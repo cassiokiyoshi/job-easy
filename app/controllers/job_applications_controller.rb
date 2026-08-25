@@ -5,6 +5,8 @@ class JobApplicationsController < ApplicationController
   end
 
   def show
+    @job_application = JobApplication.find(params[:id])
+    @resume = Resume.new
     authorize @job_application
   end
 

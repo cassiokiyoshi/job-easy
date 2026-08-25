@@ -8,7 +8,7 @@ User.destroy_all
 Company.destroy_all
 
 puts "Creating seeds..."
-User.create(
+user = User.create(
   email: "test@mail.com",
   password: "secret"
 )
@@ -30,7 +30,7 @@ JobOpening.create!(
   source_url: "https://www.lewagon.com/careers"
 )
 
-JobOpening.create!(
+job_frontend = JobOpening.create!(
   title: "Frontend Developer (React)",
   closed: false,
   company: company,
@@ -53,6 +53,11 @@ JobOpening.create!(
   deadline: 2.weeks.ago,
   job_url: "https://www.lewagon.com/careers/data-analyst-intern",
   source_url: "https://www.lewagon.com/careers"
+)
+
+JobApplication.create!(
+  job_opening: job_frontend,
+  user: user
 )
 
 puts "Created #{JobOpening.count} openings with #{Company.count} company"
