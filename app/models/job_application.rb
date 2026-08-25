@@ -5,7 +5,7 @@ class JobApplication < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
   enum :status,
-       { saved: "Saved", applied: "Applied", interviewed: "Interviewed", offer: "Offer", accepted: "Accepted",
+       { saved: "Saved", applied: "Applied", interviewed: "Interviewed", offered: "Offered", accepted: "Accepted",
          rejected: "Rejected" }
 
   attribute :status, :string, default: "Saved"
