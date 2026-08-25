@@ -75,3 +75,4 @@ end
 
 # additional gems
 gem "pundit"
+gem "cloudinary"
