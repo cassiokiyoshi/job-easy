@@ -10,9 +10,60 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_24_051917) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_25_030129) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "companies", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "job_applications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "job_opening_id", null: false
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["job_opening_id"], name: "index_job_applications_on_job_opening_id"
+    t.index ["user_id"], name: "index_job_applications_on_user_id"
+  end
+
+  create_table "job_openings", force: :cascade do |t|
+    t.boolean "closed"
+    t.bigint "company_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.date "deadline"
+    t.string "job_url"
+    t.string "source_url"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_job_openings_on_company_id"
+  end
+
+  create_table "resumes", force: :cascade do |t|
+    t.jsonb "ai_response"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.bigint "job_application_id", null: false
+    t.string "pdf"
+    t.datetime "updated_at", null: false
+    t.index ["job_application_id"], name: "index_resumes_on_job_application_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.boolean "completed"
+    t.datetime "created_at", null: false
+    t.bigint "job_application_id"
+    t.string "name"
+    t.integer "position"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["job_application_id"], name: "index_tasks_on_job_application_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -25,4 +76,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_24_051917) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "job_applications", "job_openings"
+  add_foreign_key "job_applications", "users"
+  add_foreign_key "job_openings", "companies"
+  add_foreign_key "resumes", "job_applications"
+  add_foreign_key "tasks", "job_applications"
+  add_foreign_key "tasks", "users"
 end
