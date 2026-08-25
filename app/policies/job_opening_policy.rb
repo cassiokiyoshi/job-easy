@@ -7,8 +7,13 @@ class JobOpeningPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
+    def resolve
+      scope.all
+    end
+  end
+
+  def show?
+    true # if need it tochange can put to only for user who loged in. I had to
+    # check if it was working.
   end
 end

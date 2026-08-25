@@ -1,0 +1,8 @@
+<h1> All Jobs openings</h1>
+
+<% @job_openings.each do |job_opening| %>
+  <div>
+    <h2><%= job_opening.title %></h2>
+    <p><%= job_opening.content %></p>
+  </div>
+<% end %>
