@@ -22,7 +22,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_030129) do
 
   create_table "job_applications", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "job_opening_id", null: false
+    t.bigint "job_opening_id"
     t.string "status"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -31,7 +31,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_030129) do
   end
 
   create_table "job_openings", force: :cascade do |t|
-    t.boolean "closed"
+    t.boolean "closed", default: false
     t.bigint "company_id", null: false
     t.text "content"
     t.datetime "created_at", null: false
@@ -48,13 +48,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_030129) do
     t.text "content"
     t.datetime "created_at", null: false
     t.bigint "job_application_id", null: false
-    t.string "pdf"
     t.datetime "updated_at", null: false
     t.index ["job_application_id"], name: "index_resumes_on_job_application_id"
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.boolean "completed"
+    t.boolean "completed", default: false
     t.datetime "created_at", null: false
     t.bigint "job_application_id"
     t.string "name"

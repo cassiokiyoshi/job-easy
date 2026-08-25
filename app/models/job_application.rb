@@ -1,10 +1,13 @@
 class JobApplication < ApplicationRecord
-  belongs_to :user, :job_opening
+  belongs_to :user
+  belongs_to :job_opening
   has_one :resume
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
 
-  STATUS = ["Saved", "Applied", "Interviewed", "Offer", "Accepted", "Rejected"]
+  enum :status,
+       { saved: "Saved", applied: "Applied", interviewed: "Interviewed", offer: "Offer", accepted: "Accepted",
+         rejected: "Rejected" }
 
   attribute :status, :string, default: "Saved"
-  validates :status, inclusion: { in: STATUS }
+  validates :status, presence: true
 end

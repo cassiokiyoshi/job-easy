@@ -5,7 +5,7 @@ class CreateJobOpenings < ActiveRecord::Migration[8.1]
       t.date :deadline
       t.text :content
       t.references :company, null: false, foreign_key: true
-      t.boolean :closed
+      t.boolean :closed, default: false
       t.string :job_url
       t.string :source_url
 
