@@ -24,10 +24,22 @@ class JobApplicationsController < ApplicationController
   end
 
   def update
+    @job_application = JobApplication.find(params[:id])
     authorize @job_application
+    if @job_application.update(job_application_params)
+      redirect_to job_application_path(@job_application), notice: "Status updated."
+    else
+      redirect_to job_application_path(@job_application), alert: @job_application.errors.full_messages.to_sentence
+    end
   end
 
   def destroy
     authorize @job_application
+  end
+
+  private
+
+  def job_application_params
+    params.require(:job_application).permit(:status)
   end
 end
