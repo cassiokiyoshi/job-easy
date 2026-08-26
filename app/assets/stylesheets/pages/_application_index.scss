@@ -1,0 +1,217 @@
+:root {
+  --blue: #0d4aa2;
+  --navy: #101d39;
+  --muted: #68758d;
+  --column-background: #f0f2f6;
+  --border: #dce2ec;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.applications-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 42px 30px;
+  color: var(--navy);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.applications-header,
+.applications-board {
+  width: 100%;
+  max-width: 1530px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.eyebrow {
+  margin: 0 0 7px;
+  color: var(--blue);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.applications-header h1 {
+  margin: 0 0 8px;
+  font-size: 2.5rem;
+  letter-spacing: -0.04em;
+}
+
+.applications-header > p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.applications-board {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(220px, 1fr));
+  gap: 14px;
+  max-height: calc(100vh - 210px);
+  margin-top: 35px;
+  padding: 0 10px 16px 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+.status-column {
+  min-height: 550px;
+  padding: 13px 10px;
+  background: var(--column-background);
+  border-radius: 10px;
+}
+
+.status-header {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 7px 13px;
+}
+
+.status-header h2 {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.status-header span {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  color: #536078;
+  background: #e4e8ef;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.application-card {
+  display: block;
+  min-height: 180px;
+  margin-bottom: 11px;
+  padding: 15px;
+  color: inherit;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(37, 53, 85, 0.04);
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.application-card:hover {
+  border-color: #8eadda;
+  box-shadow: 0 8px 20px rgba(25, 52, 96, 0.12);
+  transform: translateY(-3px);
+}
+
+.application-card:focus-visible {
+  outline: 3px solid rgba(13, 74, 162, 0.3);
+  outline-offset: 2px;
+}
+
+.application-card--offered {
+  border-top: 3px solid #e99a38;
+}
+
+.application-card--accepted {
+  border-top: 3px solid #32a978;
+}
+
+.application-card--rejected {
+  border-top: 3px solid #dc5d72;
+}
+
+.card-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.company-mark {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  color: white;
+  background: var(--blue);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.card-heading h3 {
+  margin: 1px 0 5px;
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.card-heading p,
+.location,
+.application-card time,
+.task-count,
+.empty-column {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.card-heading p,
+.location,
+.task-count {
+  margin: 0;
+}
+
+.location {
+  margin: 17px 0 20px;
+}
+
+.application-card time {
+  display: block;
+}
+
+.task-count {
+  margin-top: 14px;
+  padding-top: 11px;
+  border-top: 1px solid #e8ecf2;
+}
+
+.empty-column {
+  margin: 8px;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .applications-page {
+    padding: 30px 16px;
+  }
+
+  .applications-header h1 {
+    font-size: 2.125rem;
+  }
+
+  .applications-board {
+    grid-template-columns: repeat(6, minmax(240px, 82vw));
+    gap: 12px;
+    max-height: calc(100vh - 190px);
+  }
+
+  .status-column {
+    min-height: 520px;
+  }
+
+  .application-card {
+    min-height: 175px;
+  }
+}

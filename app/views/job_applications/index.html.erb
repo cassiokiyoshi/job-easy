@@ -1,0 +1,56 @@
+<main class="applications-page">
+  <header class="applications-header">
+    <p class="eyebrow">Application tracker</p>
+    <h1>My applications</h1>
+    <%# <p>Track every opportunity from saved to hired.</p> %>
+  </header>
+
+  <section class="applications-board" aria-label="Applications grouped by status">
+    <% JobApplication.statuses.each_key do |status| %>
+      <% applications = @job_applications.public_send(status) %>
+
+      <section class="status-column">
+        <header class="status-header">
+          <h2><%= status.humanize %></h2>
+          <span><%= applications.size %></span>
+        </header>
+
+        <div class="application-list">
+          <% applications.each do |application| %>
+            <%= link_to job_application_path(application),
+                        class: "application-card application-card--#{status}" do %>
+              <div class="card-heading">
+                <span class="company-mark">
+                  <%= application.job_opening.company.name.first.upcase %>
+                </span>
+
+                <div>
+                  <h3><%= application.job_opening.title %></h3>
+                  <p><%= application.job_opening.company.name %></p>
+                </div>
+              </div>
+
+              <%# <% if application.job_opening.location.present? %>
+                <%# <p class="location"> %>
+                  <%# <%= application.job_opening.location %>
+                <%# </p> %>
+              <%# <% end %>
+
+              <time datetime="<%= application.created_at.to_date.iso8601 %>">
+                <%= application.created_at.strftime("%b %-d") %>
+              </time>
+
+              <p class="task-count">
+                <%= pluralize(application.tasks.size, "task") %>
+              </p>
+            <% end %>
+          <% end %>
+
+          <% if applications.empty? %>
+            <p class="empty-column">No applications</p>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  </section>
+</main>
