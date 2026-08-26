@@ -6,10 +6,26 @@ class ResumePolicy < ApplicationPolicy
   # https://gist.github.com/Burgestrand/4b4bc22f31c8a95c425fc0e30d7ef1f5
 
   class Scope < ApplicationPolicy::Scope
-    # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
+    def resolve
+      scope.joins(:job_application)
+           .where(job_applications: { user_id: user.id })
+    end
+  end
+
+  def create?
+    true
+  end
+
+  def edit?
+    record.job_application.user_id == user.id
+  end
+
+  def update?
+    record.job_application.user_id == user.id
+  end
+
+  def destroy?
+    update?
   end
 
   def create?

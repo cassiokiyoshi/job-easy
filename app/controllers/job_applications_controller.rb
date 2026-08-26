@@ -6,7 +6,7 @@ class JobApplicationsController < ApplicationController
 
   def show
     @job_application = JobApplication.find(params[:id])
-    @resume = Resume.new
+    @resume = @job_application.resume || @job_application.build_resume
     authorize @job_application
   end
 

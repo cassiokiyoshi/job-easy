@@ -1,4 +1,5 @@
 class ResumesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_resume, only: %i[edit update destroy recommendations]
   def create
     @job_application = JobApplication.find(params[:job_application_id])
@@ -20,12 +21,24 @@ class ResumesController < ApplicationController
   end
 
   def update
+    authorize @resume
+
+    if @resume.update(resume_params)
+      redirect_to edit_resume_path(@resume)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    authorize @resume
+    @resume.destroy!
+
+    redirect_to job_application_path(@job_application), status: :see_other
   end
 
   def recommendations
+    authorize @resume
   end
 
   private
