@@ -1,2 +1,151 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<section class="job-hero">
+  <div class="container">
+    <div class="row align-items-center gy-5">
+      <!-- Hero content -->
+      <div class="col-lg-6">
+        <div class="job-hero__content">
+          <span class="job-hero__eyebrow">
+            Built for early-career tech talent
+          </span>
+
+          <h1 class="job-hero__title">
+            Your job search,
+            <span>all in one place.</span>
+          </h1>
+
+          <p class="job-hero__description">
+            Discover entry-level tech opportunities and track every
+            application—from saved to hired.
+          </p>
+
+          <div class="job-hero__actions d-flex flex-column flex-sm-row">
+            <a href="/jobs" class="btn job-hero__primary-btn">
+              Find entry-level jobs
+
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+
+            <a href="/applications" class="btn job-hero__secondary-btn">
+              Track my applications
+            </a>
+          </div>
+
+          <p class="job-hero__note">
+            <span aria-hidden="true"></span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Product preview -->
+      <div class="col-lg-6">
+        <div class="job-hero__visual" aria-label="Job application tracker preview">
+          <div class="job-hero__decoration job-hero__decoration--one"></div>
+          <div class="job-hero__decoration job-hero__decoration--two"></div>
+
+          <div class="tracker">
+            <div class="tracker__header">
+              <div>
+                <span class="tracker__label">Application tracker</span>
+                <h2>My applications</h2>
+              </div>
+
+              <span class="tracker__total">8 active</span>
+            </div>
+
+            <div class="tracker__columns">
+              <div class="tracker__column">
+                <div class="tracker__column-header">
+                  <span>Saved</span>
+                  <span>3</span>
+                </div>
+
+                <article class="tracker-card">
+                  <div class="tracker-card__logo">N</div>
+
+                  <div>
+                    <h3>Junior UX Designer</h3>
+                    <p>Northstar · Remote</p>
+                  </div>
+                </article>
+
+                <article class="tracker-card">
+                  <div class="tracker-card__logo tracker-card__logo--light">
+                    A
+                  </div>
+
+                  <div>
+                    <h3>Associate Engineer</h3>
+                    <p>Atlas · New York</p>
+                  </div>
+                </article>
+              </div>
+
+              <div class="tracker__column">
+                <div class="tracker__column-header">
+                  <span>Interview</span>
+                  <span>2</span>
+                </div>
+
+                <article class="tracker-card tracker-card--highlighted">
+                  <span class="tracker-card__status">Tomorrow</span>
+
+                  <div class="tracker-card__logo">O</div>
+
+                  <div>
+                    <h3>Product Analyst</h3>
+                    <p>Orbit · Remote</p>
+                  </div>
+                </article>
+              </div>
+
+              <div class="tracker__column">
+                <div class="tracker__column-header">
+                  <span>Offer</span>
+                  <span>1</span>
+                </div>
+
+                <article class="tracker-card">
+                  <div class="tracker-card__logo tracker-card__logo--light">
+                    L
+                  </div>
+
+                  <div>
+                    <h3>Frontend Developer</h3>
+                    <p>Lumen · Hybrid</p>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div class="job-hero__success-card">
+            <span class="job-hero__check" aria-hidden="true">✓</span>
+
+            <div>
+              <strong>Application saved</strong>
+              <span>You're all caught up</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <!-- Footer navigation and legal information -->
+</footer>
