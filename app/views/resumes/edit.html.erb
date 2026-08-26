@@ -4,6 +4,8 @@
 
   <%= render "save_status", resume: @resume, status: "saving" %>
 
+  <div id="onlyoffice-editor"></div>
+
   <script src="<%= ONLYOFFICE_CONFIG[:server_url] %>/web-apps/apps/api/documents/api.js"></script>
   <script>
     const config = <%= raw @editor_config.to_json %>;
