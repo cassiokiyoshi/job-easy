@@ -37,6 +37,57 @@ class JobApplicationsController < ApplicationController
     authorize @job_application
   end
 
+  def suggest_tasks
+    @job_application = current_user.job_applications
+                                   .includes(:tasks, job_opening: :company)
+                                   .find(params[:id])
+
+    authorize @job_application, :show?
+
+    suggestions = Ai::TaskSuggestionService.new(@job_application).call
+
+    existing_names = @job_application.tasks.pluck(:name).map do |name|
+      name.to_s.squish.downcase
+    end
+
+    new_suggestions = suggestions
+                      .map { |suggestion| suggestion.to_s.squish }
+                      .reject(&:blank?)
+                      .uniq { |suggestion| suggestion.downcase }
+                      .reject do |suggestion|
+                        existing_names.include?(suggestion.downcase)
+                      end
+
+    Task.transaction do
+      new_suggestions.each do |suggestion|
+        task = current_user.tasks.build(
+          name: suggestion.to_s.squish.truncate(140),
+          job_application: @job_application
+        )
+
+        authorize task, :create?
+        task.save!
+      end
+    end
+
+    message =
+      if new_suggestions.any?
+        "#{new_suggestions.size} AI-generated task(s) saved."
+      else
+        "No new tasks were generated."
+      end
+
+    redirect_to tasks_path, notice: message
+  rescue StandardError => e
+    Rails.logger.error(
+      "Task generation failed for application #{params[:id]}: " \
+      "#{e.class} - #{e.message}"
+    )
+
+    redirect_to job_application_path(params[:id]),
+                alert: "Tasks could not be generated. Please try again."
+  end
+
   private
 
   def job_application_params
