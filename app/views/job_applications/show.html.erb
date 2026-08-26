@@ -19,13 +19,20 @@
 
       </div>
     </div>
+    <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
 
-    <div class="job-details col-4 mx-2 card bg-white text-dark border border-dark">
+    <div class="job-details col-4 mx-2 card text-dark border border-dark">
       <div class="card-body">
+        <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
         <h4>Job Details</h4>
+        <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
+        <p><strong>Company:</strong> <%= @job_application.job_opening.company.name %></p>
+        <p><strong>Posted on:</strong> <%= @job_application.job_opening.created_at.strftime("%B %d, %Y") %></p>
+        <p><strong>Applied on:</strong> <%= @job_application.created_at.strftime("%B %d, %Y") %></p>
       </div>
     </div>
   </div>
+   <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
   <div class="upload-button my-3">
     <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
       <%= f.input :cv_file, as: :file, label: false %>
@@ -33,6 +40,9 @@
     <% end %>
   </div>
 </div>
+<%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
   <% if flash[:alert] %>
     <div class="alert alert-danger"><%= flash[:alert] %></div>
+    <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
   <% end %>
+  <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
