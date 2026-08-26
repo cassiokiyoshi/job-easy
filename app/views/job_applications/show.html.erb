@@ -1,11 +1,38 @@
 <div class="container">
 
+  <div class="title my-5">
+    <p class="my-0"><%= @job_application.job_opening.company.name %></p>
+    <h1 class="my-0"><%= @job_application.job_opening.title %> Application</h1>
+    <p><%= @job_application.status %></p>
+  </div>
+
+
+  <div class="d-flex">
+    <div class="application-status col-8 mx-2 card bg-white text-dark border border-dark">
+      <div class="card-body">
+        <h4>Application Status</h4>
+        <%= simple_form_for @job_application, method: :patch do |f| %>
+          <%= f.select :status, collection: JobApplication.statuses.values %>
+          <%= f.submit "Submit" %>
+
+        <% end %>
+
+      </div>
+    </div>
+
+    <div class="job-details col-4 mx-2 card bg-white text-dark border border-dark">
+      <div class="card-body">
+        <h4>Job Details</h4>
+      </div>
+    </div>
+  </div>
+  <div class="upload-button my-3">
+    <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
+      <%= f.input :cv_file, as: :file, label: false %>
+      <%= f.button :submit, "Upload resume" %>
+    <% end %>
+  </div>
+</div>
   <% if flash[:alert] %>
     <div class="alert alert-danger"><%= flash[:alert] %></div>
   <% end %>
-
-  <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
-  <%= f.input :cv_file, as: :file, label: "Upload Resume" %>
-  <%= f.button :submit, "Upload resume" %>
-  <% end %>
-</div>
