@@ -23,9 +23,18 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body><%= render "shared/navbar" %>
-<%= render "shared/flashes" %>
+  <!-- app/views/layouts/application.html.erb -->
 
+<body class="<%= user_signed_in? ? "is-logged-in" : "is-logged-out" %>">
+  <% if user_signed_in? %>
+    <%= render "shared/sidebar" %>
+  <% else %>
+    <%= render "shared/navbar" %>
+  <% end %>
+
+  <main class="page-content">
     <%= yield %>
-  </body>
+  </main>
+</body>
+
 </html>

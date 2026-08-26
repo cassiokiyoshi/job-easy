@@ -1,12 +1,76 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: white;
+$primary-color: #003d96;
+$sidebar-color: rgba(0, 61, 150, 0.79);
+$white: #ffffff;
+$page-background: #f5f7fb;
+
+$sidebar-expanded: 260px;
+$sidebar-collapsed: 80px;
+
+* {
+  box-sizing: border-box;
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: #1d2939;
+  background-color: $page-background;
+  font-family: Inter, Arial, sans-serif;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.top-navbar,
+.sidebar {
+  display: none;
 }
+
+/* Logged-out navbar */
+
+.is-logged-out {
+  .top-navbar {
+    display: block;
+    height: 80px;
+    background-color: $white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    &__content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1200px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    &__brand {
+      color: $primary-color;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    &__actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    &__login {
+      color: $primary-color;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    &__signup {
+      padding: 0.75rem 1.25rem;
+      color: $white;
+      background-color: $primary-color;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+  }
+}
+
+/* Logged-in sidebar */
