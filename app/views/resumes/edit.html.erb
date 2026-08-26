@@ -1,0 +1,13 @@
+<%= turbo_stream_from @resume %>
+
+<div class="container">
+
+  <%= render "save_status", resume: @resume, status: "saving" %>
+
+  <script src="<%= ONLYOFFICE_CONFIG[:server_url] %>/web-apps/apps/api/documents/api.js"></script>
+  <script>
+    const config = <%= raw @editor_config.to_json %>;
+    new DocsAPI.DocEditor("onlyoffice-editor", config);
+  </script>
+
+</div>
