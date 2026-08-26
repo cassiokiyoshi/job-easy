@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     resources :resumes, only: [:create]
   end
 
-  resources :resumes, only: [:destroy, :edit, :update] do
+  resources :resume, only: [:destroy, :edit, :update] do
     post :recommendations, on: :member
   end
 

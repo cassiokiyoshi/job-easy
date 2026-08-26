@@ -1,5 +1,6 @@
 <div class="container">
   <%= simple_form_for [@job_application, @resume] do |f| %>
   <%= f.input :cv_file, as: :file, label: "Upload Resume" %>
+  <%= f.button :submit, "Upload resume" %>
   <% end %>
 </div>
