@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     post :recommendations, on: :member
   end
 
-  resources :tasks, only: [:create, :update, :destroy]
+  resources :tasks, only: [:index, :create, :update, :destroy]
 
   namespace :api do
     get "resumes/callback"
