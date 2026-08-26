@@ -19,11 +19,8 @@ class JobApplicationsController < ApplicationController
     @job_application.job_opening = @job_opening
     @job_application.user = current_user
     authorize @job_application
-    if @job_application.save
-      redirect_to job_application_path(@job_application)
-    else
-      render "job_openings/show", status: :unprocessable_entity
-    end
+    @job_application.save
+    redirect_to job_application_path(@job_application)
   end
 
   def update
