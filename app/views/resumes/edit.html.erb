@@ -1,15 +1,19 @@
 <%= turbo_stream_from @resume %>
 
-<div class="container">
+<%= render "save_status", resume: @resume, status: "saving" %>
 
-  <%= render "save_status", resume: @resume, status: "saving" %>
+<div id="onlyoffice-editor" style="width: 100%; height: 90vh;"></div>
 
-  <div id="onlyoffice-editor"></div>
-
-  <script src="<%= ONLYOFFICE_CONFIG[:server_url] %>/web-apps/apps/api/documents/api.js"></script>
-  <script>
+<script src="<%= ONLYOFFICE_CONFIG[:server_url] %>/web-apps/apps/api/documents/api.js"></script>
+<script>
+  document.addEventListener("turbo:load", function () {
     const config = <%= raw @editor_config.to_json %>;
-    new DocsAPI.DocEditor("onlyoffice-editor", config);
-  </script>
-
-</div>
+    if (typeof DocsAPI !== "undefined") {
+      new DocsAPI.DocEditor("onlyoffice-editor", config);
+    } else {
+      document.getElementById("onlyoffice-api-script")?.addEventListener("load", function() {
+        new DocsAPI.DocEditor("onlyoffice-editor", config);
+      });
+    }
+  });
+</script>

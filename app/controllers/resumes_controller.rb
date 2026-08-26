@@ -54,6 +54,8 @@ class ResumesController < ApplicationController
 
   def build_editor_config(resume)
     config = {
+      height: "1000px",
+      width: "100%",
       document: {
         fileType: "docx",
         key: resume.onlyoffice_key,
