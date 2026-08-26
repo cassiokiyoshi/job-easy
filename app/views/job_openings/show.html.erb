@@ -1,6 +1,7 @@
 <div class="container">
 
   <h1 class="title mt-5 "><%= @job_opening.company.name %> - <%= @job_opening.title %> </h1>
+
   <div class="d-flex">
     <div class="jd col-8 my-5 mx-2 card bg-white text-dark border border-dark">
       <div class="card-body">
@@ -12,16 +13,19 @@
       </div>
     </div>
 
-    <div class="company-info col-4 my-5 mx-2 card bg-white text-dark border border-dark">
-      <div class="card-body">
-        <h4>About the company</h4>
-        <p><%= @company.name %></p>
+    <div class="company-info col-4 my-5 mx-2">
+      <div class="card bg-white text-dark border border-dark">
+        <div class="card-body">
+          <h4>About <%= @company.name %></h4>
+          <p><%= @company.description %></p>
+        </div>
       </div>
 
-      <div class="apply-btn">
+      <div class="apply-btn my-3">
         <%= link_to "Apply to this job", job_opening_job_applications_path(@job_opening), data: { turbo_method: :post }, class: "btn btn-primary" %>
       </div>
     </div>
+
   </div>
 
   </div>
