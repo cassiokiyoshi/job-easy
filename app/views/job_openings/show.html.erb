@@ -21,9 +21,15 @@
         </div>
       </div>
 
-      <div class="apply-btn my-3">
-        <%= link_to "Apply to this job", job_opening_job_applications_path(@job_opening), data: { turbo_method: :post }, class: "btn btn-primary" %>
-      </div>
+      <% if current_user.job_applications.exists?(job_opening: @job_opening) %>
+        <div class="apply-btn my-3">
+          <%= link_to "Go to Application", job_application_path(@job_application), class: "btn btn-primary" %>
+        </div>
+      <% else %>
+        <div class="apply-btn my-3">
+          <%= link_to "Apply to this job", job_opening_job_applications_path(@job_opening), data: { turbo_method: :post }, class: "btn btn-primary" %>
+        </div>
+      <% end %>
     </div>
 
   </div>

@@ -11,8 +11,16 @@ class JobApplicationsController < ApplicationController
   end
 
   def create
-    @job_application = JobApplication.find(params[:id])
+    # triggered by job_opening show page
+    # created Job Application instance
+    # redirect to Job Application show page
+    @job_application = JobApplication.new
+    @job_opening = JobOpening.find(params[:job_opening_id])
+    @job_application.job_opening = @job_opening
+    @job_application.user = current_user
     authorize @job_application
+    @job_application.save
+    redirect_to job_application_path(@job_application)
   end
 
   def update
