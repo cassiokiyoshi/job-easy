@@ -1,8 +1,11 @@
-<h1> All Jobs openings</h1>
+<h1>Jobs openings</h1>
 
 <% @job_openings.each do |job_opening| %>
-  <div>
-    <h2><%= job_opening.title %></h2>
-    <p><%= job_opening.content %></p>
-  </div>
+  <%= link_to job_opening_path(job_opening), class: "job-card" do %>
+    <div class="job-image-placeholder"></div>
+    <div class="job-card-content">
+      <h2><%= job_opening.title %></h2>
+      <p><%= job_opening.content %></p>
+    </div>
+  <% end %>
 <% end %>
