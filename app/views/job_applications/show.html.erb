@@ -4,7 +4,7 @@
     <div class="alert alert-danger"><%= flash[:alert] %></div>
   <% end %>
 
-  <%= simple_form_for [@job_application, @resume] do |f| %>
+  <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
   <%= f.input :cv_file, as: :file, label: "Upload Resume" %>
   <%= f.button :submit, "Upload resume" %>
   <% end %>
