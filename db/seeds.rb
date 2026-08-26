@@ -4,8 +4,10 @@
 puts "Starting seed"
 
 puts "Cleaning db...."
+Resume.destroy_all
 User.destroy_all
 Company.destroy_all
+JobApplication.destroy_all
 
 puts "Creating seeds..."
 user = User.create(
@@ -14,7 +16,8 @@ user = User.create(
 )
 
 company = Company.create(
-  name: "Le Wagon"
+  name: "Le Wagon",
+  description: "Le Wagon is a global education company that helps people build skills and launch careers in tech. Through immersive, hands-on programs, it supports learners at various stages of their journey — from complete beginners to working professionals — in developing practical, in-demand abilities. With a presence across multiple countries, Le Wagon brings together a community of instructors, alumni, and industry partners focused on real-world learning outcomes."
 )
 
 JobOpening.create!(

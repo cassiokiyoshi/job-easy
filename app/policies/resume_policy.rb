@@ -27,4 +27,16 @@ class ResumePolicy < ApplicationPolicy
   def destroy?
     update?
   end
+
+  def create?
+    record.job_application.user == user
+  end
+
+  def update?
+    edit?
+  end
+
+  def destroy?
+    edit?
+  end
 end

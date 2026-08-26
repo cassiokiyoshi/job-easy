@@ -1,6 +1,37 @@
-<h1>Job</h1>
-  <div>
-    <h2><%= @job_opening.title %></h2>
-    <p><%= @job_opening.content %></p>
-    <p><%= @job_opening.company.name %></p>
+<div class="container">
+
+  <h1 class="title mt-5 "><%= @job_opening.company.name %> - <%= @job_opening.title %> </h1>
+
+  <div class="d-flex">
+    <div class="jd col-8 my-5 mx-2 card bg-white text-dark border border-dark">
+      <div class="card-body">
+        <h3 class="card-title text-center"><%= @job_opening.title %></h3>
+        <h4>Job Summary</h4>
+        <p><%= @job_opening.content %></p>
+        <h4>Deadline</h4>
+        <p><%= @job_opening.deadline %></p>
+      </div>
+    </div>
+
+    <div class="company-info col-4 my-5 mx-2">
+      <div class="card bg-white text-dark border border-dark">
+        <div class="card-body">
+          <h4>About <%= @company.name %></h4>
+          <p><%= @company.description %></p>
+        </div>
+      </div>
+
+      <% if current_user.job_applications.exists?(job_opening: @job_opening) %>
+        <div class="apply-btn my-3">
+          <%= link_to "Go to Application", job_application_path(@job_application), class: "btn btn-primary" %>
+        </div>
+      <% else %>
+        <div class="apply-btn my-3">
+          <%= link_to "Apply to this job", job_opening_job_applications_path(@job_opening), data: { turbo_method: :post }, class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+
   </div>
