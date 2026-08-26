@@ -6,6 +6,7 @@ class JobOpeningsController < ApplicationController
 
   def show
     @job_opening = JobOpening.find(params[:id])
+    @company = @job_opening.company
     authorize @job_opening
   end
 end
