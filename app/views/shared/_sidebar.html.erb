@@ -1,0 +1,135 @@
+<aside class="sidebar" id="sidebar" data-controller="sidebar">
+  <div class="sidebar__header">
+    <%= link_to dashboard_path, class: "sidebar__brand" do %>
+      <span class="sidebar__brand-full">JobEasy</span>
+    <% end %>
+
+    <button
+      class="sidebar__brand-short"
+      type="button"
+      data-action="click->sidebar#expand"
+      aria-label="Expand sidebar"
+    >J</button>
+
+    <button
+      class="sidebar__toggle"
+      id="sidebar-toggle"
+      data-sidebar-target="toggle"
+      data-action="click->sidebar#toggle"
+      type="button"
+      aria-label="Collapse sidebar"
+      aria-expanded="true"
+      aria-controls="sidebar"
+    >
+      <span aria-hidden="true">‹</span>
+    </button>
+  </div>
+
+  <div class="sidebar__user">
+    <span class="sidebar__avatar" aria-hidden="true">U</span>
+
+    <div class="sidebar__user-information">
+      <span class="sidebar__username">Username</span>
+      <span class="sidebar__account-label"></span>
+    </div>
+  </div>
+
+  <nav class="sidebar__navigation" aria-label="Application navigation">
+    <%= link_to dashboard_path,
+        class: class_names(
+          "sidebar__link",
+          "sidebar__link--active": current_page?(dashboard_path)
+        ) do %>
+      <span class="sidebar__icon" aria-hidden="true">
+        <%= image_tag "icons/dashboard.png", alt: "" %>
+      </span>
+
+      <span class="sidebar__label">Dashboard</span>
+    <% end %>
+
+    <%= link_to job_applications_path,
+        class: class_names(
+          "sidebar__link",
+          "sidebar__link--active": request.path.start_with?(job_applications_path)
+        ) do %>
+      <span class="sidebar__icon" aria-hidden="true">
+        <%= image_tag "icons/applications.png", alt: "" %>
+      </span>
+
+      <span class="sidebar__label">My applications</span>
+    <% end %>
+
+    <%= link_to tasks_path,
+        class: class_names(
+          "sidebar__link",
+          "sidebar__link--active": request.path == tasks_path
+        ) do %>
+      <span class="sidebar__icon" aria-hidden="true">
+        <%= image_tag "icons/dailytasks.png", alt: "" %>
+      </span>
+
+      <span class="sidebar__label">Daily tasks</span>
+    <% end %>
+
+    <%= link_to job_openings_path,
+        class: class_names(
+          "sidebar__link",
+          "sidebar__link--active": request.path.start_with?(job_openings_path)
+        ) do %>
+      <span class="sidebar__icon" aria-hidden="true">
+        <%= image_tag "icons/jobboard.png", alt: "" %>
+      </span>
+
+      <span class="sidebar__label">Job board</span>
+    <% end %>
+  </nav>
+
+  <div class="sidebar__footer">
+    <%= link_to "/settings",
+        class: class_names(
+          "sidebar__link",
+          "sidebar__link--active": request.path == "/settings"
+        ),
+        title: "Settings" do %>
+      <span class="sidebar__icon" aria-hidden="true">
+        <%= image_tag "icons/settings.png", alt: "" %>
+      </span>
+
+      <span class="sidebar__label">Settings</span>
+    <% end %>
+
+    <%= button_to destroy_user_session_path,
+        method: :delete,
+        class: "sidebar__link sidebar__logout",
+        form_class: "sidebar__logout-form",
+        title: "Log out",
+        aria: { label: "Log out" } do %>
+      <span class="sidebar__icon" aria-hidden="true">
+        <svg
+          class="sidebar__logout-icon"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <path
+            d="M10 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H10"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+
+          <path
+            d="M14 8l4 4-4 4M18 12H9"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+
+      <span class="sidebar__label">Log out</span>
+    <% end %>
+  </div>
+</aside>
