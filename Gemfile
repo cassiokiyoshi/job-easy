@@ -76,3 +76,6 @@ end
 # additional gems
 gem "pundit"
 gem "cloudinary"
+gem "ruby_llm", "~> 1.2.0"
+gem "jwt"
+gem "rack-cors"

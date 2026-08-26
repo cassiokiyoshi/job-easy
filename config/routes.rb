@@ -18,4 +18,9 @@ Rails.application.routes.draw do
 
   resources :tasks, only: [:create, :update, :destroy]
 
+  namespace :api do
+    get "resumes/callback"
+    post "resumes/:id/callback", to: "resumes#callback", as: :resume_callback
+  end
+
 end

@@ -1,0 +1,8 @@
+<%# app/views/resumes/_save_status.html.erb %>
+<div id="<%= dom_id(resume, :save_status) %>">
+  <% if status == "saved" %>
+    <p class="text-success">✓ Saved</p>
+  <% else %>
+    <p class="text-muted">Saving...</p>
+  <% end %>
+</div>
