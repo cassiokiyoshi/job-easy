@@ -1,0 +1,6 @@
+<div id="advice_<%= advice[:id] %>" class="alert alert-info alert-dismissible fade show" role="alert">
+  <strong><%= advice[:label] %>:</strong>
+  <%= Kramdown::Document.new(advice[:body].to_s).to_html.html_safe %>
+  <%= link_to "Close", advice_resume_path(@resume, advice[:id]),
+        data: { turbo_method: :delete }, class: "btn btn-primary" %>
+</div>

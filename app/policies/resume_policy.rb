@@ -31,4 +31,8 @@ class ResumePolicy < ApplicationPolicy
   def recommendations?
     edit?
   end
+
+  def dismiss_advice?
+    edit?
+  end
 end
