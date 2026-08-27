@@ -5,11 +5,20 @@
     <%# <p>Track every opportunity from saved to hired.</p> %>
   </header>
 
-  <section class="applications-board" aria-label="Applications grouped by status">
-    <% JobApplication.statuses.each_key do |status| %>
-      <% applications = @job_applications.public_send(status) %>
+    <section class="applications-board"
+         aria-label="Applications grouped by status"
+         data-controller="application-board">
+  <% JobApplication.statuses.each_key do |status| %>
+    <% applications = @job_applications.public_send(status) %>
 
-      <section class="status-column">
+    <section class="status-column"
+             data-application-board-target="column"
+             data-status="<%= JobApplication.statuses.fetch(status) %>"
+             data-action="
+               dragover->application-board#dragOver
+               dragleave->application-board#dragLeave
+               drop->application-board#drop
+             ">
         <header class="status-header">
           <h2><%= status.humanize %></h2>
           <span><%= applications.size %></span>
@@ -18,7 +27,18 @@
         <div class="application-list">
           <% applications.each do |application| %>
             <%= link_to job_application_path(application),
-                        class: "application-card application-card--#{status}" do %>
+                class: "application-card application-card--#{status}",
+                draggable: true,
+                data: {
+                  application_board_target: "card",
+                  application_id: application.id,
+                  status: application.status,
+                  update_url: job_application_path(application),
+                  action: [
+                    "dragstart->application-board#dragStart",
+                    "dragend->application-board#dragEnd"
+                  ].join(" ")
+                } do %>
               <div class="card-heading">
                 <span class="company-mark">
                   <%= application.job_opening.company.name.first.upcase %>

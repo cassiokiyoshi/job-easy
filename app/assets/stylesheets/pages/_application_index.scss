@@ -65,9 +65,38 @@
   min-height: 550px;
   padding: 13px 10px;
   background: var(--column-background);
-  border-radius: 10px;
+  border: 2px solid transparent;
+  border: 2px solid transparent;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
+.status-column--drag-over {
+  background: #e7eef9;
+  border-color: #367bd6;
+  box-shadow: inset 0 0 0 2px rgba(54, 123, 214, 0.12);
+}
+
+.application-card {
+  cursor: grab;
+}
+
+.application-card:active {
+  cursor: grabbing;
+}
+
+.application-card--dragging {
+  opacity: 0.45;
+  transform: scale(0.98);
+}
+
+.application-card--updating {
+  cursor: wait;
+  opacity: 0.55;
+  pointer-events: none;
+}
 .status-header {
   display: flex;
   min-height: 46px;
@@ -121,16 +150,28 @@
   outline-offset: 2px;
 }
 
+.application-card--saved {
+  border-top: 5px solid #6c7a90;
+}
+
+.application-card--applied {
+  border-top: 5px solid #367bd6;
+}
+
+.application-card--interviewed {
+  border-top: 5px solid #8a63d2;
+}
+
 .application-card--offered {
-  border-top: 3px solid #e99a38;
+  border-top: 5px solid #e99a38;
 }
 
 .application-card--accepted {
-  border-top: 3px solid #32a978;
+  border-top: 5px solid #32a978;
 }
 
 .application-card--rejected {
-  border-top: 3px solid #dc5d72;
+  border-top: 5px solid #dc5d72;
 }
 
 .card-heading {

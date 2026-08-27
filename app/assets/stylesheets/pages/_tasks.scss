@@ -107,13 +107,11 @@
 
 .application-task-grid {
   display: grid;
-  min-width: 0;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: 360px;
   gap: 14px;
-}
-
-.application-task-grid.application-task-grid--single {
-  grid-template-columns: minmax(0, 1fr);
+  width: max-content;
+  overflow: visible;
 }
 
 .task-status-scroll .task-status-card,
@@ -326,16 +324,15 @@
 }
 
 .task-status-scroll .task-status-card {
-  width: 88%;
-  max-width: 760px;
-  flex: 0 0 88%;
-  scroll-snap-align: start;
+  width: max-content;
+  max-width: none;
+  flex: 0 0 auto;
 }
 
 .task-status-scroll .task-status-card--single {
-  width: 380px;
-  max-width: 88%;
-  flex-basis: 380px;
+  width: max-content;
+  max-width: none;
+  flex-basis: auto;
 }
 
 .task-panel__list {
@@ -352,9 +349,10 @@
   justify-self: start;
 
   .task-status-card {
-    width: 100%;
+    width: max-content;
+    min-width: 100%;
     max-width: none;
-    flex-basis: 100%;
+    flex-basis: auto;
   }
 }
 
