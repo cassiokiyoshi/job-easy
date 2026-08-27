@@ -1,0 +1,15 @@
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.go-to-page-btn {
+  background-color: rgba(0, 61, 150, 0.79);
+  border-radius: 0.5rem;
+  color: white;
+
+  &:hover {
+    background-color: rgba(0, 61, 150, 0.5);
+  }
+}
