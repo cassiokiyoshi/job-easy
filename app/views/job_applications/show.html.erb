@@ -12,7 +12,7 @@
       <h4>Application Status</h4>
 
       <div class="status-bar d-flex justify-content-between my-4">
-        <% %w[saved applied interviewed offered accepted].each do |step| %>
+        <% %w[Saved Applied Interviewed Offered Accepted].each do |step| %>
           <%= button_to job_application_path(@job_application), method: :patch, params: { job_application: { status: step } }, class: "status-step-btn" do %>
             <div class="status-step text-center">
               <div class="status-dot"></div>

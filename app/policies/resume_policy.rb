@@ -17,18 +17,6 @@ class ResumePolicy < ApplicationPolicy
   end
 
   def edit?
-    record.job_application.user_id == user.id
-  end
-
-  def update?
-    record.job_application.user_id == user.id
-  end
-
-  def destroy?
-    update?
-  end
-
-  def create?
     record.job_application.user == user
   end
 
@@ -37,6 +25,10 @@ class ResumePolicy < ApplicationPolicy
   end
 
   def destroy?
+    destroy?
+  end
+
+  def recommendations?
     edit?
   end
 end
