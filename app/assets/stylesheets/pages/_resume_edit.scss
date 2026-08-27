@@ -19,3 +19,38 @@
   flex-direction: column;
   margin: 0 16px;
 }
+
+#advices {
+  max-height: 130vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .alert {
+    position: static;
+    inset: auto;
+    z-index: auto;
+    margin: 0;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+    background-color: rgba(128, 128, 128, 0.15);
+    color: black;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 0.5rem;
+  }
+
+  .btn {
+    margin-top: 8px;
+  }
+
+  .go-to-page-btn {
+    background-color: rgba(0, 60, 150, 0.644);
+
+    &:hover {
+      background-color: rgba(0, 61, 150, 0.5);
+      color:white;
+    }
+  }
+}
