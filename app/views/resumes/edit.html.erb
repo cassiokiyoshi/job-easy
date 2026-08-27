@@ -2,6 +2,8 @@
 
 <%= render "save_status", resume: @resume, status: "saving" %>
 
+<%= link_to "Apply for this job", @resume.job_application.job_opening.job_url, class: "btn btn-primary" %>
+
 <div id="onlyoffice-editor" style="width: 100%; height: 90vh;"></div>
 
 <script src="<%= ONLYOFFICE_CONFIG[:server_url] %>/web-apps/apps/api/documents/api.js"></script>
