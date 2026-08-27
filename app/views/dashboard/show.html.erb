@@ -1,1 +1,147 @@
-<h1>DASHBOARD HERE HEH</h1>
+<% content_for :title, "Dashboard | JobEasy" %>
+
+<% active_count = @job_applications.count { |application| !application.accepted? && !application.rejected? } %>
+
+<div class="dashboard-page">
+  <header class="dashboard-header">
+    <div>
+      <p class="dashboard-header__eyebrow">Dashboard</p>
+      <h1>Welcome back</h1>
+    </div>
+
+  </header>
+
+  <section class="dashboard-metrics" aria-label="Job search summary">
+    <%= link_to job_applications_path, class: "metric-chip" do %>
+      <span class="metric-chip__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v11A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 17.5 5H15"/><rect x="9" y="3" width="6" height="4" rx="1.5"/><path d="M8 12h8M8 16h6"/></svg>
+      </span>
+      <span><strong><%= @job_applications.size %></strong><small>Total applications</small></span>
+    <% end %>
+
+    <%= link_to job_applications_path, class: "metric-chip" do %>
+      <span class="metric-chip__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v11A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 17.5 5H15"/>
+          <rect x="9" y="3" width="6" height="4" rx="1.5"/>
+          <path d="m8 14 2.5 2.5L16 11"/>
+        </svg>
+      </span>
+      <span><strong><%= active_count %></strong><small>Active</small></span>
+    <% end %>
+
+    <%= link_to job_applications_path, class: "metric-chip" do %>
+      <span class="metric-chip__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M8 3v5M16 3v5M3.5 10h17"/></svg>
+      </span>
+      <span><strong><%= @status_counts.fetch("Interviewed", 0) %></strong><small>Interviews</small></span>
+    <% end %>
+
+    <%= link_to job_applications_path, class: "metric-chip" do %>
+      <span class="metric-chip__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-3.5 7-10V5l-7-2-7 2v6c0 6.5 7 10 7 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+      </span>
+      <span><strong><%= @status_counts.fetch("Offered", 0) %></strong><small>Offers</small></span>
+    <% end %>
+  </section>
+
+  <section class="dashboard-workspace">
+    <article class="dashboard-panel pipeline-panel">
+      <header class="dashboard-panel__header">
+        <div>
+          <h2>Application pipeline</h2>
+          <p>Your applications by current status</p>
+        </div>
+        <%= link_to "View board", job_applications_path %>
+      </header>
+
+      <div class="pipeline" aria-label="Application counts by status">
+        <% JobApplication.statuses.each do |status, label| %>
+          <div class="pipeline__stage pipeline__stage--<%= status %>">
+            <span><%= label %></span>
+            <strong><%= @status_counts.fetch(label, 0) %></strong>
+          </div>
+        <% end %>
+      </div>
+    </article>
+
+    <article class="dashboard-panel task-summary">
+      <header class="dashboard-panel__header">
+        <div>
+          <h2>Personal tasks</h2>
+          <p>Your next priorities</p>
+        </div>
+        <%= link_to "View all", tasks_path %>
+      </header>
+
+      <div class="task-summary__list">
+        <% if @personal_tasks.any? %>
+          <% @personal_tasks.each do |task| %>
+            <%= form_with model: task, url: task_path(task), method: :patch, class: "dashboard-task" do |form| %>
+              <%= form.check_box :completed, { onchange: "this.form.requestSubmit()", aria: { label: "Complete #{task.name}" } }, true, false %>
+              <span><%= task.name %></span>
+            <% end %>
+          <% end %>
+        <% else %>
+          <p class="dashboard-empty">No personal tasks pending.</p>
+        <% end %>
+      </div>
+    </article>
+
+    <article class="dashboard-panel task-summary">
+      <header class="dashboard-panel__header">
+        <div>
+          <h2>Application tasks</h2>
+          <p>Follow-ups for your applications</p>
+        </div>
+        <%= link_to "View all", tasks_path %>
+      </header>
+
+      <div class="task-summary__list">
+        <% if @application_tasks.any? %>
+          <% @application_tasks.each do |task| %>
+            <%= form_with model: task, url: task_path(task), method: :patch, class: "dashboard-task dashboard-task--application" do |form| %>
+              <%= form.check_box :completed, { onchange: "this.form.requestSubmit()", aria: { label: "Complete #{task.name}" } }, true, false %>
+              <span>
+                <%= task.name %>
+                <small><%= task.job_application.job_opening.company.name %></small>
+              </span>
+            <% end %>
+          <% end %>
+        <% else %>
+          <p class="dashboard-empty">No application tasks pending.</p>
+        <% end %>
+      </div>
+    </article>
+  </section>
+
+  <section class="dashboard-panel dashboard-jobs">
+    <header class="dashboard-panel__header">
+      <div>
+        <h2>Job openings available</h2>
+        <p>Opportunities you haven’t applied to yet</p>
+      </div>
+      <%= link_to "Browse all", job_openings_path %>
+    </header>
+
+    <div class="dashboard-jobs__list">
+      <% if @job_openings.any? %>
+        <% @job_openings.each do |job| %>
+          <%= link_to job_opening_path(job), class: "dashboard-job" do %>
+            <span class="dashboard-job__mark"><%= job.company.name.first.upcase %></span>
+            <span class="dashboard-job__content">
+              <strong><%= job.title %></strong>
+              <small><%= job.company.name %></small>
+            </span>
+            <% if job.deadline.present? %>
+              <time datetime="<%= job.deadline.iso8601 %>"><%= job.deadline.strftime("%b %-d") %></time>
+            <% end %>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          <% end %>
+        <% end %>
+      <% else %>
+        <p class="dashboard-empty">No new job openings are available right now.</p>
+      <% end %>
+    </div>
+  </section>
+</div>
