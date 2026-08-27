@@ -25,7 +25,18 @@
   display: inline-block;
   margin-top: 12px;
   padding: 8px 16px;
-  background-color: #003D96;
+  background-color: #003d96;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.btn-upload-button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color: #003d96;
   color: white;
   border-radius: 4px;
   text-decoration: none;
