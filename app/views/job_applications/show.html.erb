@@ -45,4 +45,22 @@
     <div class="alert alert-danger"><%= flash[:alert] %></div>
     <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
   <% end %>
-  <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
+
+<div class="card bg-white text-dark border border-dark my-3">
+  <div class="card-body">
+    <h4>AI Tasks</h4>
+
+    <p>
+      Generate and save tasks based on the application status and job details.
+    </p>
+
+    <%= button_to "Generate and save tasks",
+                  suggest_tasks_job_application_path(@job_application),
+                  method: :post,
+                  class: "btn btn-primary",
+                  data: {
+                    turbo: false,
+                    turbo_confirm: "Generate and save all suggested tasks?"
+                  } %>
+  </div>
+</div>

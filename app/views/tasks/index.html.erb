@@ -1,0 +1,161 @@
+<div class="tasks-page">
+  <header class="tasks-header">
+    <p class="tasks-header__eyebrow">Daily tasks</p>
+    <h1>My tasks</h1>
+    <p>Stay on top of personal and application-specific next steps.</p>
+  </header>
+
+  <div class="tasks-layout">
+    <aside class="personal-tasks">
+      <div class="task-panel__form">
+        <%= simple_form_for @task do |form| %>
+          <%= form.input :name,
+                        label: false,
+                        placeholder: "Add a new task" %>
+
+          <%= form.input :job_application_id,
+                        collection: @job_applications.map { |application|
+                          [
+                            "#{application.job_opening.company.name} — #{application.job_opening.title}",
+                            application.id
+                          ]
+                        },
+                        include_blank: "Personal task",
+                        label: false %>
+
+          <%= form.button :submit,
+                          "Add task",
+                          class: "btn btn-primary w-100" %>
+        <% end %>
+      </div>
+        <section class="task-panel">
+          <div class="task-panel__header">
+            <div>
+              <p class="task-panel__eyebrow">Personal</p>
+              <h2>My daily tasks</h2>
+            </div>
+
+            <span class="task-panel__count">
+              <%= pluralize(@personal_tasks.reject(&:completed?).size, "task") %>
+            </span>
+          </div>
+
+          <div class="task-panel__list">
+            <% if @personal_tasks.any? %>
+              <% @personal_tasks.each do |task| %>
+                <%= render "task", task: task %>
+              <% end %>
+            <% else %>
+              <div class="tasks-empty">
+                <p>No personal tasks yet.</p>
+                <span>Add one using the form above.</span>
+              </div>
+            <% end %>
+          </div>
+        </section>
+    </aside>
+
+    <main class="application-tasks" data-controller="status-filter">
+      <div class="application-tasks__heading">
+        <div>
+          <p class="task-panel__eyebrow">Applications</p>
+          <h2>Application tasks</h2>
+        </div>
+
+        <div class="application-tasks__controls">
+          <label for="application-status-filter" class="visually-hidden">
+            Filter by application status
+          </label>
+
+          <select id="application-status-filter"
+                  class="application-tasks__filter"
+                  data-status-filter-target="select"
+                  data-action="change->status-filter#filter">
+            <option value="all">All statuses</option>
+
+            <% JobApplication.statuses.values.each do |status| %>
+              <option value="<%= status.parameterize %>">
+                <%= status %>
+              </option>
+            <% end %>
+          </select>
+
+          <span class="task-panel__count">
+            <%= pluralize(@tasks.count { |task| task.job_application_id.present? && !task.completed? }, "task")  %>
+          </span>
+        </div>
+      </div>
+
+      <% if @application_tasks_by_status.any? %>
+        <div class="task-status-scroll">
+          <% JobApplication.statuses.values.each do |status| %>
+            <% applications = @application_tasks_by_status[status] %>
+            <% next if applications.blank? %>
+
+            <section class="<%= class_names(
+                                              "task-status-card",
+                                              "task-status-card--#{status.parameterize}",
+                                              "task-status-card--single": applications.one?
+                                            ) %>"
+                                              data-status-filter-target="card"
+                                              data-status="<%= status.parameterize %>">
+              <div class="task-status-card__header">
+                <div>
+                  <p>Application status</p>
+                  <h3><%= status %></h3>
+                </div>
+
+                <span>
+                  <%= pluralize(
+                    applications.values.flatten.count { |task| !task.completed? },
+                    "task"
+                  ) %>
+                </span>
+              </div>
+
+              <div class="<%= class_names(
+                                           "application-task-grid",
+                                           "application-task-grid--single": applications.one?,
+                                           "application-task-grid--scrollable": applications.size > 2
+                                         ) %>">
+                <% applications.each do |application, tasks| %>
+                  <article class="application-task-card">
+                    <header class="application-task-card__header">
+                      <div class="application-task-card__company">
+                        <span class="application-task-card__mark">
+                          <%= application.job_opening.company.name.first.upcase %>
+                        </span>
+
+                        <div>
+                          <h4><%= application.job_opening.title %></h4>
+                          <p><%= application.job_opening.company.name %></p>
+                        </div>
+                      </div>
+
+                      <%= link_to "View",
+                                  job_application_path(application),
+                                  class: "application-task-card__link" %>
+                    </header>
+
+                    <div class="application-task-card__tasks">
+                      <% tasks.each do |task| %>
+                        <%= render "task", task: task %>
+                      <% end %>
+                    </div>
+                  </article>
+                <% end %>
+              </div>
+            </section>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="tasks-empty tasks-empty--applications">
+          <h3>No application tasks yet</h3>
+          <p>
+            Open an application and generate AI tasks based on its status and job details.
+          </p>
+        </div>
+      <% end %>
+    </main>
+  </div>
+</div>

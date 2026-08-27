@@ -18,6 +18,7 @@ class ResumesController < ApplicationController
   def edit
     authorize @resume
     @editor_config = build_editor_config(@resume)
+    # raise "STEP 3 — config: #{@editor_config.inspect}"
   end
 
   def update
@@ -53,6 +54,8 @@ class ResumesController < ApplicationController
 
   def build_editor_config(resume)
     config = {
+      height: "1000px",
+      width: "100%",
       document: {
         fileType: "docx",
         key: resume.onlyoffice_key,

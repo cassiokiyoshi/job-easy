@@ -1,6 +1,7 @@
 class Api::ResumesController < ApplicationController
   skip_before_action :verify_authenticity_token
   skip_before_action :authenticate_user!, raise: false
+  skip_after_action :verify_authorized # ← add
 
   def callback
     resume = Resume.find(params[:id])

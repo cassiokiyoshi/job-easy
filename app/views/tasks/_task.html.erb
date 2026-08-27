@@ -1,0 +1,38 @@
+<div class="<%= class_names("task-row", "task-row--completed": task.completed?) %>">
+  <%= form_with model: task,
+                url: task_path(task),
+                method: :patch,
+                class: "task-row__toggle" do |form| %>
+    <%= form.check_box :completed,
+                       {
+                         checked: task.completed?,
+                         onchange: "this.form.requestSubmit()",
+                         class: "form-check-input",
+                         aria: {
+                           label: task.completed? ?
+                             "Mark task as incomplete" :
+                             "Mark task as completed"
+                         }
+                       },
+                       true,
+                       false %>
+  <% end %>
+
+  <div class="task-row__content">
+    <p class="task-row__name"><%= task.name %></p>
+  </div>
+
+  <%= button_to task_path(task),
+                method: :delete,
+                class: "task-row__delete",
+                form: {
+                  data: {
+                    turbo_confirm: "Delete this task?"
+                  }
+                },
+                aria: {
+                  label: "Delete #{task.name}"
+                } do %>
+    <span aria-hidden="true">&times;</span>
+  <% end %>
+</div>

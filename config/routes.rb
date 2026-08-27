@@ -8,15 +8,16 @@ Rails.application.routes.draw do
     resources :job_applications, only: [:create]
   end
 
-  resources :job_applications, only: [:index, :show, :update, :destroy ] do
+  resources :job_applications, only: [:index, :show, :update, :destroy] do
+    post :suggest_tasks, on: :member
     resources :resumes, only: [:create]
   end
 
-  resources :resume, only: [:destroy, :edit, :update] do
+  resources :resumes, only: [:destroy, :edit, :update] do
     post :recommendations, on: :member
   end
 
-  resources :tasks, only: [:create, :update, :destroy]
+  resources :tasks, only: [:index, :create, :update, :destroy]
 
   namespace :api do
     get "resumes/callback"
