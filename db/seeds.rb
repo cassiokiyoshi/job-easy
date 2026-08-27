@@ -115,8 +115,8 @@ companies.each_with_index do |company, company_index|
       content: job_descriptions[global_index % job_descriptions.length],
       closed: closed,
       deadline: closed ? (global_index + 1).days.ago : (global_index + 14).days.from_now,
-      job_url: "https://example.com/jobs/#{global_index + 1}",
-      source_url: "https://example.com/companies/#{company.name.parameterize}/careers"
+      job_url: "https://www.accenture.com/us-en/careers/jobdetails?id=R00333866_en&title=SAP+Intercompany+Manager+-+Life+Sciences",
+      source_url: "https://www.accenture.com/us-en/careers/jobdetails?id=R00333866_en&title=SAP+Intercompany+Manager+-+Life+Sciences"
     )
   end
 end
