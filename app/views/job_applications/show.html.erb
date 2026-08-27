@@ -26,18 +26,18 @@
           <p><strong>Applied on:</strong> <%= @job_application.created_at.strftime("%B %d, %Y") %></p>
         </div>
       </div>
+
       <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
       <div class="upload-button my-3">
-  <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
-    <%= f.input :cv_file, as: :file, label: false, input_html: { id: "cv-file-input", style: "display:none;" } %>
-    <label for="cv-file-input" class="btn-upload-button">Choose File</label>
-    <span id="file-name">No file chosen</span>
-    <%= f.button :submit, "Upload resume", class: "btn-upload-button" %>
-  <% end %>
-</div>
+      <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
+        <%= f.input :cv_file, as: :file, label: false, input_html: { id: "cv-file-input", style: "display:none;" } %>
+    <!-- <label for="cv-file-input" class="btn-upload-button">Choose File</label> -->
+        <%= f.button :submit, "Upload resume", class: "btn-upload-button" %>
+      <% end %>
+      </div>
+    </div>
   </div>
-    </div>
-    </div>
+</div>
 
 
 <% if flash[:alert] %>
