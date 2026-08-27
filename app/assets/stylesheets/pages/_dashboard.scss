@@ -6,10 +6,10 @@ $dashboard-surface: #ffffff;
 
 .dashboard-page {
   width: 100%;
-  max-width: 1500px;
+  max-width: 1530px;
   margin: 0 auto;
-  padding: 1.5rem;
-  color: $dashboard-text;
+  padding: 42px 30px;
+  color: #101d39;
 }
 
 .dashboard-header {
@@ -17,21 +17,20 @@ $dashboard-surface: #ffffff;
   align-items: flex-end;
   justify-content: space-between;
   gap: 1.5rem;
-  margin-bottom: 1.25rem;
+  margin: 0 auto 32px;
 
   &__eyebrow {
-    margin: 0 0 0.3rem !important;
-    color: $dashboard-blue !important;
-    font-size: 0.7rem !important;
+    margin: 0 0 6px !important;
+    color: #0d4aa2 !important;
+    font-size: 0.75rem !important;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   h1 {
-    margin: 0 0 0.3rem;
-    font-size: clamp(1.7rem, 3vw, 2.2rem);
-    font-weight: 700;
+    margin: 0 0 8px;
+    font-size: 2.5rem;
     letter-spacing: -0.04em;
   }
 
@@ -254,8 +253,9 @@ $dashboard-surface: #ffffff;
 }
 
 @media (max-width: 720px) {
-  .dashboard-page { padding: 1rem 0; }
+  .dashboard-page { padding: 30px 16px; }
   .dashboard-header { align-items: flex-start; flex-direction: column; }
+  .dashboard-header h1 { font-size: 2.125rem; }
   .dashboard-metrics { display: grid; grid-template-columns: 1fr 1fr; }
   .metric-chip { min-width: 0; }
   .dashboard-workspace { grid-template-columns: 1fr; }

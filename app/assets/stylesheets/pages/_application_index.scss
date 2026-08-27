@@ -27,8 +27,12 @@
   margin-left: auto;
 }
 
+.applications-header {
+  margin-bottom: 32px;
+}
+
 .eyebrow {
-  margin: 0 0 7px;
+  margin: 0 0 6px;
   color: var(--blue);
   font-size: 0.75rem;
   font-weight: 800;
@@ -54,7 +58,7 @@
   align-items: start;
   gap: 14px;
   max-height: calc(100vh - 210px);
-  margin-top: 35px;
+  margin-top: 0;
   padding: 0 10px 16px 0;
   overflow: auto;
   overscroll-behavior: contain;
