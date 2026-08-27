@@ -11,5 +11,11 @@
 
   &:hover {
     background-color: rgba(0, 61, 150, 0.5);
+    color:white;
   }
+}
+.resume-buttons {
+  display: flex;
+  flex-direction: column;
+  margin: 0 16px;
 }

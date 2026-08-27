@@ -1,3 +1,5 @@
+require 'docx'
+
 class ResumesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_resume, only: %i[edit update destroy recommendations]
@@ -39,8 +41,18 @@ class ResumesController < ApplicationController
 
   def recommendations
     authorize @resume
+    io = URI.parse(Cloudinary::Utils.cloudinary_url("#{Rails.env}/#{@resume.cv_file.key}.docx",
+                                                    resource_type: "raw")).read
+    doc = Docx::Document.open(io)
+    raise
+
     # Parse CV into content
-    # Write prompt to check this CV,
+    # Get descrpition JD
+    # Write prompt to check this CV, Give recommendations (list of 3 things)
+    # Call RubyLLM to chat
+    # Returns in jsonb
+    # background job to add squares on the side, iterate overt the json to give recommendations
+    # When click close button, disappear
   end
 
   private

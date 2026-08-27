@@ -6,8 +6,10 @@
     <i class="fa-solid fa-arrow-left me-2"></i>
     <p>Back to <%= @resume.job_application.job_opening.title %> Job Page</p>
   <% end %>
-
-  <%= link_to "Apply for this job", @resume.job_application.job_opening.job_url, class: "btn go-to-page-btn" %>
+  <div class="resume-buttons">
+    <%= link_to "Apply for this job", @resume.job_application.job_opening.job_url, class: "btn go-to-page-btn my-1" %>
+    <%= link_to "Ask Job Easy for suggestions", recommendations_resume_path(@resume), data: {turbo_method: "post"}, class: "btn go-to-page-btn my-1" %>
+  </div>
 </div>
 <div id="onlyoffice-editor" style="width: 100%; height: 90vh;"></div>
 
