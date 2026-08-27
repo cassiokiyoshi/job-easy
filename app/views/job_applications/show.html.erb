@@ -6,19 +6,27 @@
     <p><%= @job_application.status %></p>
   </div>
 
-  <div class="d-flex">
-    <div class="application-status col-8 mx-2 card bg-white text-dark border border-dark">
-      <div class="card-body">
-        <h4>Application Status</h4>
-        <%= simple_form_for @job_application, method: :patch do |f| %>
-          <%= f.select :status, collection: JobApplication.statuses.values %>
-          <%= f.submit "Submit" %>
+ <div class="d-flex">
+  <div class="application-status col-8 mx-2 card bg-white text-dark border-white">
+    <div class="card-body">
+      <h4>Application Status</h4>
+
+      <div class="status-bar d-flex justify-content-between my-4">
+        <% %w[saved applied interviewed offered accepted].each do |step| %>
+          <%= button_to job_application_path(@job_application), method: :patch, params: { job_application: { status: step } }, class: "status-step-btn" do %>
+            <div class="status-step text-center">
+              <div class="status-dot"></div>
+              <p class="status-label"><%= step.capitalize %></p>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
+  </div>
+
 
     <div class="job-details-wrapper col-4 mx-2">
-      <div class="job-details card text-dark border border-dark">
+      <div class="job-details card text-dark border border-white">
         <div class="card-body">
           <h4>Job Details</h4>
           <p><strong>Company:</strong> <%= @job_application.job_opening.company.name %></p>
@@ -28,29 +36,15 @@
       </div>
 
       <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
-      
-      <div class="buttons mt-2">
-        <% if @job_application.resume.id.present? %>
-          <div class="resume-button btn btn-light my-2">
-              <%= link_to "Go to Resume", edit_resume_path(@job_application.resume), class: "text-black text-decoration-none" %>
-          </div>
-          <div class="upload-button my-3">
-            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
-              <%= f.input :cv_file, as: :file, label: false %>
-              <%= f.button :submit, "Upload resume", class: "btn-upload-button" %>
-            <% end %>
-          </div>
-        <% else %>
-            <div class="upload-button my-3">
-            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
-              <%= f.input :cv_file, as: :file, label: false %>
-              <%= f.button :submit, "Upload resume", class: "btn-upload-button" %>
-            <% end %>
-        <% end %>
+      <div class="upload-button my-3">
+      <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
+        <%= f.input :cv_file, as: :file, label: false, input_html: { id: "cv-file-input", style: "display:none;" } %>
+    <!-- <label for="cv-file-input" class="btn-upload-button">Choose File</label> -->
+        <%= f.button :submit, "Upload resume", class: "btn-upload-button" %>
+      <% end %>
       </div>
     </div>
   </div>
-    
 </div>
 
 
@@ -63,7 +57,7 @@
     <div class="alert alert-danger"><%= flash[:alert] %></div>
   <% end %>
 
-<div class="card bg-white text-dark border border-dark my-3">
+<div class="card small-white text-dark border-white my-3">
   <div class="card-body">
     <h4>AI Tasks</h4>
 
