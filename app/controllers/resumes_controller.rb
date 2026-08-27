@@ -39,6 +39,8 @@ class ResumesController < ApplicationController
 
   def recommendations
     authorize @resume
+    # Parse CV into content
+    # Write prompt to check this CV,
   end
 
   private

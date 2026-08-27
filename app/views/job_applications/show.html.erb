@@ -27,30 +27,30 @@
         </div>
       </div>
 
-      <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "btn-check-details" %>
-      
-      <div class="buttons mt-2">
+      <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "job-application-button" %>
+
+      <div class="job-application-buttons mt-2" data-controller="auto-submit">
         <% if @job_application.resume.id.present? %>
-          <div class="resume-button btn btn-light my-2">
-              <%= link_to "Go to Resume", edit_resume_path(@job_application.resume), class: "text-black text-decoration-none" %>
+          <div class="mt-2">
+              <%= link_to "Go to Resume", edit_resume_path(@job_application.resume), class: "job-application-button" %>
           </div>
-          <div class="upload-button my-3">
-            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
-              <%= f.input :cv_file, as: :file, label: false %>
-              <%= f.button :submit, "Upload resume", class: "btn-upload-button" %>
+          <div class="upload-button mt-2">
+            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post, data: {auto_submit_target: "form"} do |f| %>
+              <%= f.label :cv_file, "Add a new resume", class: "job-application-button", for: "resume_cv_file" %>
+              <%= f.file_field :cv_file, id: "resume_cv_file", class: "d-none", data: { action: "change->auto-submit#submit" } %>
             <% end %>
           </div>
         <% else %>
-            <div class="upload-button my-3">
-            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post do |f| %>
-              <%= f.input :cv_file, as: :file, label: false %>
-              <%= f.button :submit, "Upload resume", class: "btn-upload-button" %>
+            <div class="upload-button mt-2">
+            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post, data: {auto_submit_target: "form"} do |f| %>
+              <%= f.label :cv_file, "Add a resume", class: "job-application-button", for: "resume_cv_file" %>
+              <%= f.file_field :cv_file, id: "resume_cv_file", class: "d-none", data: { action: "change->auto-submit#submit" } %>
             <% end %>
         <% end %>
       </div>
     </div>
   </div>
-    
+
 </div>
 
 

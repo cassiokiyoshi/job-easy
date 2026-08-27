@@ -21,24 +21,22 @@
   }
 }
 
-.btn-check-details {
-  display: inline-block;
+.job-application-button {
   margin-top: 12px;
   padding: 8px 16px;
-  background-color: #003d96;
+  background-color: rgba(0, 61, 150, 0.79);
   color: white;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
+    &:hover {
+    background-color: rgba(0, 61, 150, 0.5);
+    color:white;
+  }
 }
 
-.btn-upload-button {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 8px 16px;
-  background-color: #003d96;
-  color: white;
-  border-radius: 4px;
-  text-decoration: none;
-  font-size: 14px;
+.job-application-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
