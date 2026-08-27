@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
+  devise_scope :user do
+    get "/settings", to: "devise/registrations#edit", as: :settings
+  end
   root to: "pages#home"
 
   get "/dashboard", to: "dashboard#show", as: :dashboard

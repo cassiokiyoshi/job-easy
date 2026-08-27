@@ -135,11 +135,16 @@ body {
     }
 
     &__icon {
-      img {
+      svg {
         display: block;
-        max-width: 20px;
-        max-height: 20px;
-        object-fit: contain;
+        width: 20px;
+        height: 20px;
+        overflow: visible;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vector-effect: non-scaling-stroke;
       }
     }
 
