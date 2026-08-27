@@ -18,7 +18,6 @@ class ResumesController < ApplicationController
   def edit
     authorize @resume
     @editor_config = build_editor_config(@resume)
-    # raise "STEP 3 — config: #{@editor_config.inspect}"
   end
 
   def update
