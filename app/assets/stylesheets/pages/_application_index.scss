@@ -51,6 +51,7 @@
 .applications-board {
   display: grid;
   grid-template-columns: repeat(6, minmax(220px, 1fr));
+  align-items: start;
   gap: 14px;
   max-height: calc(100vh - 210px);
   margin-top: 35px;
@@ -62,11 +63,10 @@
 }
 
 .status-column {
-  min-height: 550px;
   padding: 13px 10px;
   background: var(--column-background);
   border: 2px solid transparent;
-  border: 2px solid transparent;
+  border-radius: 12px;
   transition:
     background-color 160ms ease,
     border-color 160ms ease,
@@ -246,10 +246,6 @@
     grid-template-columns: repeat(6, minmax(240px, 82vw));
     gap: 12px;
     max-height: calc(100vh - 190px);
-  }
-
-  .status-column {
-    min-height: 520px;
   }
 
   .application-card {

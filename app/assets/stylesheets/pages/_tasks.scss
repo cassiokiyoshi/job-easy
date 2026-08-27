@@ -109,6 +109,7 @@
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 360px;
+  align-items: start;
   gap: 14px;
   width: max-content;
   overflow: visible;
@@ -316,11 +317,26 @@
 
 .task-status-scroll {
   display: flex;
+  align-items: flex-start;
   gap: 20px;
-  padding-bottom: 12px;
+  padding: 0 18px 12px;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-snap-type: x proximity;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 18px,
+    black calc(100% - 18px),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 18px,
+    black calc(100% - 18px),
+    transparent
+  );
 }
 
 .task-status-scroll .task-status-card {
@@ -338,9 +354,23 @@
 .task-panel__list {
   max-height: 55vh;
   margin-top: 16px;
-  padding-right: 4px;
+  padding: 14px 4px 14px 0;
   overflow-y: auto;
   overscroll-behavior-y: contain;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 14px,
+    black calc(100% - 14px),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 14px,
+    black calc(100% - 14px),
+    transparent
+  );
 }
 
 .application-tasks--filtered {
