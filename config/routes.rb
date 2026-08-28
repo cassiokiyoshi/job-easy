@@ -18,6 +18,9 @@ Rails.application.routes.draw do
 
   resources :resumes, only: [:destroy, :edit, :update] do
     post :recommendations, on: :member
+    member do
+      delete "advices/:advice_id", to: "resumes#dismiss_advice", as: :advice
+    end
   end
 
   resources :tasks, only: [:index, :create, :update, :destroy]
@@ -26,5 +29,4 @@ Rails.application.routes.draw do
     get "resumes/callback"
     post "resumes/:id/callback", to: "resumes#callback", as: :resume_callback
   end
-
 end

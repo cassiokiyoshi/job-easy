@@ -11,7 +11,20 @@
     <%= link_to "Ask Job Easy for suggestions", recommendations_resume_path(@resume), data: {turbo_method: "post"}, class: "btn go-to-page-btn my-1" %>
   </div>
 </div>
-<div id="onlyoffice-editor" style="width: 100%; height: 90vh;"></div>
+<div class="row resume-workspace mt-5">
+  <div class="<%= @advices.any? ? "col-lg-9" : "col-12" %>">
+    <div id="onlyoffice-editor" style="width: 100%; height: 90vh;"></div>
+  </div>
+
+  <% if @advices.any? %>
+    <div class="col-lg-3 mt-2">
+      <div id="advices">
+        <%= render partial: "advice", collection: @advices, as: :advice %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
 
 <script src="<%= ONLYOFFICE_CONFIG[:server_url] %>/web-apps/apps/api/documents/api.js"></script>
 <script>
