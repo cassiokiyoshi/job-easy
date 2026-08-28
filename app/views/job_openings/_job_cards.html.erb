@@ -1,5 +1,5 @@
 <% job_openings.each do |job_opening| %>
-    <article class="job-card">
+    <article class="job-card <%= 'job-card--closed' if job_opening.closed %>">
       <div class="job-card__panel">
         <div class="job-card__panel-top">
           <div class="div">

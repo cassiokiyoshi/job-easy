@@ -76,6 +76,17 @@ $jo-card-min-height: 240px; // baseline height; grows only if the title needs mo
   }
 }
 
+.job-openings-grid .job-card--closed {
+  filter: grayscale(100%);
+  opacity: 0.65;
+  transition: filter 0.15s ease, opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
+}
+
 .job-card__panel {
   background: $jo-panel-bg;
   border-radius: 12px;
