@@ -1,14 +1,10 @@
-<%= turbo_stream_from @resume %>
-
-<%# <%= render "save_status", resume: @resume, status: "saving" %>
 <div class="buttons">
   <%= link_to job_application_path(@resume.job_application), class: "d-flex text-decoration-none text-dark" do  %>
     <i class="fa-solid fa-arrow-left me-2"></i>
     <p>Back to <%= @resume.job_application.job_opening.title %> Job Page</p>
   <% end %>
   <div class="resume-buttons">
-    <%= link_to "Apply for this job", job_application_path(@resume.job_application), data: {controller: "redirect", redirect_url_value: @resume.job_application.job_opening.job_url, action: "click->redirect#openUrl"}  %>
-    <%# <%= link_to "Apply for this job", @resume.job_application.job_opening.job_url, target: "_blank", class: "btn go-to-page-btn my-1" %> %>
+    <%= link_to "Apply for this job", job_application_path(@resume.job_application), data: {controller: "redirect", redirect_url_value: @resume.job_application.job_opening.job_url, action: "click->redirect#openUrl"}, class: "btn go-to-page-btn my-1"  %>
     <%= link_to "Ask Job Easy for suggestions", recommendations_resume_path(@resume), data: {turbo_method: "post"}, class: "btn go-to-page-btn my-1" %>
   </div>
 </div>
