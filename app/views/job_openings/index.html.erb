@@ -1,11 +1,11 @@
-<h1>Jobs openings</h1>
+<div class="job-openings-page">
+  <div class="head">
+    <h1>Open Jobs</h1>
+    <span class="job-openings-count"><%= @job_openings.size %></span>
+  </div>
 
-<% @job_openings.each do |job_opening| %>
-  <%= link_to job_opening_path(job_opening), class: "job-card" do %>
-    <div class="job-image-placeholder"></div>
-    <div class="job-card-content">
-      <h2><%= job_opening.title %></h2>
-      <p><%= job_opening.content %></p>
-    </div>
-  <% end %>
-<% end %>
+  <div class="job-openings-grid">
+    <%= render "job_openings/job_cards", job_openings: @job_openings%>
+    <%= render "job_openings/job_cards", job_openings: @job_openings_closed %>
+  </div>
+</div>

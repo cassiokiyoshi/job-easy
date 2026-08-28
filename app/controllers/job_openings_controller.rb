@@ -1,7 +1,7 @@
 class JobOpeningsController < ApplicationController
   def index
-    @job_openings = JobOpening.all
-    @job_openings = policy_scope(JobOpening)
+    @job_openings = policy_scope(JobOpening).ordered.open
+    @job_openings_closed = policy_scope(JobOpening).ordered.close
   end
 
   def show
