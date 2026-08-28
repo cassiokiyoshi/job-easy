@@ -327,14 +327,14 @@
     to right,
     transparent,
     black 18px,
-    black calc(100% - #{18px}),
+    /* black calc(100% - #{18px}), */
     transparent
   );
   mask-image: linear-gradient(
     to right,
     transparent,
     black 18px,
-    black calc(100% - #{18px}),
+    /* black calc(100% - #{18px}), */
     transparent
   );
 }
@@ -361,14 +361,14 @@
     to bottom,
     transparent,
     black 14px,
-    black calc(100% - #{14px}),
+    /* black calc(100% - #{14px}), */
     transparent
   );
   mask-image: linear-gradient(
     to bottom,
     transparent,
     black 14px,
-    black calc(100% - #{14px}),
+    /* black calc(100% - #{14px}), */
     transparent
   );
 }
