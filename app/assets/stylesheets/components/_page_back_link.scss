@@ -1,0 +1,31 @@
+.page-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  color: #536078;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 150ms ease, transform 150ms ease;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &:hover {
+    color: #003d96;
+    transform: translateX(-2px);
+  }
+
+  &:focus-visible {
+    border-radius: 3px;
+    outline: 2px solid #003d96;
+    outline-offset: 4px;
+  }
+}
