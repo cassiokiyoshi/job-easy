@@ -1,11 +1,48 @@
-<h1>Jobs openings</h1>
+<div class="job-openings-page">
+  <div class="head">
+    <h1>Job Openings</h1>
+    <span class="job-openings-count"><%= @job_openings.size %></span>
+  </div>
 
-<% @job_openings.each do |job_opening| %>
-  <%= link_to job_opening_path(job_opening), class: "job-card" do %>
-    <div class="job-image-placeholder"></div>
-    <div class="job-card-content">
-      <h2><%= job_opening.title %></h2>
-      <p><%= job_opening.content %></p>
-    </div>
-  <% end %>
-<% end %>
+  <div class="job-openings-grid">
+    <% @job_openings.each do |job_opening| %>
+      <article class="job-card">
+        <div class="job-card__panel">
+          <div class="job-card__panel-top">
+            <div class="div">
+              <% if job_opening.closed  %>
+                <span class="job-card__deadline">Closed</span>
+                <% else %>
+                <span class="job-card__deadline">Open</span>
+              <% end %>
+            </div>
+            <div class="div">
+              <%= link_to "", class: "job-card__save" do %>
+                <i class="fa-regular fa-bookmark"></i>
+              <% end %>
+            </div>
+          </div>
+
+          <p class="job-card__company"><%= job_opening.company.name %></p>
+          <h2 class="job-card__title"><%= job_opening.title %></h2>
+        </div>
+
+        <div class="job-card__footer">
+            <span class="job-card__salary">Salary: <%= job_opening.salary %></span>
+
+          <div class="job-card__footer-row">
+            <%# <div class="d-flex justify-content-between"> %>
+              <p class="job-card__location"><%= job_opening.location %></p>
+              <% if job_opening.deadline %>
+                <p class="job-card__deadline">
+                  Deadline: <%= job_opening.deadline.strftime("%b %d, %Y") %>
+                </p>
+              <% end %>
+            <%# </div> %>
+            <%= link_to "", job_opening_path(job_opening), class: "job-card__details" %>
+          </div>
+        </div>
+      </article>
+    <% end %>
+  </div>
+</div>
