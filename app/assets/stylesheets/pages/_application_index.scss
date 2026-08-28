@@ -54,7 +54,6 @@
 
 .applications-board {
   display: grid;
-  /* width: calc(100% + #{20px}); */
   max-width: calc(1530px + 20px);
   grid-template-columns: repeat(6, minmax(220px, 1fr));
   align-items: start;
@@ -72,14 +71,12 @@
       to right,
       transparent,
       black 10px,
-      /* black calc(100% - #{10px}), */
       transparent
     ),
     linear-gradient(
       to bottom,
       transparent,
       black 10px,
-      /* black calc(100% - #{10px}), */
       transparent
     );
   -webkit-mask-composite: source-in;
@@ -88,14 +85,12 @@
       to right,
       transparent,
       black 10px,
-      /* black calc(100% - #{10px}), */
       transparent
     ),
     linear-gradient(
       to bottom,
       transparent,
       black 10px,
-      /* black calc(100% - #{10px}), */
       transparent
     );
   mask-composite: intersect;

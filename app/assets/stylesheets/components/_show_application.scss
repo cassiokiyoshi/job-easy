@@ -3,10 +3,6 @@ $application-text: #111827;
 $application-muted: #6b7280;
 $application-border: #e5e7eb;
 
-.application-show-page {
-  /* width: 100%; max-width: 1200px; margin: 0 auto; padding: 40px 32px 64px; color: $application-text; */
-}
-
 .application-show-header {
   margin-bottom: 32px;
   > p { margin: 0 0 4px; color: $application-muted; font-size: 15px; font-weight: 500; }
@@ -58,7 +54,6 @@ $application-border: #e5e7eb;
 }
 
 .application-pipeline__dot {
-  /* z-index: 1; width: 28px; height: 28px; border: 2px solid #d1d5db; border-radius: 50%; */
   background: #fff; transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 .application-pipeline__label { margin-top: 8px; font-size: 13px; font-weight: 500; }
@@ -74,8 +69,6 @@ $application-border: #e5e7eb;
   h3 { margin: 3px 0 0; font-size: 15px; font-weight: 500; }
   p { margin: 4px 0 0; color: $application-muted; font-size: 13px; line-height: 1.5; }
 }
-/* .application-timeline__marker { position: absolute; top: 4px; left: 0; width: 12px; height: 12px; border-radius: 50%; background: $application-blue; } */
-
 .application-task-card { overflow: hidden; }
 .application-task-card__header {
   display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px;
@@ -108,7 +101,6 @@ $application-border: #e5e7eb;
 .application-details-actions { display: grid; gap: 10px; padding-top: 20px; }
 .application-details-actions form { margin: 0; }
 .application-show-button {
-  /* display: flex; width: 100%; min-height: 46px; align-items: center; justify-content: center; margin: 0; */
   padding: 10px 16px; border: 1px solid $application-blue; border-radius: 8px; font-size: 14px;
   font-weight: 600; text-align: center; text-decoration: none; cursor: pointer;
   &--primary { color: #fff !important; background: $application-blue; }
