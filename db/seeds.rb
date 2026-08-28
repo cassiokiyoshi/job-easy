@@ -145,6 +145,8 @@ companies.each_with_index do |company, company_index|
       content: job_descriptions[global_index % job_descriptions.length],
       closed: closed,
       deadline: closed ? (global_index + 1).days.ago : (global_index + 14).days.from_now,
+      location: ["Tokyo","Osaka"].sample,
+      salary: ["JPY 3M - 4M", "JPY 4M - 5M", "N/A"].sample,
       job_url: "https://www.accenture.com/us-en/careers/jobdetails?id=R00333866_en&title=SAP+Intercompany+Manager+-+Life+Sciences",
       source_url: "https://www.accenture.com/us-en/careers/jobdetails?id=R00333866_en&title=SAP+Intercompany+Manager+-+Life+Sciences"
     )
