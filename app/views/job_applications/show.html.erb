@@ -1,109 +1,122 @@
-<div class="container">
-  <%= link_to job_applications_path, class: "page-back-link mt-5", aria: { label: "Back to applications" } do %>
+<% opening = @job_application.job_opening %>
+<% company = opening.company %>
+<% stages = %w[Saved Applied Interviewed Offered Accepted] %>
+<% current_stage = stages.index(@job_application.status) %>
+<% content_for :title, "#{opening.title} application | JobEasy" %>
+
+<div class="application-show-page">
+  <%= link_to job_applications_path, class: "page-back-link", aria: { label: "Back to applications" } do %>
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></svg>
     <span>Back to applications</span>
   <% end %>
 
-  <div class="title my-5">
-    <p class="my-0"><%= @job_application.job_opening.company.name %></p>
-    <h1 class="my-0"><%= @job_application.job_opening.title %> Application</h1>
-    <p><%= @job_application.status %></p>
-  </div>
-
- <div class="d-flex">
-  <div>
-  <div class="application-status mx-2 mb-2 card bg-white text-dark border-white">
-    <div class="card-body">
-      <h4>Application Status</h4>
-
-      <div class="status-bar d-flex justify-content-between my-4">
-        <% %w[Saved Applied Interviewed Offered Accepted].each do |step| %>
-          <%= button_to job_application_path(@job_application), method: :patch, params: { job_application: { status: step } }, class: "status-step-btn" do %>
-            <div class="status-step text-center">
-              <div class="status-dot <%= @job_application.status == step ? 'status-dot-active' : '' %>"></div>
-              <p class="status-label <%= @job_application.status == step ? 'status-label-active' : '' %>"><%= step.capitalize %></p>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
+  <header class="application-show-header">
+    <p><%= company.name %></p>
+    <div class="application-show-header__title">
+      <h1><%= opening.title %></h1>
+      <span class="application-status-pill application-status-pill--<%= @job_application.status.downcase %>"><%= @job_application.status %></span>
     </div>
-  </div>
-
-  <div class="card small-white text-dark mx-2">
-  <div class="card-body">
-    <h4>My Tasks</h4>
-    <ul class="task-list">
-      <% @job_application.tasks.order(:position).each do |task| %>
-      <%= render "tasks/task", task: task %>
-      <% end %>
-    </ul>
-  </div>
-</div>
-</div>
-
-
-
-    <div class="job-details-wrapper col-4 mx-2">
-      <div class="job-details card text-dark border border-white">
-        <div class="card-body">
-          <h4>Job Details</h4>
-          <p><strong>Company:</strong> <%= @job_application.job_opening.company.name %></p>
-          <p><strong>Posted on:</strong> <%= @job_application.job_opening.created_at.strftime("%B %d, %Y") %></p>
-          <p><strong>Applied on:</strong> <%= @job_application.created_at.strftime("%B %d, %Y") %></p>
-        </div>
-      </div>
-
-      <%= link_to "Check Details", job_opening_path(@job_application.job_opening), class: "job-application-button" %>
-
-      <div class="job-application-buttons mt-2" data-controller="auto-submit">
-        <% if @job_application.resume.id.present? %>
-          <div class="mt-2">
-              <%= link_to "Go to Resume", edit_resume_path(@job_application.resume), class: "job-application-button" %>
-          </div>
-          <div class="upload-button mt-2">
-            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post, data: {auto_submit_target: "form"} do |f| %>
-              <%= f.label :cv_file, "Add a new resume", class: "job-application-button", for: "resume_cv_file" %>
-              <%= f.file_field :cv_file, id: "resume_cv_file", class: "d-none", data: { action: "change->auto-submit#submit" } %>
-            <% end %>
-          </div>
-        <% else %>
-            <div class="upload-button mt-2">
-            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post, data: {auto_submit_target: "form"} do |f| %>
-              <%= f.label :cv_file, "Add a resume", class: "job-application-button", for: "resume_cv_file" %>
-              <%= f.file_field :cv_file, id: "resume_cv_file", class: "d-none", data: { action: "change->auto-submit#submit" } %>
-            <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-
-<% if flash[:alert] %>
-  <div class="alert alert-danger"><%= flash[:alert] %></div>
-<% end %>
-
+  </header>
 
   <% if flash[:alert] %>
     <div class="alert alert-danger"><%= flash[:alert] %></div>
   <% end %>
 
-</div>
+  <div class="application-show-layout">
+    <main class="application-show-main">
+      <section class="application-show-card application-pipeline-card">
+        <h2>Application status</h2>
+        <div class="application-pipeline" aria-label="Application pipeline">
+          <% stages.each_with_index do |stage, index| %>
+            <% reached = current_stage.present? && index <= current_stage %>
+            <% active = stage == @job_application.status %>
+            <%= button_to job_application_path(@job_application), method: :patch,
+                          params: { job_application: { status: stage } },
+                          class: class_names("application-pipeline__step", "is-reached": reached, "is-active": active),
+                          aria: { label: "Change application status to #{stage}", current: ("step" if active) } do %>
+              <span class="application-pipeline__track" aria-hidden="true"></span>
+              <span class="application-pipeline__dot" aria-hidden="true"></span>
+              <span class="application-pipeline__label"><%= stage %></span>
+            <% end %>
+          <% end %>
+        </div>
+        <% if @job_application.status == "Rejected" %>
+          <p class="application-pipeline__notice">This application has been marked as rejected.</p>
+        <% end %>
+      </section>
 
-<div class="card small-white text-dark border-white my-3">
-  <div class="card-body">
-    <h4>AI Tasks</h4>
+      <section class="application-show-card application-timeline-card">
+        <h2>Application activity</h2>
+        <div class="application-timeline">
+          <% if @job_application.updated_at > @job_application.created_at + 1.second %>
+            <article class="application-timeline__event">
+              <span class="application-timeline__marker" aria-hidden="true"></span>
+              <time datetime="<%= @job_application.updated_at.iso8601 %>"><%= @job_application.updated_at.strftime("%b %-d, %Y") %></time>
+              <h3>Status changed to <%= @job_application.status.downcase %></h3>
+              <p>Your application and suggested tasks were updated.</p>
+            </article>
+          <% end %>
+          <article class="application-timeline__event">
+            <span class="application-timeline__marker" aria-hidden="true"></span>
+            <time datetime="<%= @job_application.created_at.iso8601 %>"><%= @job_application.created_at.strftime("%b %-d, %Y") %></time>
+            <h3>Application saved</h3>
+            <p>You added this opening to your application pipeline.</p>
+          </article>
+        </div>
+      </section>
 
-    <p>
-      Generate and save tasks based on the application status and job details.
-    </p>
+      <section class="application-show-card application-task-card">
+        <header class="application-task-card__header">
+          <div><h2>My tasks</h2><p><%= pluralize(@job_application.tasks.reject(&:completed?).size, "task") %> remaining</p></div>
+          <%= button_to "Refresh tasks", suggest_tasks_job_application_path(@job_application), method: :post,
+                        class: "application-task-card__refresh",
+                        data: { turbo: false, turbo_confirm: "Generate and save all suggested tasks?" } %>
+        </header>
+        <div class="application-task-card__list">
+          <% if @job_application.tasks.any? %>
+            <% @job_application.tasks.order(:position, :created_at).each do |task| %>
+              <%= render "tasks/task", task: task %>
+            <% end %>
+          <% else %>
+            <p class="application-task-card__empty">No tasks yet. Refresh tasks to create suggestions for this application.</p>
+          <% end %>
+        </div>
+      </section>
+    </main>
 
-    <%= button_to "Generate and save tasks",
-                  suggest_tasks_job_application_path(@job_application),
-                  method: :post,
-                  class: "btn btn-primary",
-                  data: {
-                    turbo: false,
-                    turbo_confirm: "Generate and save all suggested tasks?"
-                  } %>
+    <aside class="application-show-sidebar">
+      <section class="application-details-card">
+        <h2>Job details</h2>
+        <dl>
+          <div><dt>Company</dt><dd><%= company.name %></dd></div>
+          <div><dt>Location</dt><dd class="<%= "is-unavailable" if opening.location.blank? %>"><%= opening.location.presence || "Not available" %></dd></div>
+          <div><dt>Salary</dt><dd class="<%= "is-unavailable" if opening.salary.blank? %>"><%= opening.salary.presence || "Not available" %></dd></div>
+          <div><dt>Deadline</dt><dd class="<%= "is-unavailable" if opening.deadline.blank? %>"><%= opening.deadline&.strftime("%B %-d, %Y") || "Not available" %></dd></div>
+          <div><dt>Applied on</dt><dd><%= @job_application.created_at.strftime("%B %-d, %Y") %></dd></div>
+          <div><dt>Job URL</dt><dd class="<%= "is-unavailable" if opening.job_url.blank? %>">
+            <% if opening.job_url.present? %><%= link_to "View job page", opening.job_url, target: "_blank", rel: "noopener noreferrer" %><% else %>Not available<% end %>
+          </dd></div>
+          <div><dt>Source</dt><dd class="<%= "is-unavailable" if opening.source_url.blank? %>">
+            <% if opening.source_url.present? %><%= link_to "View source", opening.source_url, target: "_blank", rel: "noopener noreferrer" %><% else %>Not available<% end %>
+          </dd></div>
+        </dl>
+
+        <div class="application-details-actions" data-controller="auto-submit">
+          <%= link_to "View opening details", job_opening_path(opening), class: "application-show-button application-show-button--primary" %>
+          <% if @job_application.resume.persisted? %>
+            <%= link_to "Review resume", edit_resume_path(@job_application.resume), class: "application-show-button application-show-button--secondary" %>
+            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post, data: { auto_submit_target: "form" } do |form| %>
+              <%= form.label :cv_file, "Upload a new resume", class: "application-show-button application-show-button--quiet", for: "resume_cv_file" %>
+              <%= form.file_field :cv_file, id: "resume_cv_file", class: "d-none", data: { action: "change->auto-submit#submit" } %>
+            <% end %>
+          <% else %>
+            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post, data: { auto_submit_target: "form" } do |form| %>
+              <%= form.label :cv_file, "Add a resume", class: "application-show-button application-show-button--secondary", for: "resume_cv_file" %>
+              <%= form.file_field :cv_file, id: "resume_cv_file", class: "d-none", data: { action: "change->auto-submit#submit" } %>
+            <% end %>
+          <% end %>
+        </div>
+      </section>
+    </aside>
   </div>
 </div>

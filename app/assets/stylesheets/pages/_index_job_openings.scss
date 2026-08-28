@@ -4,44 +4,17 @@ $jo-panel-border: rgb(245, 245, 245);
 $jo-card-width: 356px;
 $jo-card-min-height: 240px; // baseline height; grows only if the title needs more lines
 
-.job-openings-page {
-  padding: 44px 52px;
-  overflow-x: hidden; // nothing on this page should scroll sideways
-}
-
-.job-openings-page .head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 28px;
-
-  h1 {
-    font-size: 28px;
-    font-weight: 800;
-    color: $jo-primary;
-    letter-spacing: -0.5px;
-    margin: 0;
-  }
-}
-
-.job-openings-count {
-  border: 1px solid $jo-panel-border;
-  color: $jo-primary;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 3px 12px;
-  border-radius: 999px;
-  background: #fff;
-}
-
 .job-openings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(#{"min(100%, 280px)"}, 1fr));
-  max-width: $jo-card-width * 3 + 22px * 2;
+  width: 100%;
+  max-width: 1530px;
+  margin-right: auto;
+  margin-left: auto;
   align-items: start;
   gap: 22px;
 
-  max-height: calc(100vh - 160px);
+  max-height: calc(100vh - 190px);
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 6px;
