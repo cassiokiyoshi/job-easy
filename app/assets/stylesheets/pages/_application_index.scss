@@ -66,34 +66,6 @@
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
   -webkit-overflow-scrolling: touch;
-  -webkit-mask-image:
-    linear-gradient(
-      to right,
-      transparent,
-      black 10px,
-      transparent
-    ),
-    linear-gradient(
-      to bottom,
-      transparent,
-      black 10px,
-      transparent
-    );
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(
-      to right,
-      transparent,
-      black 10px,
-      transparent
-    ),
-    linear-gradient(
-      to bottom,
-      transparent,
-      black 10px,
-      transparent
-    );
-  mask-composite: intersect;
 }
 
 .status-column {

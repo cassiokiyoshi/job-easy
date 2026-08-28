@@ -323,18 +323,6 @@
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-snap-type: x proximity;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 18px,
-    transparent
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 18px,
-    transparent
-  );
 }
 
 .task-status-scroll .task-status-card {
@@ -355,18 +343,6 @@
   padding: 14px 4px 14px 0;
   overflow-y: auto;
   overscroll-behavior-y: contain;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black 14px,
-    transparent
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black 14px,
-    transparent
-  );
 }
 
 .application-tasks--filtered {
