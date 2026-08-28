@@ -1,11 +1,12 @@
-<div class="job-openings-page">
-  <div class="head">
-    <h1>Open Jobs</h1>
-    <span class="job-openings-count"><%= @job_openings.size %></span>
-  </div>
+<main class="applications-page">
+  <header class="applications-header">
+    <p class="eyebrow">Job board</p>
+    <h1>Open jobs</h1>
+    <p><%= pluralize(@job_openings.size, "opening") %></p>
+  </header>
 
   <div class="job-openings-grid">
     <%= render "job_openings/job_cards", job_openings: @job_openings%>
     <%= render "job_openings/job_cards", job_openings: @job_openings_closed %>
   </div>
-</div>
+</main>
