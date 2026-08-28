@@ -1,37 +1,112 @@
-<div class="container">
+<% content_for :title, "#{@job_opening.title} | JobEasy" %>
 
-  <h1 class="title mt-5 "><%= @job_opening.company.name %> - <%= @job_opening.title %> </h1>
+<% location = @job_opening.location %>
+<% work_model = nil %>
+<% employment_type = nil %>
+<% salary = @job_opening.salary %>
 
-  <div class="d-flex">
-    <div class="jd col-8 my-5 mx-2 card bg-white text-dark border border-dark">
-      <div class="card-body">
-        <h3 class="card-title text-center"><%= @job_opening.title %></h3>
-        <h4>Job Summary</h4>
-        <p><%= @job_opening.content %></p>
-        <h4>Deadline</h4>
-        <p><%= @job_opening.deadline %></p>
+<div class="job-show-page">
+  <%= link_to job_openings_path, class: "page-back-link", aria: { label: "Back to job openings" } do %>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></svg>
+    <span>Back to job openings</span>
+  <% end %>
+
+  <header class="job-show-header">
+    <p class="job-show-header__eyebrow">Job opening</p>
+    <h1><%= @job_opening.title %></h1>
+    <p><%= @company.name %></p>
+  </header>
+
+  <div class="job-show-layout">
+    <main class="job-show-main">
+      <header class="job-show-main__header">
+        <span class="job-show-logo" aria-label="<%= @company.name %> logo placeholder">
+          <%= @company.name.first&.upcase || "?" %>
+        </span>
+
+        <div class="job-show-main__heading">
+          <h2><%= @job_opening.title %></h2>
+          <p><%= @company.name %></p>
+
+          <div class="job-show-highlights" aria-label="Job highlights">
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-5.2 7-12a7 7 0 1 0-14 0c0 6.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              <%= location.presence || "Location not available" %>
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V4h8v2M3 11h18"/></svg>
+              <%= employment_type.presence || "Employment type not available" %>
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <%= @job_opening.deadline.present? ? "Apply by #{@job_opening.deadline.strftime('%b %-d, %Y')}" : "Deadline not available" %>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <section class="job-show-description">
+        <h2>Job description</h2>
+        <% if @job_opening.content.present? %>
+          <%= simple_format(@job_opening.content) %>
+        <% else %>
+          <p class="job-show-unavailable">No job description is available.</p>
+        <% end %>
+      </section>
+    </main>
+
+    <aside class="job-show-sidebar">
+      <section class="job-details-card">
+        <header>
+          <p>Overview</p>
+          <h2>Job details</h2>
+        </header>
+
+        <dl class="job-details-list">
+          <div><dt>Company</dt><dd><%= @company.name %></dd></div>
+          <div><dt>Location</dt><dd class="<%= "job-details-list__unavailable" if location.blank? %>"><%= location.presence || "Not available" %></dd></div>
+          <div><dt>Work model</dt><dd class="<%= "job-details-list__unavailable" if work_model.blank? %>"><%= work_model.presence || "Not available" %></dd></div>
+          <div><dt>Employment type</dt><dd class="<%= "job-details-list__unavailable" if employment_type.blank? %>"><%= employment_type.presence || "Not available" %></dd></div>
+          <div><dt>Salary</dt><dd class="<%= "job-details-list__unavailable" if salary.blank? %>"><%= salary.presence || "Not available" %></dd></div>
+          <div>
+            <dt>Deadline</dt>
+            <dd class="<%= "job-details-list__unavailable" if @job_opening.deadline.blank? %>"><%= @job_opening.deadline&.strftime("%B %-d, %Y") || "Not available" %></dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd><span class="job-status job-status--<%= @job_opening.closed? ? "closed" : "open" %>"><%= @job_opening.closed? ? "Closed" : "Open" %></span></dd>
+          </div>
+          <div>
+            <dt>Source</dt>
+            <dd class="<%= "job-details-list__unavailable" if @job_opening.source_url.blank? %>">
+              <% if @job_opening.source_url.present? %>
+                <%= link_to "View source", @job_opening.source_url, target: "_blank", rel: "noopener noreferrer" %>
+              <% else %>
+                Not available
+              <% end %>
+            </dd>
+          </div>
+        </dl>
+
+        <div class="job-company-about">
+          <h3>About <%= @company.name %></h3>
+          <p><%= @company.description.presence || "No company description is available." %></p>
+        </div>
+      </section>
+
+      <div class="job-show-actions">
+        <% if @job_application.present? %>
+          <%= link_to "Go to application", job_application_path(@job_application), class: "job-show-button job-show-button--primary" %>
+        <% else %>
+          <%= link_to "Save job", job_opening_job_applications_path(@job_opening), data: { turbo_method: :post }, class: "job-show-button job-show-button--primary" %>
+        <% end %>
+
+        <% if @job_opening.job_url.present? %>
+          <%= link_to "Visit job page", @job_opening.job_url, target: "_blank", rel: "noopener noreferrer", class: "job-show-button job-show-button--secondary" %>
+        <% else %>
+          <span class="job-show-button job-show-button--disabled" aria-disabled="true">Job page not available</span>
+        <% end %>
       </div>
-    </div>
-
-    <div class="company-info col-4 my-5 mx-2">
-      <div class="card bg-white text-dark border border-dark">
-        <div class="card-body">
-          <h4>About <%= @company.name %></h4>
-          <p><%= @company.description %></p>
-        </div>
-      </div>
-
-      <% if current_user.job_applications.exists?(job_opening: @job_opening) %>
-        <div class="apply-btn my-3">
-          <%= link_to "Go to Application", job_application_path(@job_application), class: "btn btn-primary" %>
-        </div>
-      <% else %>
-        <div class="apply-btn my-3">
-          <%= link_to "Apply to this job", job_opening_job_applications_path(@job_opening), data: { turbo_method: :post }, class: "btn btn-primary" %>
-        </div>
-      <% end %>
-    </div>
-
+    </aside>
   </div>
-
-  </div>
+</div>

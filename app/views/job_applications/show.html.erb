@@ -1,4 +1,8 @@
 <div class="container">
+  <%= link_to job_applications_path, class: "page-back-link mt-5", aria: { label: "Back to applications" } do %>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></svg>
+    <span>Back to applications</span>
+  <% end %>
 
   <div class="title my-5">
     <p class="my-0"><%= @job_application.job_opening.company.name %></p>
