@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
+  devise_scope :user do
+    get "/settings", to: "devise/registrations#edit", as: :settings
+  end
   root to: "pages#home"
 
   get "/dashboard", to: "dashboard#show", as: :dashboard
@@ -15,6 +18,9 @@ Rails.application.routes.draw do
 
   resources :resumes, only: [:destroy, :edit, :update] do
     post :recommendations, on: :member
+    member do
+      delete "advices/:advice_id", to: "resumes#dismiss_advice", as: :advice
+    end
   end
 
   resources :tasks, only: [:index, :create, :update, :destroy]
@@ -23,5 +29,4 @@ Rails.application.routes.draw do
     get "resumes/callback"
     post "resumes/:id/callback", to: "resumes#callback", as: :resume_callback
   end
-
 end

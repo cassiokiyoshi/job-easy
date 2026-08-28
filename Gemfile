@@ -76,6 +76,9 @@ end
 # additional gems
 gem "pundit"
 gem "cloudinary"
-gem "ruby_llm", "~> 1.2.0"
+gem "ruby_llm"
+gem "ruby_llm-schema", "~> 0.4"
 gem "jwt"
 gem "rack-cors"
+gem 'docx'
+gem "kramdown"
