@@ -10,11 +10,12 @@
   <div class="application-status col-8 mx-2 card bg-white text-dark border-white">
     <div class="card-body">
       <h4>Application Status</h4>
-
+           <% statuses = %w[saved applied interviewed offered accepted] %>
+            <% current_index = statuses.index(@job_application.status) %>
       <div class="status-bar d-flex justify-content-between my-4">
-        <% %w[saved applied interviewed offered accepted].each do |step| %>
+          <% statuses.each_with_index do |step, index| %>
           <%= button_to job_application_path(@job_application), method: :patch, params: { job_application: { status: step } }, class: "status-step-btn" do %>
-            <div class="status-step text-center">
+            <div class="status-step text-center<%= 'active' if index <= current_index %>">
               <div class="status-dot"></div>
               <p class="status-label"><%= step.capitalize %></p>
             </div>
