@@ -11,7 +11,8 @@
   </div>
 
  <div class="d-flex">
-  <div class="application-status col-8 mx-2 card bg-white text-dark border-white">
+  <div>
+  <div class="application-status mx-2 mb-2 card bg-white text-dark border-white">
     <div class="card-body">
       <h4>Application Status</h4>
 
@@ -19,14 +20,27 @@
         <% %w[Saved Applied Interviewed Offered Accepted].each do |step| %>
           <%= button_to job_application_path(@job_application), method: :patch, params: { job_application: { status: step } }, class: "status-step-btn" do %>
             <div class="status-step text-center">
-              <div class="status-dot"></div>
-              <p class="status-label"><%= step.capitalize %></p>
+              <div class="status-dot <%= @job_application.status == step ? 'status-dot-active' : '' %>"></div>
+              <p class="status-label <%= @job_application.status == step ? 'status-label-active' : '' %>"><%= step.capitalize %></p>
             </div>
           <% end %>
         <% end %>
       </div>
     </div>
   </div>
+
+  <div class="card small-white text-dark mx-2">
+  <div class="card-body">
+    <h4>My Tasks</h4>
+    <ul class="task-list">
+      <% @job_application.tasks.order(:position).each do |task| %>
+      <%= render "tasks/task", task: task %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+</div>
+
 
 
     <div class="job-details-wrapper col-4 mx-2">
@@ -73,7 +87,7 @@
     <div class="alert alert-danger"><%= flash[:alert] %></div>
   <% end %>
 
- </div>
+</div>
 
 <div class="card small-white text-dark border-white my-3">
   <div class="card-body">

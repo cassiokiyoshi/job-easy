@@ -29,16 +29,20 @@
   border-radius: 0.5rem;
   text-decoration: none;
   font-size: 16px;
-    &:hover {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+
+
+  &:hover {
     background-color: rgba(0, 61, 150, 0.5);
-    color:white;
+    color: white;
   }
 }
 
 .job-application-buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+
+  margin-top: 12px;
 }
 
 .status-bar {
@@ -54,8 +58,12 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #ccc;
+  background-color: grey;
   margin: 0 auto;
+}
+
+.status-dot-active {
+  background-color: #4c33b8;
 }
 
 
@@ -95,4 +103,33 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   padding: 0.5rem;
   max-width: 700px;
+}
+
+.status-step.active .status-dot {
+  background-color: #4c33b8;
+}
+
+.status-label {
+  color: #b8b3f5;
+}
+
+.status-label-active {
+  color: rgb(31, 31, 31);
+}
+
+.status-step.active .status-label {
+  color: rgb(31, 31, 31);
+  font-weight: bold;
+}
+
+.card-body {
+  position: relative;
+}
+
+.card.small-white.col-4.mx-2 {
+  flex: 0 0 calc(33.333% - 16px);
+  max-width: calc(33.333% - 16px);
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box;
 }
