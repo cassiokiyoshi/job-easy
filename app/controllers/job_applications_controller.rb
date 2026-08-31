@@ -14,6 +14,7 @@ class JobApplicationsController < ApplicationController
 
   def create
     @job_opening = JobOpening.find(params[:job_opening_id])
+    @company = @job_opening.company
     @job_application = current_user.job_applications.build(
       job_opening: @job_opening
     )

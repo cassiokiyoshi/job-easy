@@ -72,6 +72,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_024028) do
     t.text "content"
     t.datetime "created_at", null: false
     t.date "deadline"
+    t.string "employment_type"
     t.string "job_url"
     t.string "location"
     t.string "salary"
