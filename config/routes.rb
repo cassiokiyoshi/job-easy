@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   resources :job_applications, only: [:index, :show, :update, :destroy] do
     post :suggest_tasks, on: :member
     resources :resumes, only: [:create]
+
+    resource :chat, only: [:show] do
+      resources :messages, only: [:create]
+    end
   end
 
   resources :resumes, only: [:destroy, :edit, :update] do

@@ -1,0 +1,54 @@
+<div id="<%= dom_id(chat, :messages) %>"
+     class="application-chat__messages-shell"
+     data-controller="chat-scroll">
+  <button type="button"
+          class="application-chat__scroll-button application-chat__scroll-button--top"
+          aria-label="Go to first message"
+          hidden
+          data-chat-scroll-target="topButton"
+          data-action="chat-scroll#scrollToTop">
+    &uarr;
+  </button>
+
+  <div class="application-chat__messages"
+       aria-live="polite"
+       data-chat-scroll-target="viewport"
+       data-action="scroll->chat-scroll#updateButtons">
+    <% persisted_messages = chat.messages.select(&:persisted?) %>
+
+    <% if persisted_messages.any? %>
+      <% persisted_messages.each do |chat_message| %>
+        <article class="application-chat__message application-chat__message--<%= chat_message.role %>">
+          <span class="application-chat__role">
+            <%= chat_message.role == "user" ? "You" : "JobEasy" %>
+          </span>
+
+          <div class="application-chat__message-content">
+            <p><%= chat_message.content %></p>
+          </div>
+        </article>
+      <% end %>
+    <% else %>
+      <div class="application-chat__empty">
+        <p>No messages yet.</p>
+        <p>Ask JobEasy about this role, your resume, or interview preparation.</p>
+      </div>
+    <% end %>
+
+    <% if persisted_messages.last&.role == "user" %>
+      <article class="application-chat__message application-chat__message--assistant application-chat__message--pending">
+        <span class="application-chat__role">JobEasy</span>
+        <p>Thinking…</p>
+      </article>
+    <% end %>
+  </div>
+
+  <button type="button"
+          class="application-chat__scroll-button application-chat__scroll-button--bottom"
+          aria-label="Go to latest message"
+          hidden
+          data-chat-scroll-target="bottomButton"
+          data-action="chat-scroll#scrollToBottom">
+    &darr;
+  </button>
+</div>
