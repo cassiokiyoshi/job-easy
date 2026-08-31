@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_28_012746) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_080739) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -65,6 +65,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_28_012746) do
     t.text "content"
     t.datetime "created_at", null: false
     t.date "deadline"
+    t.string "employment_type"
     t.string "job_url"
     t.string "location"
     t.string "salary"
