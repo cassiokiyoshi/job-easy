@@ -12,8 +12,8 @@ namespace :jobs do
       company.update(
         description: data["company_info"]
       )
-      logo = URI.parse(data["logo_link"]).open
-      company.logo.attach(io: logo, filename: "logo.png", content_type: "image/png") unless company.logo.attached?
+      # logo = URI.parse(data["logo_link"]).open
+      # company.logo.attach(io: logo, filename: "logo.png", content_type: "image/png") unless company.logo.attached?
 
       job_opening = JobOpening.find_or_create_by(title: data["job_name"])
       job_opening.update(
@@ -22,8 +22,9 @@ namespace :jobs do
         content: data["jd"],
         job_url: data["job_url"],
         location: data["location"],
-        salary: data["salary"],
-        source_url: data["job_url"]
+        salary: data["salary"].nil? ? "N/A" : data["salary"],
+        source_url: data["job_url"],
+        employment_type: data["internship"] ? "Internship" : "Fulltime"
       )
     end
   end

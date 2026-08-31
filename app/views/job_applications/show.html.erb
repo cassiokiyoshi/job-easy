@@ -88,16 +88,16 @@
       <section class="application-details-card">
         <h2>Job details</h2>
         <dl>
-          <div><dt>Company</dt><dd><%= company.name %></dd></div>
-          <div><dt>Location</dt><dd class="<%= "is-unavailable" if opening.location.blank? %>"><%= opening.location.presence || "Not available" %></dd></div>
-          <div><dt>Salary</dt><dd class="<%= "is-unavailable" if opening.salary.blank? %>"><%= opening.salary.presence || "Not available" %></dd></div>
-          <div><dt>Deadline</dt><dd class="<%= "is-unavailable" if opening.deadline.blank? %>"><%= opening.deadline&.strftime("%B %-d, %Y") || "Not available" %></dd></div>
+          <div><dt>Company</dt><dd><%= @company.name %></dd></div>
+          <div><dt>Location</dt><dd class="<%= "is-unavailable" if @job_opening.location.blank? %>"><%= @job_opening.location.presence || "Not available" %></dd></div>
+          <div><dt>Salary</dt><dd class="<%= "is-unavailable" if @job_opening.salary.blank? %>"><%= @job_opening.salary.presence || "Not available" %></dd></div>
+          <div><dt>Deadline</dt><dd class="<%= "is-unavailable" if @job_opening.deadline.blank? %>"><%= @job_opening.deadline&.strftime("%B %-d, %Y") || "Not available" %></dd></div>
           <div><dt>Applied on</dt><dd><%= @job_application.created_at.strftime("%B %-d, %Y") %></dd></div>
-          <div><dt>Job URL</dt><dd class="<%= "is-unavailable" if opening.job_url.blank? %>">
-            <% if opening.job_url.present? %><%= link_to "View job page", opening.job_url, target: "_blank", rel: "noopener noreferrer" %><% else %>Not available<% end %>
+          <div><dt>Job URL</dt><dd class="<%= "is-unavailable" if @job_opening.job_url.blank? %>">
+            <% if @job_opening.job_url.present? %><%= link_to "View job page", @job_opening.job_url, target: "_blank", rel: "noopener noreferrer" %><% else %>Not available<% end %>
           </dd></div>
           <div><dt>Source</dt><dd class="<%= "is-unavailable" if opening.source_url.blank? %>">
-            <% if opening.source_url.present? %><%= link_to "View source", opening.source_url, target: "_blank", rel: "noopener noreferrer" %><% else %>Not available<% end %>
+            <% if @job_openingn.source_url.present? %><%= link_to "View source", @job_opening.source_url, target: "_blank", rel: "noopener noreferrer" %><% else %>Not available<% end %>
           </dd></div>
         </dl>
 
