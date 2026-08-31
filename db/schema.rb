@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_080739) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_024028) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -40,6 +40,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_080739) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "job_application_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_id"], name: "index_chats_on_job_application_id", unique: true
   end
 
   create_table "companies", force: :cascade do |t|
@@ -73,6 +80,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_080739) do
     t.string "title"
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_job_openings_on_company_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "chat_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.string "role", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id", "created_at"], name: "index_messages_on_chat_id_and_created_at"
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
   end
 
   create_table "resumes", force: :cascade do |t|
@@ -282,9 +299,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_080739) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "chats", "job_applications"
   add_foreign_key "job_applications", "job_openings"
   add_foreign_key "job_applications", "users"
   add_foreign_key "job_openings", "companies"
+  add_foreign_key "messages", "chats"
   add_foreign_key "resumes", "job_applications"
   add_foreign_key "solid_queue_batch_executions", "solid_queue_batches", column: "batch_id", on_delete: :cascade
   add_foreign_key "solid_queue_batch_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

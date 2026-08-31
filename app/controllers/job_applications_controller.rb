@@ -8,6 +8,8 @@ class JobApplicationsController < ApplicationController
     @job_application = JobApplication.find(params[:id])
     @resume = @job_application.resume || @job_application.build_resume
     authorize @job_application
+    @chat = @job_application.chat || @job_application.build_chat
+    @message = Message.new
   end
 
   def create

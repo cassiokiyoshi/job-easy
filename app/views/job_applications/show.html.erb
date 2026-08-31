@@ -4,9 +4,11 @@
 <% current_stage = stages.index(@job_application.status) %>
 <% content_for :title, "#{opening.title} application | JobEasy" %>
 
-<div class="application-show-page">
+<div class="application-show-page"
+     data-controller="chat-panel"
+     data-chat-panel-open-value="<%= params[:chat] == "open" %>">
   <%= link_to job_applications_path, class: "page-back-link", aria: { label: "Back to applications" } do %>
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6" /><path d="M9 12h10" /></svg>
     <span>Back to applications</span>
   <% end %>
 
@@ -101,22 +103,88 @@
           </dd></div>
         </dl>
 
-        <div class="application-details-actions" data-controller="auto-submit">
+        <div class="application-details-actions">
           <%= link_to "View opening details", job_opening_path(opening), class: "application-show-button application-show-button--primary" %>
           <% if @job_application.resume.persisted? %>
             <%= link_to "Review resume", edit_resume_path(@job_application.resume), class: "application-show-button application-show-button--secondary" %>
-            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post, data: { auto_submit_target: "form" } do |form| %>
-              <%= form.label :cv_file, "Upload a new resume", class: "application-show-button application-show-button--quiet", for: "resume_cv_file" %>
-              <%= form.file_field :cv_file, id: "resume_cv_file", class: "d-none", data: { action: "change->auto-submit#submit" } %>
-            <% end %>
+             <button type="button" class="application-show-button application-show-button--secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Add a new Resume
+              </button>
           <% else %>
-            <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post, data: { auto_submit_target: "form" } do |form| %>
-              <%= form.label :cv_file, "Add a resume", class: "application-show-button application-show-button--secondary", for: "resume_cv_file" %>
-              <%= form.file_field :cv_file, id: "resume_cv_file", class: "d-none", data: { action: "change->auto-submit#submit" } %>
-            <% end %>
+              <button type="button" class="application-show-button application-show-button--secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Add a Resume
+              </button>
+
           <% end %>
+          <button type="button"
+                  class="application-show-button application-show-button--chat"
+                  aria-controls="application-chat-panel"
+                  aria-expanded="false"
+                  data-chat-panel-target="trigger"
+                  data-action="chat-panel#open">
+            Chat with JobEasy
+          </button>
         </div>
       </section>
     </aside>
+  </div>
+
+  <div class="application-chat-backdrop"
+       hidden
+       aria-hidden="true"
+       data-chat-panel-target="backdrop"
+       data-action="click->chat-panel#close">
+  </div>
+
+  <aside id="application-chat-panel"
+         class="application-chat-panel"
+         hidden
+         role="dialog"
+         aria-modal="true"
+         aria-label="Application chat"
+         data-controller="panel-resize"
+         data-chat-panel-target="panel">
+    <div class="application-chat-panel__resize-handle"
+         role="separator"
+         aria-label="Resize chat panel"
+         aria-orientation="vertical"
+         tabindex="0"
+         data-action="pointerdown->panel-resize#start keydown->panel-resize#resizeWithKeyboard">
+    </div>
+
+    <button type="button"
+            class="application-chat-panel__close"
+            aria-label="Close chat"
+            data-chat-panel-target="closeButton"
+            data-action="chat-panel#close">
+      &times;
+    </button>
+
+    <%= render "chats/chat",
+               job_application: @job_application,
+               chat: @chat,
+               message: @message,
+               show_full_page_link: true,
+               return_to_application: true %>
+  </aside>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-controller="auto-submit">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">⚠️<strong>IMPORTANT</strong> Before You Upload</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        This resume will be processed by AI to help analyze and suggest improvements for you. Please review your file and remove any sensitive personal information (such as your full name,
+        phone number, email address, or home address) before uploading.<br><br>
+        <strong>By clicking "Upload Resume," you consent to having your resume stored in this app and processed by AI on your behalf</strong>
+         <%= simple_form_for @resume, url: job_application_resumes_path(@job_application), method: :post, data: { auto_submit_target: "form" } do |form| %>
+              <%= form.label :cv_file, "Upload resume", class: "btn btn-primary upload-resume-btn ", for: "resume_cv_file" %>
+              <%= form.file_field :cv_file, id: "resume_cv_file", class: "d-none", data: { action: "change->auto-submit#submit" } %>
+            <% end %>
+      </div>
+    </div>
   </div>
 </div>
