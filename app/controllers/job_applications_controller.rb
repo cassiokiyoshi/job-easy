@@ -6,7 +6,7 @@ class JobApplicationsController < ApplicationController
 
   def show
     @job_application = JobApplication.find(params[:id])
-    @company = @job_application.job_opening.company
+    @company = @job_application.job_application.job_opening.company
     @resume = @job_application.resume || @job_application.build_resume
     authorize @job_application
     @chat = @job_application.chat || @job_application.build_chat
