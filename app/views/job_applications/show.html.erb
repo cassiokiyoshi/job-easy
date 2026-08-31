@@ -104,8 +104,6 @@
         </dl>
 
         <div class="application-details-actions">
-
-        </div>
           <%= link_to "View opening details", job_opening_path(opening), class: "application-show-button application-show-button--primary" %>
           <% if @job_application.resume.persisted? %>
             <%= link_to "Review resume", edit_resume_path(@job_application.resume), class: "application-show-button application-show-button--secondary" %>
