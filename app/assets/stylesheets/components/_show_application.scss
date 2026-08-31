@@ -12,128 +12,436 @@ $application-chat-surface: #fff;
 
 .application-show-header {
   margin-bottom: 32px;
-  > p { margin: 0 0 4px; color: $application-muted; font-size: 15px; font-weight: 500; }
+
+  >p {
+    margin: 0 0 4px;
+    color: $application-muted;
+    font-size: 15px;
+    font-weight: 500;
+  }
 }
 
 .application-show-header__title {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
-  h1 { margin: 0; font-size: 30px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+
+  h1 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
 }
 
 .application-status-pill {
-  display: inline-flex; padding: 5px 12px; border-radius: 999px; color: $application-blue;
-  background: rgba($application-blue, 0.1); font-size: 13px; font-weight: 600;
-  &--rejected { color: #b42318; background: #fdefed; }
-  &--accepted { color: #18794e; background: #e8f7ef; }
+  display: inline-flex;
+  padding: 5px 12px;
+  border-radius: 999px;
+  color: $application-blue;
+  background: rgba($application-blue, 0.1);
+  font-size: 13px;
+  font-weight: 600;
+
+  &--rejected {
+    color: #b42318;
+    background: #fdefed;
+  }
+
+  &--accepted {
+    color: #18794e;
+    background: #e8f7ef;
+  }
 }
 
 .application-show-layout {
-  display: grid; grid-template-columns: minmax(0, 2fr) 360px; align-items: start; gap: 32px;
-}
-.application-show-main { display: grid; gap: 24px; }
-
-.application-show-card, .application-details-card {
-  border: 1px solid $application-border; border-radius: 12px; background: #fff;
-  h2 { margin: 0; font-size: 18px; font-weight: 600; }
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) 360px;
+  align-items: start;
+  gap: 32px;
 }
 
-.application-pipeline-card { padding: 24px 28px 28px; overflow: hidden; }
-.application-pipeline { display: flex; margin-top: 28px; }
-.application-pipeline > form { flex: 1; margin: 0; }
-.application-pipeline > form:not(:first-child) .application-pipeline__track {
-  position: absolute; top: 13px; right: 50%; width: 100%; height: 2px; background: #d1d5db;
+.application-show-main {
+  display: grid;
+  gap: 24px;
 }
-.application-pipeline > form.is-reached:not(:first-child) .application-pipeline__track,
-.application-pipeline > form:not(:first-child) .application-pipeline__step.is-reached .application-pipeline__track {
+
+.application-show-card,
+.application-details-card {
+  border: 1px solid $application-border;
+  border-radius: 12px;
+  background: #fff;
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+.application-pipeline-card {
+  padding: 24px 28px 28px;
+  overflow: hidden;
+}
+
+.application-pipeline {
+  display: flex;
+  margin-top: 28px;
+}
+
+.application-pipeline>form {
+  flex: 1;
+  margin: 0;
+}
+
+.application-pipeline>form:not(:first-child) .application-pipeline__track {
+  position: absolute;
+  top: 13px;
+  right: 50%;
+  width: 100%;
+  height: 2px;
+  background: #d1d5db;
+}
+
+.application-pipeline>form.is-reached:not(:first-child) .application-pipeline__track,
+.application-pipeline>form:not(:first-child) .application-pipeline__step.is-reached .application-pipeline__track {
   background: $application-blue;
 }
 
 .application-pipeline__step {
-  position: relative; display: grid; width: 100%; justify-items: center; padding: 0; color: $application-muted;
-  background: transparent; border: 0;
-  &:hover .application-pipeline__dot { border-color: $application-blue; }
-  &:focus-visible { border-radius: 6px; outline: 2px solid $application-blue; outline-offset: 5px; }
+  position: relative;
+  display: grid;
+  width: 100%;
+  justify-items: center;
+  padding: 0;
+  color: $application-muted;
+  background: transparent;
+  border: 0;
+
+  &:hover .application-pipeline__dot {
+    border-color: $application-blue;
+  }
+
+  &:focus-visible {
+    border-radius: 6px;
+    outline: 2px solid $application-blue;
+    outline-offset: 5px;
+  }
+
   &.is-reached {
     color: $application-text;
-    .application-pipeline__dot { background: $application-blue; border-color: $application-blue; }
+
+    .application-pipeline__dot {
+      background: $application-blue;
+      border-color: $application-blue;
+    }
   }
-  &.is-active .application-pipeline__dot { box-shadow: 0 0 0 4px rgba($application-blue, 0.15); }
+
+  &.is-active .application-pipeline__dot {
+    box-shadow: 0 0 0 4px rgba($application-blue, 0.15);
+  }
 }
 
 .application-pipeline__dot {
-  z-index: 1; width: 28px; height: 28px; border: 2px solid #d1d5db; border-radius: 50%;
-  background: #fff; transition: border-color 150ms ease, box-shadow 150ms ease;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+  background: #fff;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
 }
-.application-pipeline__label { margin-top: 8px; font-size: 13px; font-weight: 500; }
-.application-pipeline__notice { margin: 20px 0 0; color: #b42318; font-size: 13px; }
 
-.application-timeline-card { padding: 28px; }
-.application-timeline { margin-top: 24px; }
+.application-pipeline__label {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.application-pipeline__notice {
+  margin: 20px 0 0;
+  color: #b42318;
+  font-size: 13px;
+}
+
+.application-timeline-card {
+  padding: 28px;
+}
+
+.application-timeline {
+  margin-top: 24px;
+}
+
 .application-timeline__event {
-  position: relative; margin-left: 5px; padding: 0 0 28px 32px;
-  &:not(:last-child)::before { content: ""; position: absolute; top: 12px; bottom: 0; left: 5px; width: 2px; background: #dce1e7; }
-  &:last-child { padding-bottom: 0; }
-  time { display: block; font-size: 14px; font-weight: 600; }
-  h3 { margin: 3px 0 0; font-size: 15px; font-weight: 500; }
-  p { margin: 4px 0 0; color: $application-muted; font-size: 13px; line-height: 1.5; }
-}
-.application-timeline__marker { position: absolute; top: 4px; left: 0; width: 12px; height: 12px; border-radius: 50%; background: $application-blue; }
+  position: relative;
+  margin-left: 5px;
+  padding: 0 0 28px 32px;
 
-.application-task-card { overflow: hidden; }
+  &:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    bottom: 0;
+    left: 5px;
+    width: 2px;
+    background: #dce1e7;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  time {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  h3 {
+    margin: 3px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: $application-muted;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+}
+
+.application-timeline__marker {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: $application-blue;
+}
+
+.application-task-card {
+  overflow: hidden;
+}
+
 .application-task-card__header {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px;
-  p { margin: 4px 0 0; color: $application-muted; font-size: 13px; }
-  form { margin: 0; }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px;
+
+  p {
+    margin: 4px 0 0;
+    color: $application-muted;
+    font-size: 13px;
+  }
+
+  form {
+    margin: 0;
+  }
 }
+
 .application-task-card__refresh {
-  padding: 7px 11px; color: $application-blue; background: #fff; border: 1px solid #cad6e8;
-  border-radius: 7px; font-size: 12px; font-weight: 600;
-  &:hover { background: #f3f7fd; }
+  padding: 7px 11px;
+  color: $application-blue;
+  background: #fff;
+  border: 1px solid #cad6e8;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+
+  &:hover {
+    background: #f3f7fd;
+  }
 }
+
 .application-task-card__list {
-  .task-row { min-height: 64px; align-items: center; gap: 14px; padding: 14px 20px; background: #fff; border: 0; border-top: 1px solid $application-border; border-radius: 0; }
-  .task-row__toggle { margin: 0; }
-  .form-check-input { width: 18px; height: 18px; margin: 0; }
-  .task-row__name { font-size: 14px; font-weight: 500; }
+  .task-row {
+    min-height: 64px;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    background: #fff;
+    border: 0;
+    border-top: 1px solid $application-border;
+    border-radius: 0;
+  }
+
+  .task-row__toggle {
+    margin: 0;
+  }
+
+  .form-check-input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+
+  .task-row__name {
+    font-size: 14px;
+    font-weight: 500;
+  }
 }
-.application-task-card__empty { margin: 0; padding: 24px; color: $application-muted; border-top: 1px solid $application-border; font-size: 14px; }
 
-.application-show-sidebar { position: sticky; top: 24px; }
-.application-details-card { padding: 24px; }
-.application-details-card dl { margin: 20px 0 0; }
-.application-details-card dl > div { padding: 16px 0; border-bottom: 1px solid #eef0f2; }
-.application-details-card dl > div:first-child { padding-top: 0; }
-.application-details-card dt { margin-bottom: 5px; color: $application-muted; font-size: 12px; font-weight: 500; }
-.application-details-card dd { margin: 0; font-size: 14px; font-weight: 500; overflow-wrap: anywhere; }
-.application-details-card dd.is-unavailable { color: #98a2b3; font-weight: 400; }
-.application-details-card a { color: $application-blue; }
+.application-task-card__empty {
+  margin: 0;
+  padding: 24px;
+  color: $application-muted;
+  border-top: 1px solid $application-border;
+  font-size: 14px;
+}
 
-.application-details-actions { display: grid; gap: 10px; padding-top: 20px; }
-.application-details-actions form { margin: 0; }
+.application-show-sidebar {
+  position: sticky;
+  top: 24px;
+}
+
+.application-details-card {
+  padding: 24px;
+}
+
+.application-details-card dl {
+  margin: 20px 0 0;
+}
+
+.application-details-card dl>div {
+  padding: 16px 0;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.application-details-card dl>div:first-child {
+  padding-top: 0;
+}
+
+.application-details-card dt {
+  margin-bottom: 5px;
+  color: $application-muted;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.application-details-card dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.application-details-card dd.is-unavailable {
+  color: #98a2b3;
+  font-weight: 400;
+}
+
+.application-details-card a {
+  color: $application-blue;
+}
+
+.application-details-actions {
+  display: grid;
+  gap: 10px;
+  padding-top: 20px;
+}
+
+.application-details-actions form {
+  margin: 0;
+}
+
 .application-show-button {
-  display: flex; width: 100%; min-height: 46px; align-items: center; justify-content: center; margin: 0;
-  padding: 10px 16px; border: 1px solid $application-blue; border-radius: 8px; font-size: 14px;
-  font-weight: 600; text-align: center; text-decoration: none; cursor: pointer;
-  &--primary { color: #fff !important; background: $application-blue; }
-  &--primary:hover { background: #003580; }
-  &--secondary { color: $application-blue; background: #fff; }
-  &--secondary:hover { color: $application-blue; background: #f3f7fd; }
-  &--quiet { min-height: auto; color: $application-muted; background: #fff; border-color: transparent; font-size: 12px; }
-  &--quiet:hover { color: $application-blue; }
+  display: flex;
+  width: 100%;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 10px 16px;
+  border: 1px solid $application-blue;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  &--primary {
+    color: #fff !important;
+    background: $application-blue;
+  }
+
+  &--primary:hover {
+    background: #003580;
+  }
+
+  &--secondary {
+    color: $application-blue;
+    background: #fff;
+  }
+
+  &--secondary:hover {
+    color: $application-blue;
+    background: #f3f7fd;
+  }
+
+  &--quiet {
+    min-height: auto;
+    color: $application-muted;
+    background: #fff;
+    border-color: transparent;
+    font-size: 12px;
+  }
+
+  &--quiet:hover {
+    color: $application-blue;
+  }
 }
 
 @media (max-width: 900px) {
-  .application-show-layout { grid-template-columns: 1fr; }
-  .application-show-sidebar { position: static; }
+  .application-show-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .application-show-sidebar {
+    position: static;
+  }
 }
 
 @media (max-width: 600px) {
-  .application-show-page { padding: 30px 16px 48px; }
-  .application-show-header__title h1 { font-size: 26px; }
-  .application-pipeline-card { padding: 22px 16px 24px; overflow-x: auto; }
-  .application-pipeline { min-width: 500px; }
-  .application-timeline-card { padding: 22px 20px; }
-  .application-task-card__header { align-items: flex-start; padding: 20px; }
+  .application-show-page {
+    padding: 30px 16px 48px;
+  }
+
+  .application-show-header__title h1 {
+    font-size: 26px;
+  }
+
+  .application-pipeline-card {
+    padding: 22px 16px 24px;
+    overflow-x: auto;
+  }
+
+  .application-pipeline {
+    min-width: 500px;
+  }
+
+  .application-timeline-card {
+    padding: 22px 20px;
+  }
+
+  .application-task-card__header {
+    align-items: flex-start;
+    padding: 20px;
+  }
+}
+
+.upload-resume-btn {
+  background-color: #003580;
+  /* change color here */
+  border-color: #003580;
+  float: right;
+  /* or use display: flex + justify-content: flex-end on the parent */
 }
 
 .application-chat-backdrop {
