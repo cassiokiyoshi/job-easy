@@ -1,7 +1,12 @@
 class JobOpeningsController < ApplicationController
   def index
-    @job_openings = policy_scope(JobOpening).ordered.open
-    @job_openings_closed = policy_scope(JobOpening).ordered.close
+    scope = policy_scope(JobOpening).ordered
+    scope = scope.where(source: params[:source]) if params[:source].present?
+
+    @job_openings = scope.open
+    @job_openings_closed = scope.close
+    @sources = policy_scope(JobOpening).distinct.pluck(:source).compact.sort
+    @current_source = params[:source]
   end
 
   def show

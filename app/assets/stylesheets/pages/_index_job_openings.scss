@@ -26,6 +26,41 @@ $jo-card-min-height: 240px; // baseline height; grows only if the title needs mo
   }
 }
 
+.job-source-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 1530px; // matches .job-openings-grid
+  margin: 0 auto 22px;
+  padding-right: 6px;
+}
+
+.job-source-filter__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid #d3d9e3;
+  background: #fff;
+  color: #12233d;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    border-color: $jo-primary;
+    color: $jo-primary;
+  }
+}
+
+.job-source-filter__chip--active {
+  background: $jo-primary;
+  border-color: $jo-primary;
+  color: #fff;
+}
+
 .job-openings-grid .job-card {
   position: relative;
   width: 100%;
