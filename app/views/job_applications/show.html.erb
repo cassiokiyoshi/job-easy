@@ -98,8 +98,8 @@
           <div><dt>Job URL</dt><dd class="<%= "is-unavailable" if @job_opening.job_url.blank? %>">
             <% if @job_opening.job_url.present? %><%= link_to "View job page", @job_opening.job_url, target: "_blank", rel: "noopener noreferrer" %><% else %>Not available<% end %>
           </dd></div>
-          <div><dt>Source</dt><dd class="<%= "is-unavailable" if opening.source_url.blank? %>">
-            <% if @job_openingn.source_url.present? %><%= link_to "View source", @job_opening.source_url, target: "_blank", rel: "noopener noreferrer" %><% else %>Not available<% end %>
+          <div><dt>Source</dt><dd class="<%= "is-unavailable" if @job_opening.source_url.blank? %>">
+            <% if @job_opening.source_url.present? %><%= link_to "View source", @job_opening.source_url, target: "_blank", rel: "noopener noreferrer" %><% else %>Not available<% end %>
           </dd></div>
         </dl>
 
