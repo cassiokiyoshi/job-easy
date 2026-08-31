@@ -3,8 +3,13 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
   # Pundit: allow-list approach
-  after_action :verify_authorized, except: :index, unless: :skip_pundit?
-  after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
+  after_action :verify_authorized,
+               if: -> { action_name != "index" },
+               unless: :skip_pundit?
+
+  after_action :verify_policy_scoped,
+               if: -> { action_name == "index" },
+               unless: :skip_pundit?
 
   # Uncomment when you *really understand* Pundit!
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized

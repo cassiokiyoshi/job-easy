@@ -2,8 +2,11 @@ $application-blue: #003d96;
 $application-text: #111827;
 $application-muted: #6b7280;
 $application-border: #e5e7eb;
+$application-chat-surface: #fff;
 
 .application-show-page {
+  container-name: application-show;
+  container-type: inline-size;
   width: 100%; max-width: 1200px; margin: 0 auto; padding: 40px 32px 64px; color: $application-text;
 }
 
@@ -131,4 +134,326 @@ $application-border: #e5e7eb;
   .application-pipeline { min-width: 500px; }
   .application-timeline-card { padding: 22px 20px; }
   .application-task-card__header { align-items: flex-start; padding: 20px; }
+}
+
+.application-chat-backdrop {
+  position: fixed;
+  z-index: 1040;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.45);
+}
+
+.application-chat-panel {
+  position: fixed;
+  z-index: 1050;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  width: 440px;
+  padding: 18px 24px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: -12px 0 32px rgba(17, 24, 39, 0.16);
+}
+
+.application-chat-panel[hidden],
+.application-chat-backdrop[hidden] {
+  display: none;
+}
+
+.application-chat-panel__close {
+  position: absolute;
+  z-index: 3;
+  top: 14px;
+  right: 18px;
+  padding: 0;
+  color: $application-muted;
+  background: transparent;
+  border: 0;
+  font-size: 20px;
+  line-height: 1;
+
+  &:hover {
+    color: $application-text;
+    background: transparent;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $application-blue;
+    outline-offset: 4px;
+  }
+}
+
+.application-chat__form .application-chat__composer {
+  position: relative;
+
+  textarea {
+    display: block;
+    padding-right: 84px;
+    padding-bottom: 38px;
+  }
+
+  input[type="submit"] {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    padding: 7px 14px;
+  }
+}
+
+.application-chat-panel__resize-handle {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: -4px;
+  width: 8px;
+  cursor: col-resize;
+  touch-action: none;
+
+  &:hover,
+  &:focus-visible {
+    background: rgba($application-blue, 0.16);
+    outline: 0;
+  }
+}
+
+body.application-chat-is-resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+body.application-chat-is-open {
+  padding-right: var(--application-chat-panel-width, 440px);
+}
+
+.application-chat {
+  position: relative;
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.application-chat__header {
+  flex: 0 0 auto;
+  padding-top: 22px;
+  padding-right: 40px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid $application-border;
+
+  h2 {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: $application-muted;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+.application-chat__full-link {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    color: $application-text;
+  }
+}
+
+.application-chat__messages-shell {
+  container-type: inline-size;
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  background: $application-chat-surface;
+}
+
+.application-chat-page .application-chat {
+  height: 80vh;
+  min-height: 520px;
+}
+
+.application-chat-page {
+  .application-chat__messages-shell,
+  .application-chat__form {
+    background: #f5f6f8;
+  }
+
+  .application-chat__message--assistant {
+    background: #fff;
+  }
+}
+
+.application-chat__messages {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 0;
+  overflow-y: auto;
+}
+
+.application-chat__scroll-button {
+  position: absolute;
+  z-index: 4;
+  right: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  padding: 0;
+  color: #4b5563;
+  background: #fff;
+  border: 1px solid $application-border;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(17, 24, 39, 0.12);
+  line-height: 1;
+
+  &--top { top: 8px; }
+  &--bottom { bottom: 8px; }
+  &[hidden] { display: none; }
+}
+
+.application-chat__message {
+  max-width: 78cqi;
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  p {
+    margin: 4px 0 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  &--user {
+    align-self: flex-end;
+    color: #fff;
+    background: rgba($application-blue, 0.79);
+  }
+
+  &--assistant {
+    align-self: flex-start;
+    color: $application-text;
+    background: #f3f4f6;
+  }
+}
+
+.application-chat__message-content {
+  p, ul, ol, blockquote, pre { margin: 6px 0 0; }
+  ul, ol { padding-left: 20px; }
+  pre { overflow-x: auto; }
+  code { overflow-wrap: anywhere; }
+  > :first-child { margin-top: 4px; }
+  > :last-child { margin-bottom: 0; }
+}
+
+.application-chat__role {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.application-chat__empty {
+  margin: auto 0;
+  color: $application-muted;
+  text-align: center;
+
+  p {
+    margin: 4px 0;
+  }
+}
+
+.application-chat__form {
+  flex: 0 0 auto;
+  display: grid;
+  gap: 10px;
+  padding-top: 10px;
+  background: $application-chat-surface;
+
+  textarea {
+    width: 100%;
+    resize: vertical;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid $application-border;
+    border-radius: 8px;
+
+    &:focus {
+      border-color: $application-blue;
+      outline: 2px solid rgba($application-blue, 0.15);
+    }
+  }
+
+  input[type="submit"] {
+    padding: 9px 18px;
+    color: #fff;
+    background: $application-blue;
+    border: 0;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+}
+
+@container application-show (max-width: 900px) {
+  .application-show-layout { grid-template-columns: 1fr; }
+  .application-show-sidebar { position: static; }
+}
+
+.application-chat__error {
+  margin: 0;
+  color: #b42318;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  body.application-chat-is-open {
+    padding-right: 0;
+    overflow: hidden;
+  }
+
+  .application-chat-panel {
+    left: 0;
+    width: auto !important;
+  }
+
+  .application-chat-panel__resize-handle {
+    display: none;
+  }
+
+  .application-chat-page .application-chat {
+    min-height: 0;
+  }
+
+  .application-chat-backdrop:not([hidden]) {
+    display: block;
+  }
+}
+
+.application-show-button--chat {
+  color: $application-text;
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+
+  &:hover {
+    color: $application-text;
+    background: #e5e7eb;
+    border-color: #d1d5db;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $application-blue;
+    outline-offset: 2px;
+  }
 }

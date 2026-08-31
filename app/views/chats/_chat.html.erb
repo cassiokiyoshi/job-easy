@@ -1,0 +1,52 @@
+<section class="application-chat" aria-labelledby="application-chat-title">
+  <header class="application-chat__header">
+    <div>
+      <h2 id="application-chat-title">JobEasy assistant</h2>
+      <p>
+        Ask questions about your application to
+        <%= job_application.job_opening.company.name %>.
+      </p>
+    </div>
+
+    <% if local_assigns.fetch(:show_full_page_link, false) %>
+      <%= link_to "Open full chat",
+                  job_application_chat_path(job_application),
+                  class: "application-chat__full-link" %>
+    <% end %>
+  </header>
+
+  <% if chat.persisted? %>
+    <%= turbo_stream_from [chat, :messages] %>
+  <% end %>
+
+  <%= render "chats/messages", chat: chat %>
+
+  <%= form_with model: message,
+                url: job_application_chat_messages_path(job_application),
+                class: "application-chat__form",
+                data: {
+                  controller: "chat-form",
+                  action: "keydown->chat-form#submitOnEnter"
+                } do |form| %>
+    <% if local_assigns.fetch(:return_to_application, false) %>
+      <%= hidden_field_tag :return_to, "application" %>
+    <% end %>
+
+    <% if message.errors.any? %>
+      <p class="application-chat__error">
+        <%= message.errors.full_messages.to_sentence %>
+      </p>
+    <% end %>
+
+    <%= form.label :content, "Your message", class: "visually-hidden" %>
+    <div class="application-chat__composer">
+      <%= form.text_area :content,
+                        placeholder: "Ask about this application…",
+                        rows: 2,
+                        required: true %>
+
+      <%= form.submit "Send",
+                      data: { turbo_submits_with: "Sending…" } %>
+    </div>
+  <% end %>
+</section>
