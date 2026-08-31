@@ -6,12 +6,8 @@ class JobApplicationsController < ApplicationController
 
   def show
     @job_application = JobApplication.find(params[:id])
-<<<<<<< HEAD
-    @company = @job_application.job_application.job_opening.company
-=======
     @job_opening = @job_application.job_opening
     @company = @job_application.job_opening.company
->>>>>>> master
     @resume = @job_application.resume || @job_application.build_resume
     authorize @job_application
     @chat = @job_application.chat || @job_application.build_chat
