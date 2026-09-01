@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_124458) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_01_020822) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,6 +58,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_124458) do
 
   create_table "job_applications", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.datetime "interview_schedule", default: [], array: true
+    t.integer "interviews_processed", default: 0
     t.bigint "job_opening_id"
     t.string "status"
     t.datetime "updated_at", null: false

@@ -12,7 +12,10 @@ Rails.application.routes.draw do
   end
 
   resources :job_applications, only: [:index, :show, :update, :destroy] do
-    post :suggest_tasks, on: :member
+    member do
+      post :suggest_tasks
+      post :schedule_interview
+    end
     resources :resumes, only: [:create]
 
     resource :chat, only: [:show] do

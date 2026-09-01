@@ -46,6 +46,10 @@ module Ai
         - Create at most #{MAX_SUGGESTIONS} new tasks in suggestions.
         - Base decisions on the application status and job-opening details.
         - Prioritize skills and requirements explicitly found in the job description.
+        - If completed_interviews is greater than 0, focus new tasks on post-interview
+          follow-up (thank-you note, reflection) and preparing for the next round.
+        - If next_interview_at is present, prioritize concrete preparation for that
+          interview, such as company research, practice questions, and logistics.
         - Do not repeat an existing or completed task as a new suggestion.
         - Do not invent details.
         - Each new task must be a single sentence of at most 140 characters.
@@ -70,6 +74,8 @@ module Ai
         application_deadline: opening.deadline,
         company_name: company.name,
         company_description: company.description,
+        completed_interviews: job_application.interview_schedule.count(&:past?),
+        next_interview_at: job_application.interview_schedule.select(&:future?).min,
         incomplete_tasks: incomplete_tasks.map do |task|
           { id: task.id, name: task.name }
         end,

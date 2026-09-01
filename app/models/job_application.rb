@@ -11,4 +11,9 @@ class JobApplication < ApplicationRecord
 
   attribute :status, :string, default: "Saved"
   validates :status, presence: true
+
+  def add_interview(datetime)
+    self.interview_schedule = (interview_schedule + [datetime]).uniq.sort
+    save
+  end
 end

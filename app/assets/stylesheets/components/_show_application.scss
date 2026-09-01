@@ -166,6 +166,128 @@ $application-chat-surface: #fff;
   font-size: 13px;
 }
 
+.application-interview-card {
+  padding: 22px 24px 24px;
+}
+
+.application-interview-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+
+  p {
+    margin: 0;
+    color: $application-muted;
+    font-size: 13px;
+  }
+}
+
+.application-interview-card__empty {
+  margin: 16px 0 0;
+  color: $application-muted;
+  font-size: 14px;
+}
+
+.application-interview-list {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.application-interview-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid $application-border;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+
+  time {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.application-interview-list__badge {
+  flex: none;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+
+  &--upcoming {
+    color: $application-blue;
+    background: rgba($application-blue, 0.1);
+  }
+
+  &--past {
+    color: #18794e;
+    background: #e8f7ef;
+  }
+}
+
+.application-interview-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin: 18px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid $application-border;
+}
+
+.application-interview-form__field {
+  display: grid;
+  flex: 1;
+  gap: 6px;
+
+  label {
+    color: $application-muted;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  input {
+    padding: 9px 11px;
+    border: 1px solid #cad6e8;
+    border-radius: 8px;
+    font-size: 14px;
+
+    &:focus {
+      border-color: $application-blue;
+      outline: 2px solid rgba($application-blue, 0.15);
+    }
+  }
+}
+
+.application-interview-form input[type="submit"] {
+  flex: none;
+  min-height: 40px;
+  padding: 9px 16px;
+  color: #fff;
+  background: $application-blue;
+  border: 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #003580;
+  }
+}
+
+@media (max-width: 600px) {
+  .application-interview-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
 .application-timeline-card {
   padding: 28px;
 }
