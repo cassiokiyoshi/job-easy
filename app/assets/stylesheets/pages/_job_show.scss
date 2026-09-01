@@ -29,6 +29,27 @@ $job-show-border: #dce2ec;
     letter-spacing: -0.04em;
   }
 
+  &__title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    h1 { margin-bottom: 8px; }
+  }
+
+  &__source {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: $job-show-blue;
+    color: #fff;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
   > p:last-child { margin: 0; color: $job-show-muted; }
 }
 
