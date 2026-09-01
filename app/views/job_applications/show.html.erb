@@ -2,6 +2,8 @@
 <% company = opening.company %>
 <% stages = %w[Saved Applied Interviewed Offered Accepted] %>
 <% current_stage = stages.index(@job_application.status) %>
+<% interviews = @job_application.interview_schedule.sort %>
+<% show_interview_card = @job_application.status.in?(%w[Applied Interviewed Offered Accepted]) %>
 <% content_for :title, "#{opening.title} application | JobEasy" %>
 
 <div class="application-show-page"
@@ -47,9 +49,50 @@
         <% end %>
       </section>
 
+      <% if show_interview_card %>
+        <section class="application-show-card application-interview-card">
+          <header class="application-interview-card__header">
+            <h2>Interviews</h2>
+            <p><%= pluralize(interviews.size, "interview") %> scheduled</p>
+          </header>
+
+          <% if interviews.any? %>
+            <ul class="application-interview-list">
+              <% interviews.each do |interview_at| %>
+                <li class="application-interview-list__item">
+                  <time datetime="<%= interview_at.iso8601 %>"><%= interview_at.strftime("%B %-d, %Y at %-I:%M %p") %></time>
+                  <span class="application-interview-list__badge application-interview-list__badge--<%= interview_at.past? ? "past" : "upcoming" %>">
+                    <%= interview_at.past? ? "Completed" : "Upcoming" %>
+                  </span>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="application-interview-card__empty">No interviews scheduled yet. Add the date and time below.</p>
+          <% end %>
+
+          <%= form_with url: schedule_interview_job_application_path(@job_application), method: :post, class: "application-interview-form" do |form| %>
+            <div class="application-interview-form__field">
+              <%= form.label :interview_at, "Interview date & time" %>
+              <%= form.datetime_field :interview_at, required: true,
+                                      value: Time.current.strftime("%Y-%m-%dT%H:%M") %>
+            </div>
+            <%= form.submit "Schedule interview" %>
+          <% end %>
+        </section>
+      <% end %>
+
       <section class="application-show-card application-timeline-card">
         <h2>Application activity</h2>
         <div class="application-timeline">
+          <% interviews.reverse_each do |interview_at| %>
+            <article class="application-timeline__event">
+              <span class="application-timeline__marker" aria-hidden="true"></span>
+              <time datetime="<%= interview_at.iso8601 %>"><%= interview_at.strftime("%b %-d, %Y") %></time>
+              <h3>Interview <%= interview_at.past? ? "completed" : "scheduled" %></h3>
+              <p><%= interview_at.past? ? "This interview round has passed." : "You have an upcoming interview round." %></p>
+            </article>
+          <% end %>
           <% if @job_application.updated_at > @job_application.created_at + 1.second %>
             <article class="application-timeline__event">
               <span class="application-timeline__marker" aria-hidden="true"></span>

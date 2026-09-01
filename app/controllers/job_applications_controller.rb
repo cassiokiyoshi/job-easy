@@ -8,8 +8,19 @@ class JobApplicationsController < ApplicationController
     @job_application = JobApplication.find(params[:id])
     @job_opening = @job_application.job_opening
     @company = @job_application.job_opening.company
-    @resume = @job_application.resume || @job_application.build_resume
     authorize @job_application
+
+    # completed variable is checking # of interviews that are in the past (integer)
+    completed = @job_application.interview_schedule.count(&:past?)
+    # if a round has finished that I haven't handled yet
+    if completed > @job_application.interviews_processed
+      # move status to "Interviewed" if my current status is "Applied"
+      @job_application.update(status: "Interviewed") if @job_application.status == "Applied"
+      # updating interviews_processed to completed variable
+      @job_application.update(interviews_processed: completed)
+    end
+
+    @resume = @job_application.resume || @job_application.build_resume
     @chat = @job_application.chat || @job_application.build_chat
     @message = Message.new
   end
@@ -100,6 +111,20 @@ class JobApplicationsController < ApplicationController
                 alert: "Tasks could not be refreshed. Please try again."
   end
 
+  def schedule_interview
+    @job_application = current_user.job_applications.find(params[:id])
+    authorize @job_application, :update?
+
+    interview_at = parse_interview_time(params[:interview_at])
+    if interview_at.nil?
+      redirect_to job_application_path(@job_application), status: :see_other
+    else
+      @job_application.add_interview(interview_at)
+      Ai::TaskRefreshService.new(@job_application).call
+      redirect_to job_application_path(@job_application), status: :see_other
+    end
+  end
+
   private
 
   def job_application_params
@@ -111,5 +136,11 @@ class JobApplicationsController < ApplicationController
       "Task refresh failed for application #{@job_application.id}: " \
       "#{error.class} - #{error.message}"
     )
+  end
+
+  def parse_interview_time(value)
+    return nil if value.blank?
+
+    Time.zone.parse(value.to_s)
   end
 end
