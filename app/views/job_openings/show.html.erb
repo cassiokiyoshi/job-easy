@@ -20,8 +20,8 @@
   <div class="job-show-layout">
     <main class="job-show-main">
       <header class="job-show-main__header">
-        <span class="job-show-logo" aria-label="<%= @company.name %> logo placeholder">
-          <%= @company.name.first&.upcase || "?" %>
+        <span class="job-show-logo" aria-label="<%= @company.name %> logo" style="
+          <%= @company.logo.attached? ? "background-image: url(#{cl_image_path(@company.logo.key, secure: true)})" : "background-color: rgba(0, 61, 150, 0.09)" %>">
         </span>
 
         <div class="job-show-main__heading">

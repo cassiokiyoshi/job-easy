@@ -140,7 +140,7 @@
       <% if @job_openings.any? %>
         <% @job_openings.each do |job| %>
           <%= link_to job_opening_path(job), class: "dashboard-job" do %>
-            <span class="dashboard-job__mark"><%= job.company.name.first.upcase %></span>
+            <span class="dashboard-job__mark" style="<%= job.company.logo.attached? ? "background-image: url(#{cl_image_path(job.company.logo.key, secure: true)})" : "background-color: rgba(0, 61, 150, 0.09)" %>"></span>
             <span class="dashboard-job__content">
               <strong><%= job.title %></strong>
               <small><%= job.company.name %></small>

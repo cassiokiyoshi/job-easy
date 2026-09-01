@@ -65,9 +65,10 @@ $job-show-border: #dce2ec;
   place-items: center;
   border-radius: 11px;
   color: #fff;
-  background: $job-show-blue;
   font-size: 1.15rem;
   font-weight: 800;
+  background-size: contain;
+  background-position: center;
 }
 
 .job-show-main__heading {
