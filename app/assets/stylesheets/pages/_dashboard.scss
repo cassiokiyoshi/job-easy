@@ -233,10 +233,12 @@ $dashboard-surface: #ffffff;
     flex: 0 0 34px;
     place-items: center;
     border-radius: 0.45rem;
-    background: rgba($dashboard-blue, 0.09);
+    // background: rgba($dashboard-blue, 0.09);
     color: $dashboard-blue;
     font-size: 0.75rem;
     font-weight: 700;
+    background-size: cover;
+    background-position: center;
   }
 
   &__content { min-width: 0; display: flex; flex: 1; flex-direction: column; }
