@@ -236,20 +236,14 @@ $application-chat-surface: #fff;
   align-items: flex-end;
   gap: 12px;
   margin: 18px 0 0;
-  padding-top: 18px;
-  border-top: 1px solid $application-border;
+  padding-top: 0px;
+  // border-top: 1px solid $application-border;
 }
 
 .application-interview-form__field {
   display: grid;
   flex: 1;
   gap: 6px;
-
-  label {
-    color: $application-muted;
-    font-size: 12px;
-    font-weight: 500;
-  }
 
   input {
     padding: 9px 11px;

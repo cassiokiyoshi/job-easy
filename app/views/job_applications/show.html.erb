@@ -73,9 +73,10 @@
 
           <%= form_with url: schedule_interview_job_application_path(@job_application), method: :post, class: "application-interview-form" do |form| %>
             <div class="application-interview-form__field">
-              <%= form.label :interview_at, "Interview date & time" %>
-              <%= form.datetime_field :interview_at, required: true,
-                                      value: Time.current.strftime("%Y-%m-%dT%H:%M") %>
+              <%= form.label :interview_at, "Interview date & time", class: "visually-hidden" %>
+              <%= form.text_field :interview_at, required: true, placeholder: "Select Date & Time",
+                                  data: { controller: "date-input",
+                                          action: "focus->date-input#showPicker blur->date-input#restore" } %>
             </div>
             <%= form.submit "Schedule interview" %>
           <% end %>
