@@ -6,12 +6,17 @@ class JobApplicationsController < ApplicationController
 
   def show
     @job_application = JobApplication.find(params[:id])
+    @job_opening = @job_application.job_opening
+    @company = @job_application.job_opening.company
     @resume = @job_application.resume || @job_application.build_resume
     authorize @job_application
+    @chat = @job_application.chat || @job_application.build_chat
+    @message = Message.new
   end
 
   def create
     @job_opening = JobOpening.find(params[:job_opening_id])
+    @company = @job_opening.company
     @job_application = current_user.job_applications.build(
       job_opening: @job_opening
     )

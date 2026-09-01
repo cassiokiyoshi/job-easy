@@ -5,6 +5,17 @@
     <p><%= pluralize(@job_openings.size, "opening") %></p>
   </header>
 
+  <% if @sources.any? %>
+    <nav class="job-source-filter">
+      <%= link_to "All", job_openings_path,
+            class: "job-source-filter__chip #{'job-source-filter__chip--active' if @current_source.blank?}" %>
+      <% @sources.each do |source| %>
+        <%= link_to source, job_openings_path(source: source),
+              class: "job-source-filter__chip #{'job-source-filter__chip--active' if @current_source == source}" %>
+      <% end %>
+    </nav>
+  <% end %>
+
   <div class="job-openings-grid">
     <%= render "job_openings/job_cards", job_openings: @job_openings%>
     <%= render "job_openings/job_cards", job_openings: @job_openings_closed %>

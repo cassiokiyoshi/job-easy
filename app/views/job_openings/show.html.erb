@@ -64,10 +64,10 @@
 
         <dl class="job-details-list">
           <div><dt>Company</dt><dd><%= @company.name %></dd></div>
-          <div><dt>Location</dt><dd class="<%= "job-details-list__unavailable" if location.blank? %>"><%= location.presence || "Not available" %></dd></div>
-          <div><dt>Work model</dt><dd class="<%= "job-details-list__unavailable" if work_model.blank? %>"><%= work_model.presence || "Not available" %></dd></div>
-          <div><dt>Employment type</dt><dd class="<%= "job-details-list__unavailable" if employment_type.blank? %>"><%= employment_type.presence || "Not available" %></dd></div>
-          <div><dt>Salary</dt><dd class="<%= "job-details-list__unavailable" if salary.blank? %>"><%= salary.presence || "Not available" %></dd></div>
+          <div><dt>Location</dt><dd class="<%= "job-details-list__unavailable" if @job_opening.location.blank? %>"><%= @job_opening.location.presence || "Not available" %></dd></div>
+          <div><dt>Work model</dt><dd class="<%= "job-details-list__unavailable" "Not available" %></dd></div>
+          <div><dt>Employment type</dt><dd class="<%= "job-details-list__unavailable" if @job_opening.employment_type.blank? %>"><%= @job_opening.employment_type.presence || "Not available" %></dd></div>
+          <div><dt>Salary</dt><dd class="<%= "job-details-list__unavailable" if @job_opening.salary.blank? %>"><%= @job_opening.salary.presence || "Not available" %></dd></div>
           <div>
             <dt>Deadline</dt>
             <dd class="<%= "job-details-list__unavailable" if @job_opening.deadline.blank? %>"><%= @job_opening.deadline&.strftime("%B %-d, %Y") || "Not available" %></dd>

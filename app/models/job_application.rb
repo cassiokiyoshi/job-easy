@@ -2,6 +2,7 @@ class JobApplication < ApplicationRecord
   belongs_to :user
   belongs_to :job_opening
   has_one :resume
+  has_one :chat, dependent: :destroy
   has_many :tasks, dependent: :destroy
 
   enum :status,
