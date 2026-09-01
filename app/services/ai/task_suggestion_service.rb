@@ -38,6 +38,7 @@ module Ai
         Decide which incomplete tasks remain useful for the application's
         current status. Also create at most #{MAX_SUGGESTIONS} additional
         new tasks.
+        Create tasks in english language.
 
         Requirements:
         - Keep an existing task only when it is still useful for the current status.

@@ -78,7 +78,13 @@
         <% if @personal_tasks.any? %>
           <% @personal_tasks.each do |task| %>
             <%= form_with model: task, url: task_path(task), method: :patch, class: "dashboard-task" do |form| %>
-              <%= form.check_box :completed, { onchange: "this.form.requestSubmit()", aria: { label: "Complete #{task.name}" } }, true, false %>
+              <%= form.check_box :completed,
+                                 {
+                                   onchange: "if (this.checked) this.form.requestSubmit(); else this.checked = true",
+                                   aria: { label: "Complete #{task.name}" }
+                                 },
+                                 true,
+                                 false %>
               <span><%= task.name %></span>
             <% end %>
           <% end %>
@@ -101,7 +107,13 @@
         <% if @application_tasks.any? %>
           <% @application_tasks.each do |task| %>
             <%= form_with model: task, url: task_path(task), method: :patch, class: "dashboard-task dashboard-task--application" do |form| %>
-              <%= form.check_box :completed, { onchange: "this.form.requestSubmit()", aria: { label: "Complete #{task.name}" } }, true, false %>
+              <%= form.check_box :completed,
+                                 {
+                                   onchange: "if (this.checked) this.form.requestSubmit(); else this.checked = true",
+                                   aria: { label: "Complete #{task.name}" }
+                                 },
+                                 true,
+                                 false %>
               <span>
                 <%= task.name %>
                 <small><%= task.job_application.job_opening.company.name %></small>
