@@ -22,11 +22,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            @task,
-            partial: "tasks/task",
-            locals: { task: @task }
-          )
+          head :no_content
         end
         format.html do
           redirect_back fallback_location: tasks_path, notice: "Task updated."
@@ -43,7 +39,15 @@ class TasksController < ApplicationController
     authorize @task
 
     @task.destroy
-    redirect_to tasks_path, notice: "Task deleted."
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(@task)
+      end
+      format.html do
+        redirect_to tasks_path, notice: "Task deleted."
+      end
+    end
   end
 
   private

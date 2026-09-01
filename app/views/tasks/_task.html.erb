@@ -7,7 +7,7 @@
     <%= form.check_box :completed,
                        {
                          checked: task.completed?,
-                         onchange: "this.form.requestSubmit()",
+                         onchange: "this.setAttribute('aria-label', this.checked ? 'Mark task as incomplete' : 'Mark task as completed'); this.form.requestSubmit()",
                          class: "form-check-input",
                          aria: {
                            label: task.completed? ?

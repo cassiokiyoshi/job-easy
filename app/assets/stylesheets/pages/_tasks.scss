@@ -288,7 +288,8 @@
   background: #fbfcfe;
 }
 
-.task-row--completed {
+.task-row--completed,
+.task-row:has(.form-check-input:checked) {
   opacity: 0.62;
 
   .task-row__name {
