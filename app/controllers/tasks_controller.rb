@@ -43,7 +43,15 @@ class TasksController < ApplicationController
     authorize @task
 
     @task.destroy
-    redirect_to tasks_path, notice: "Task deleted."
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(@task)
+      end
+      format.html do
+        redirect_to tasks_path, notice: "Task deleted."
+      end
+    end
   end
 
   private
