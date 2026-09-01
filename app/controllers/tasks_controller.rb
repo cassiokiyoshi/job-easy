@@ -20,7 +20,18 @@ class TasksController < ApplicationController
     authorize @task
 
     if @task.update(task_params)
-      redirect_back fallback_location: tasks_path, notice: "Task updated."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            @task,
+            partial: "tasks/task",
+            locals: { task: @task }
+          )
+        end
+        format.html do
+          redirect_back fallback_location: tasks_path, notice: "Task updated."
+        end
+      end
     else
       redirect_back fallback_location: tasks_path,
                     alert: @task.errors.full_messages.to_sentence

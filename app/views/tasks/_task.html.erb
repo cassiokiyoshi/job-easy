@@ -1,4 +1,5 @@
-<div class="<%= class_names("task-row", "task-row--completed": task.completed?) %>">
+<div id="<%= dom_id(task) %>"
+     class="<%= class_names("task-row", "task-row--completed": task.completed?) %>">
   <%= form_with model: task,
                 url: task_path(task),
                 method: :patch,
