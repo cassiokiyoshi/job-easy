@@ -27,6 +27,8 @@ namespace :jobs do
         employment_type: data["internship"] ? "Internship" : "Fulltime",
         source: "CFN"
       )
+      job_opening.closed = job_opening.deadline.is_a?(Date) && Date.current > job_opening.deadline
+      job_opening.save
     end
 
     file_data = File.read('db/scrapes/2026-08-31wantedly.json')
@@ -52,6 +54,8 @@ namespace :jobs do
         title: data["job_name"],
         source: "Wantedly"
       )
+      job_opening.closed = job_opening.deadline.is_a?(Date) && Date.current > job_opening.deadline
+      job_opening.save
     end
 
     file_data = File.read('db/scrapes/2026-08-31japandev.json')
@@ -77,6 +81,8 @@ namespace :jobs do
         title: data["job_name"],
         source: "JapanDev"
       )
+      job_opening.closed = job_opening.deadline.is_a?(Date) && Date.current > job_opening.deadline
+      job_opening.save
     end
   end
 end
