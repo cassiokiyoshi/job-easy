@@ -2,9 +2,12 @@
 <% content_for :title, "Chat for #{opening.title} | JobEasy" %>
 
 <div class="application-chat-page">
-  <%= link_to "Back to application",
-              job_application_path(@job_application, chat: "open"),
-              class: "page-back-link" %>
+  <%= link_to job_application_path(@job_application, chat: "open"),
+              class: "page-back-link",
+              aria: { label: "Back to application" } do %>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6" /><path d="M9 12h10" /></svg>
+    <span>Back to application</span>
+  <% end %>
 
   <h1>Chat about <%= opening.title %></h1>
 

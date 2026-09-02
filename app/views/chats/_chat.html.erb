@@ -29,7 +29,12 @@
                   action: "keydown->chat-form#submitOnEnter"
                 } do |form| %>
     <% if local_assigns.fetch(:return_to_application, false) %>
+      <% task_context = params[:task_context].presence %>
       <%= hidden_field_tag :return_to, "application" %>
+      <%= hidden_field_tag "message[task_context]", task_context, data: { chat_panel_target: "contextInput" } %>
+      <p class="application-chat__task-context"
+         <%= "hidden" if task_context.blank? %>
+         data-chat-panel-target="contextLabel"><%= "Chatting about: #{task_context}" if task_context.present? %></p>
     <% end %>
 
     <% if message.errors.any? %>
@@ -43,7 +48,8 @@
       <%= form.text_area :content,
                         placeholder: "Ask about this application…",
                         rows: 2,
-                        required: true %>
+                        required: true,
+                        data: { chat_panel_target: "messageInput" } %>
 
       <%= form.submit "Send",
                       data: { turbo_submits_with: "Sending…" } %>

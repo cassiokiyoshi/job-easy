@@ -102,4 +102,21 @@ class Ai::ApplicationChatServiceTest < ActiveSupport::TestCase
       end
     end
   end
+
+
+  test "includes temporary task content in the application context" do
+    fake_conversation = FakeConversation.new(
+      response_content: "Start by tailoring the resume."
+    )
+    fake_llm = FakeLlm.new(fake_conversation)
+
+    Ai::ApplicationChatService.new(
+      @chat,
+      llm: fake_llm,
+      task_context: "Tailor resume for this role"
+    ).call
+
+    assert_includes fake_conversation.instructions, "focused_task"
+    assert_includes fake_conversation.instructions, "Tailor resume for this role"
+  end
 end

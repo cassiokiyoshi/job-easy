@@ -21,8 +21,8 @@ class ApplicationChatReplyJob < ApplicationJob
     broadcast_messages(chat)
   end
 
-  def perform(chat)
-    Ai::ApplicationChatService.new(chat).call
+  def perform(chat, task_context = nil)
+    Ai::ApplicationChatService.new(chat, task_context:).call
     broadcast_messages(chat)
   end
 

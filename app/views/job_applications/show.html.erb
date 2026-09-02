@@ -1,7 +1,7 @@
 <% opening = @job_application.job_opening %>
 <% company = opening.company %>
-<% stages = %w[Saved Applied Interviewed Offered Accepted] %>
-<% current_stage = stages.index(@job_application.status) %>
+<% stages = %w[Saved Applied Interviewed Offered Accepted Rejected] %>
+<% current_stage = stages.index(@job_application.status) unless @job_application.status == "Rejected" %>
 <% interviews = @job_application.interview_schedule.sort %>
 <% show_interview_card = @job_application.status.in?(%w[Applied Interviewed Offered Accepted]) %>
 <% content_for :title, "#{opening.title} application | JobEasy" %>
@@ -31,11 +31,11 @@
         <h2>Application status</h2>
         <div class="application-pipeline" aria-label="Application pipeline">
           <% stages.each_with_index do |stage, index| %>
-            <% reached = current_stage.present? && index <= current_stage %>
+            <% reached = stage == "Rejected" ? @job_application.status == "Rejected" : current_stage.present? && index <= current_stage %>
             <% active = stage == @job_application.status %>
             <%= button_to job_application_path(@job_application), method: :patch,
                           params: { job_application: { status: stage } },
-                          class: class_names("application-pipeline__step", "is-reached": reached, "is-active": active),
+                          class: class_names("application-pipeline__step", "application-pipeline__step--rejected": stage == "Rejected", "is-reached": reached, "is-active": active),
                           aria: { label: "Change application status to #{stage}", current: ("step" if active) } do %>
               <span class="application-pipeline__track" aria-hidden="true"></span>
               <span class="application-pipeline__dot" aria-hidden="true"></span>
@@ -119,7 +119,7 @@
         <div class="application-task-card__list">
           <% if @job_application.tasks.any? %>
             <% @job_application.tasks.order(:position, :created_at).each do |task| %>
-              <%= render "tasks/task", task: task %>
+              <%= render "tasks/task", task: task, chat_enabled: true %>
             <% end %>
           <% else %>
             <p class="application-task-card__empty">No tasks yet. Refresh tasks to create suggestions for this application.</p>
@@ -164,16 +164,17 @@
 
         <div class="application-details-actions">
           <%= link_to "View opening details", job_opening_path(opening), class: "application-show-button application-show-button--primary" %>
-          <% if @job_application.resume.persisted? %>
-            <%= link_to "Review resume", edit_resume_path(@job_application.resume), class: "application-show-button application-show-button--secondary" %>
-             <button type="button" class="application-show-button application-show-button--secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Add a new Resume
-              </button>
-          <% else %>
+          <% unless @job_application.rejected? %>
+            <% if @job_application.resume.persisted? %>
+              <%= link_to "Review resume", edit_resume_path(@job_application.resume), class: "application-show-button application-show-button--secondary" %>
               <button type="button" class="application-show-button application-show-button--secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Add a Resume
+                Add a new Resume
               </button>
-
+            <% else %>
+              <button type="button" class="application-show-button application-show-button--secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Add a Resume
+              </button>
+            <% end %>
           <% end %>
           <button type="button"
                   class="application-show-button application-show-button--chat"
@@ -183,6 +184,13 @@
                   data-action="chat-panel#open">
             Chat with JobEasy
           </button>
+          <% if @job_application.rejected? %>
+            <%= button_to "Delete application",
+                          job_application_path(@job_application),
+                          method: :delete,
+                          class: "application-show-button application-show-button--danger",
+                          form: { data: { turbo_confirm: "Delete this application permanently? This cannot be undone." } } %>
+          <% end %>
         </div>
       </section>
     </aside>

@@ -26,10 +26,10 @@
   </div>
 
   <div class="sidebar__user">
-    <span class="sidebar__avatar" aria-hidden="true">U</span>
+    <span class="sidebar__avatar" aria-hidden="true"><%= current_user.username.first.upcase %></span>
 
     <div class="sidebar__user-information">
-      <span class="sidebar__username">Username</span>
+      <span class="sidebar__username"><%= current_user.username %></span>
       <span class="sidebar__account-label"></span>
     </div>
   </div>
@@ -55,7 +55,8 @@
     <%= link_to job_applications_path,
         class: class_names(
           "sidebar__link",
-          "sidebar__link--active": request.path.start_with?(job_applications_path)
+          "sidebar__link--active": request.path.start_with?(job_applications_path) &&
+                                    !params[:controller].to_s.start_with?("interview_prep")
         ) do %>
       <span class="sidebar__icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none">
@@ -110,7 +111,7 @@
         </svg>
       </span>
 
-      <span class="sidebar__label">Job board</span>
+      <span class="sidebar__label">Job list</span>
     <% end %>
   </nav>
 

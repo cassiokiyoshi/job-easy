@@ -149,6 +149,16 @@ $application-chat-surface: #fff;
   &.is-active .application-pipeline__dot {
     box-shadow: 0 0 0 4px rgba($application-blue, 0.15);
   }
+
+  &--rejected.is-reached {
+    color: #b42318;
+
+    .application-pipeline__dot {
+      background: #b42318;
+      border-color: #b42318;
+      box-shadow: 0 0 0 4px rgba(180, 35, 24, 0.15);
+    }
+  }
 }
 
 .application-pipeline__dot {
@@ -414,6 +424,11 @@ $application-chat-surface: #fff;
     font-size: 14px;
     font-weight: 500;
   }
+
+  .task-row:last-child .task-row__menu-options {
+    top: auto;
+    bottom: 32px;
+  }
 }
 
 .application-task-card__empty {
@@ -552,6 +567,18 @@ $application-chat-surface: #fff;
   &--secondary:hover {
     color: $application-blue;
     background: #f3f7fd;
+  }
+
+  &--danger {
+    color: #b42318;
+    background: #fff;
+    border-color: #f0b4ae;
+  }
+
+  &--danger:hover {
+    color: #fff;
+    background: #b42318;
+    border-color: #b42318;
   }
 
   &--quiet {
@@ -763,6 +790,23 @@ body.application-chat-is-open {
 }
 
 .application-chat-page {
+  width: 100%;
+  max-width: 1530px;
+  margin: 0 auto;
+  padding: 4px 30px 42px;
+  color: $application-text;
+
+  > .page-back-link {
+    margin-bottom: 20px;
+  }
+
+  > h1 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
   .application-chat__messages-shell,
   .application-chat__form {
     background: #f5f6f8;
@@ -883,6 +927,16 @@ body.application-chat-is-open {
   }
 }
 
+.application-chat__task-context {
+  margin: 0;
+  padding: 7px 10px;
+  color: $application-blue;
+  background: rgba($application-blue, 0.08);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 @container application-show (max-width: 900px) {
   .application-show-layout { grid-template-columns: 1fr; }
   .application-show-sidebar { position: static; }
@@ -895,6 +949,11 @@ body.application-chat-is-open {
 }
 
 @media (max-width: 600px) {
+  .application-chat-page {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
   body.application-chat-is-open {
     padding-right: 0;
     overflow: hidden;
