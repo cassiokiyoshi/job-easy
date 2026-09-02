@@ -7,29 +7,26 @@ $application-chat-surface: #fff;
 .application-show-page {
   container-name: application-show;
   container-type: inline-size;
-  width: 100%; max-width: 1200px; margin: 0 auto; padding: 40px 32px 64px; color: $application-text;
-}
+  width: 100%; max-width: 1200px; margin: 0 auto; padding: 4px 32px 64px; color: $application-text;
 
-.application-show-header {
-  margin-bottom: 32px;
-
-  >p {
-    margin: 0 0 4px;
-    color: $application-muted;
-    font-size: 15px;
-    font-weight: 500;
+  > .page-back-link {
+    margin-bottom: 20px;
   }
 }
 
 .application-show-header__title {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
+  min-width: 0;
+
+  p {
+    margin: 0 0 3px;
+    color: $application-muted;
+    font-size: 13px;
+    font-weight: 500;
+  }
 
   h1 {
     margin: 0;
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.025em;
@@ -84,6 +81,16 @@ $application-chat-surface: #fff;
 .application-pipeline-card {
   padding: 24px 28px 28px;
   overflow: hidden;
+}
+
+.application-pipeline-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $application-border;
 }
 
 .application-pipeline {
@@ -458,8 +465,13 @@ $application-chat-surface: #fff;
   font-weight: 400;
 }
 
-.application-details-card a {
+.application-details-card dl a {
   color: $application-blue;
+  text-decoration: none;
+}
+
+.application-details-card dl a:hover {
+  text-decoration: underline;
 }
 
 .application-details-actions {
@@ -532,7 +544,7 @@ $application-chat-surface: #fff;
 
 @media (max-width: 600px) {
   .application-show-page {
-    padding: 30px 16px 48px;
+    padding: 4px 16px 48px;
   }
 
   .application-show-header__title h1 {

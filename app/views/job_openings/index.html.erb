@@ -1,18 +1,17 @@
 <main class="applications-page">
-  <header class="applications-header">
-    <p class="eyebrow">Job board</p>
-    <h1>Open jobs</h1>
-    <p><%= pluralize(@job_openings.size, "opening") %></p>
-  </header>
+  <p class="eyebrow">Job list</p>
 
   <% if @sources.any? %>
     <nav class="job-source-filter">
-      <%= link_to "All", job_openings_path,
-            class: "job-source-filter__chip #{'job-source-filter__chip--active' if @current_source.blank?}" %>
-      <% @sources.each do |source| %>
-        <%= link_to source, job_openings_path(source: source),
-              class: "job-source-filter__chip #{'job-source-filter__chip--active' if @current_source == source}" %>
-      <% end %>
+      <div class="job-source-filter__chips">
+        <%= link_to "All", job_openings_path,
+              class: "job-source-filter__chip #{'job-source-filter__chip--active' if @current_source.blank?}" %>
+        <% @sources.each do |source| %>
+          <%= link_to source, job_openings_path(source: source),
+                class: "job-source-filter__chip #{'job-source-filter__chip--active' if @current_source == source}" %>
+        <% end %>
+      </div>
+      <small class="job-opening-count"><%= pluralize(@job_openings.size, "junior opening") %></small>
     </nav>
   <% end %>
 

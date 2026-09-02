@@ -3,14 +3,6 @@
 <% active_count = @job_applications.count { |application| !application.accepted? && !application.rejected? } %>
 
 <div class="dashboard-page">
-  <header class="dashboard-header">
-    <div>
-      <p class="dashboard-header__eyebrow">Dashboard</p>
-      <h1>Welcome back</h1>
-    </div>
-
-  </header>
-
   <section class="dashboard-metrics" aria-label="Job search summary">
     <%= link_to job_applications_path, class: "metric-chip" do %>
       <span class="metric-chip__icon" aria-hidden="true">

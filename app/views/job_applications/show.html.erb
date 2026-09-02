@@ -14,14 +14,6 @@
     <span>Back to applications</span>
   <% end %>
 
-  <header class="application-show-header">
-    <p><%= company.name %></p>
-    <div class="application-show-header__title">
-      <h1><%= opening.title %></h1>
-      <span class="application-status-pill application-status-pill--<%= @job_application.status.downcase %>"><%= @job_application.status %></span>
-    </div>
-  </header>
-
   <% if flash[:alert] %>
     <div class="alert alert-danger"><%= flash[:alert] %></div>
   <% end %>
@@ -29,6 +21,13 @@
   <div class="application-show-layout">
     <main class="application-show-main">
       <section class="application-show-card application-pipeline-card">
+        <header class="application-pipeline-card__header">
+          <div class="application-show-header__title">
+            <p><%= company.name %></p>
+            <h1><%= opening.title %></h1>
+          </div>
+          <span class="application-status-pill application-status-pill--<%= @job_application.status.downcase %>"><%= @job_application.status %></span>
+        </header>
         <h2>Application status</h2>
         <div class="application-pipeline" aria-label="Application pipeline">
           <% stages.each_with_index do |stage, index| %>

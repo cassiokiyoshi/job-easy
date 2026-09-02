@@ -29,10 +29,31 @@ $jo-card-min-height: 240px; // baseline height; grows only if the title needs mo
 .job-source-filter {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  align-items: center;
+  column-gap: 32px;
+  row-gap: 10px;
   max-width: 1530px; // matches .job-openings-grid
   margin: 0 auto 22px;
   padding-right: 6px;
+}
+
+.job-source-filter__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.job-opening-count {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 7px 0;
+  border: 1px solid transparent;
+  color: #5a6b80;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .job-source-filter__chip {

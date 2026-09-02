@@ -7,50 +7,12 @@ $job-show-border: #dce2ec;
   width: 100%;
   max-width: 1530px;
   margin: 0 auto;
-  padding: 42px 30px;
+  padding: 4px 30px 42px;
   color: $job-show-text;
-}
 
-.job-show-header {
-  margin-bottom: 32px;
-
-  &__eyebrow {
-    margin: 0 0 6px;
-    color: #0d4aa2;
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  > .page-back-link {
+    margin-bottom: 20px;
   }
-
-  h1 {
-    margin: 0 0 8px;
-    font-size: 2.5rem;
-    letter-spacing: -0.04em;
-  }
-
-  &__title-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    h1 { margin-bottom: 8px; }
-  }
-
-  &__source {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 10px;
-    border-radius: 999px;
-    background: $job-show-blue;
-    color: #fff;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    white-space: nowrap;
-  }
-
-  > p:last-child { margin: 0; color: $job-show-muted; }
 }
 
 .job-show-layout {
@@ -95,8 +57,30 @@ $job-show-border: #dce2ec;
 .job-show-main__heading {
   min-width: 0;
 
-  h2 { margin: 0 0 4px; font-size: 1.35rem; }
   > p { margin: 0; color: $job-show-muted; }
+}
+
+.job-show-main__title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+
+  h2 { margin: 0; font-size: 1.35rem; }
+}
+
+.job-show-source {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: $job-show-blue;
+  color: #fff;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .job-show-highlights {
@@ -190,8 +174,7 @@ $job-show-border: #dce2ec;
 }
 
 @media (max-width: 600px) {
-  .job-show-page { padding: 30px 16px; }
-  .job-show-header h1 { font-size: 2.125rem; }
+  .job-show-page { padding: 4px 16px 30px; }
   .job-show-main__header { padding: 20px; }
   .job-show-description { padding: 22px 20px 28px; }
   .job-details-card { padding: 20px; }
