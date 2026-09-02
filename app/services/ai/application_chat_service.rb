@@ -4,9 +4,10 @@ module Ai
 
     class EmptyResponseError < StandardError; end
 
-    def initialize(chat, llm: RubyLLM)
+    def initialize(chat, llm: RubyLLM, task_context: nil)
       @chat = chat
       @llm = llm
+      @task_context = task_context
     end
 
     def call
@@ -23,7 +24,7 @@ module Ai
 
     private
 
-    attr_reader :chat, :llm
+    attr_reader :chat, :llm, :task_context
 
     def llm_chat
       conversation = llm.chat.with_instructions(instructions)
@@ -108,7 +109,8 @@ module Ai
         deadline: opening.deadline,
         company_name: company.name,
         company_description: company.description,
-        resume_content: resume&.content
+        resume_content: resume&.content,
+        focused_task: task_context
       }
     end
   end

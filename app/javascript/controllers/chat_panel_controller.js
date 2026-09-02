@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["panel", "backdrop", "trigger", "closeButton"]
+  static targets = ["panel", "backdrop", "trigger", "closeButton", "contextInput", "contextLabel", "messageInput"]
   static values = {
     open: Boolean
   }
@@ -31,8 +31,22 @@ export default class extends Controller {
     document.body.classList.add("application-chat-is-open")
     document.addEventListener("keydown", this.handleKeydown)
     this.setOpenParameter()
+    this.scrollHistoryToBottom()
 
     this.closeButtonTarget.focus()
+  }
+
+  openForTask(event) {
+    const taskContent = event.currentTarget.dataset.taskContent
+
+    this.contextInputTarget.value = taskContent
+    this.contextLabelTarget.textContent = `Chatting about: ${taskContent}`
+    this.contextLabelTarget.hidden = false
+    event.currentTarget.closest("details")?.removeAttribute("open")
+
+    this.open()
+    this.setTaskContextParameter(taskContent)
+    this.messageInputTarget.focus()
   }
 
   close() {
@@ -43,6 +57,7 @@ export default class extends Controller {
     document.body.style.removeProperty("--application-chat-panel-width")
     document.removeEventListener("keydown", this.handleKeydown)
     this.removeOpenParameter()
+    this.clearTaskContext()
 
     this.triggerTarget.focus()
   }
@@ -64,6 +79,32 @@ export default class extends Controller {
     const url = new URL(window.location.href)
 
     url.searchParams.delete("chat")
+    url.searchParams.delete("task_context")
     window.history.replaceState(window.history.state, "", url)
+  }
+
+  setTaskContextParameter(taskContent) {
+    const url = new URL(window.location.href)
+
+    url.searchParams.set("task_context", taskContent)
+    window.history.replaceState(window.history.state, "", url)
+  }
+
+  clearTaskContext() {
+    if (!this.hasContextInputTarget) return
+
+    this.contextInputTarget.value = ""
+    this.contextLabelTarget.textContent = ""
+    this.contextLabelTarget.hidden = true
+  }
+
+  scrollHistoryToBottom() {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const history = this.panelTarget.querySelector(".application-chat__messages")
+
+        if (history) history.scrollTop = history.scrollHeight
+      })
+    })
   }
 }

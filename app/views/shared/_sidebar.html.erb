@@ -26,10 +26,10 @@
   </div>
 
   <div class="sidebar__user">
-    <span class="sidebar__avatar" aria-hidden="true">U</span>
+    <span class="sidebar__avatar" aria-hidden="true"><%= current_user.username.first.upcase %></span>
 
     <div class="sidebar__user-information">
-      <span class="sidebar__username">Username</span>
+      <span class="sidebar__username"><%= current_user.username %></span>
       <span class="sidebar__account-label"></span>
     </div>
   </div>

@@ -10,4 +10,8 @@ class User < ApplicationRecord
   def default_resume
     resumes.find_by(is_default: true)
   end
+
+  def username
+    (email.to_s.split("@", 2).first.presence || "User").capitalize
+  end
 end
