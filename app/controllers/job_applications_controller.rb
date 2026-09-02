@@ -92,7 +92,14 @@ class JobApplicationsController < ApplicationController
   end
 
   def destroy
+    @job_application = current_user.job_applications.find(params[:id])
     authorize @job_application
+
+    @job_application.destroy!
+
+    redirect_to job_applications_path,
+                notice: "Application deleted.",
+                status: :see_other
   end
 
   def suggest_tasks

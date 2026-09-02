@@ -149,6 +149,16 @@ $application-chat-surface: #fff;
   &.is-active .application-pipeline__dot {
     box-shadow: 0 0 0 4px rgba($application-blue, 0.15);
   }
+
+  &--rejected.is-reached {
+    color: #b42318;
+
+    .application-pipeline__dot {
+      background: #b42318;
+      border-color: #b42318;
+      box-shadow: 0 0 0 4px rgba(180, 35, 24, 0.15);
+    }
+  }
 }
 
 .application-pipeline__dot {
@@ -552,6 +562,18 @@ $application-chat-surface: #fff;
   &--secondary:hover {
     color: $application-blue;
     background: #f3f7fd;
+  }
+
+  &--danger {
+    color: #b42318;
+    background: #fff;
+    border-color: #f0b4ae;
+  }
+
+  &--danger:hover {
+    color: #fff;
+    background: #b42318;
+    border-color: #b42318;
   }
 
   &--quiet {
