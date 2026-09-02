@@ -18,7 +18,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to job_application_chat_path(@application)
 
-    message = @application.reload.chat.messages.last
+    message = @application.reload.chats.general.first.messages.last
     assert_equal "user", message.role
     assert_equal "Help me prepare", message.content
 end

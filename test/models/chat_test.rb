@@ -15,17 +15,19 @@ class ChatTest < ActiveSupport::TestCase
       job_opening: opening
     )
 
-    @chat = @application.create_chat!
+    @chat = @application.chats.general.create!
   end
 
-  test "an application can have only one chat" do
-    duplicate = Chat.new(job_application: @application)
+  test "an application can have only one chat per purpose" do
+    assert_raises ActiveRecord::RecordNotUnique do
+      @application.chats.general.create!
+    end
+  end
 
-    assert_not duplicate.valid?
-    assert_includes(
-      duplicate.errors[:job_application_id],
-      "has already been taken"
-    )
+  test "an application can have a general chat and an interview prep chat" do
+    assert_nothing_raised do
+      @application.chats.interview_prep.create!
+    end
   end
 
   test "returns messages in chronological order" do

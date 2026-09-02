@@ -1,0 +1,40 @@
+<% content_for :title, "Interview Simulation | JobEasy" %>
+
+<main class="interview-prep-index">
+  <header class="interview-prep-index__header">
+    <p class="eyebrow">Interview Simulation</p>
+    <h1>Pick an application to prep for</h1>
+    <p class="interview-prep-index__lead">
+      Work through your career-change story, a project walkthrough, your interest,
+      the experience gap, and what to ask about training.
+    </p>
+  </header>
+
+  <% if @job_applications.any? %>
+    <ul class="interview-prep-index__list">
+      <% @job_applications.each do |application| %>
+        <% opening = application.job_opening %>
+        <li>
+          <%= link_to job_application_interview_session_path(application),
+                      class: "interview-prep-index__card" do %>
+            <span class="company-mark">
+              <%= opening.company.name.first.upcase %>
+            </span>
+
+            <div class="interview-prep-index__card-body">
+              <h2><%= opening.title %></h2>
+              <p><%= opening.company.name %></p>
+            </div>
+
+            <span class="interview-prep-index__card-cta" aria-hidden="true">&rarr;</span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="interview-prep-index__empty">
+      You don't have any applications yet.
+      <%= link_to "Browse the job board", job_openings_path %>.
+    </p>
+  <% end %>
+</main>

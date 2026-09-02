@@ -1,8 +1,8 @@
 class JobApplication < ApplicationRecord
   belongs_to :user
   belongs_to :job_opening
-  has_one :resume, dependent: :destroy
-  has_one :chat, dependent: :destroy
+  has_one :resume
+  has_many :chats, dependent: :destroy
   has_many :tasks, dependent: :destroy
 
   enum :status,

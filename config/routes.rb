@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     resources :job_applications, only: [:create]
   end
 
+  namespace :interview_prep do
+    resources :sessions, only: [:index]
+  end
+
   resources :job_applications, only: [:index, :show, :update, :destroy] do
     member do
       post :suggest_tasks
@@ -20,6 +24,12 @@ Rails.application.routes.draw do
 
     resource :chat, only: [:show] do
       resources :messages, only: [:create]
+    end
+
+    resource :interview_session,
+             only: [:show],
+             controller: "interview_prep/sessions" do
+      resources :messages, only: [:create], controller: "interview_prep/messages"
     end
   end
 

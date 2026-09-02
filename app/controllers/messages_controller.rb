@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
 
     authorize @job_application, :show?
 
-    @chat = @job_application.chat || @job_application.build_chat
+    @chat = @job_application.chats.general.first || @job_application.chats.general.new
     @message = @chat.messages.build(message_params.merge(role: "user"))
 
     if @message.valid?
