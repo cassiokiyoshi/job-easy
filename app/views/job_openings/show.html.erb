@@ -11,18 +11,6 @@
     <span>Back to job openings</span>
   <% end %>
 
-  <header class="job-show-header">
-    <p class="job-show-header__eyebrow">Job opening</p>
-    <div class="job-show-header__title-row">
-      <h1><%= @job_opening.title %>
-      <% if @job_opening.source.present? %>
-        <span class="job-show-header__source"><%= @job_opening.source %></span>
-      <% end %>
-      </h1>
-    </div>
-    <p><%= @company.name %></p>
-  </header>
-
   <div class="job-show-layout">
     <main class="job-show-main">
       <header class="job-show-main__header">
@@ -31,7 +19,12 @@
         </span>
 
         <div class="job-show-main__heading">
-          <h2><%= @job_opening.title %></h2>
+          <div class="job-show-main__title-row">
+            <h2><%= @job_opening.title %></h2>
+            <% if @job_opening.source.present? %>
+              <span class="job-show-source"><%= @job_opening.source %></span>
+            <% end %>
+          </div>
           <p><%= @company.name %></p>
 
           <div class="job-show-highlights" aria-label="Job highlights">
