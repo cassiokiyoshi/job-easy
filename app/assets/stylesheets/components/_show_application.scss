@@ -790,6 +790,23 @@ body.application-chat-is-open {
 }
 
 .application-chat-page {
+  width: 100%;
+  max-width: 1530px;
+  margin: 0 auto;
+  padding: 4px 30px 42px;
+  color: $application-text;
+
+  > .page-back-link {
+    margin-bottom: 20px;
+  }
+
+  > h1 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
   .application-chat__messages-shell,
   .application-chat__form {
     background: #f5f6f8;
@@ -932,6 +949,11 @@ body.application-chat-is-open {
 }
 
 @media (max-width: 600px) {
+  .application-chat-page {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
   body.application-chat-is-open {
     padding-right: 0;
     overflow: hidden;

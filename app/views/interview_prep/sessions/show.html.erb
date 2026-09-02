@@ -2,9 +2,12 @@
 <% content_for :title, "Interview prep - #{opening.title} | JobEasy" %>
 
 <div class="application-chat-page interview-prep-session">
-  <%= link_to "Back to Interview Simulation",
-              interview_prep_sessions_path,
-              class: "page-back-link" %>
+  <%= link_to interview_prep_sessions_path,
+              class: "page-back-link",
+              aria: { label: "Back to Interview Simulation" } do %>
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 18-6-6 6-6" /><path d="M9 12h10" /></svg>
+    <span>Back to Interview Simulation</span>
+  <% end %>
 
   <h1>Prep for <%= opening.title %> at <%= opening.company.name %></h1>
 

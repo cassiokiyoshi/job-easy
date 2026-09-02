@@ -55,7 +55,8 @@
     <%= link_to job_applications_path,
         class: class_names(
           "sidebar__link",
-          "sidebar__link--active": request.path.start_with?(job_applications_path)
+          "sidebar__link--active": request.path.start_with?(job_applications_path) &&
+                                    !params[:controller].to_s.start_with?("interview_prep")
         ) do %>
       <span class="sidebar__icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none">

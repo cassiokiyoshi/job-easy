@@ -14,8 +14,14 @@
        aria-live="polite"
        data-chat-scroll-target="viewport"
        data-action="scroll->chat-scroll#updateButtons">
-    <% chat.messages.each do |chat_message| %>
+    <% persisted_messages = chat.messages.select(&:persisted?) %>
+
+    <% persisted_messages.each do |chat_message| %>
       <article class="application-chat__message application-chat__message--<%= chat_message.role %>">
+        <span class="application-chat__role">
+          <%= chat_message.role == "user" ? "You" : "JobEasy" %>
+        </span>
+
         <div class="application-chat__message-content">
           <% if chat_message.role == "user" %>
             <p><%= chat_message.content %></p>
@@ -23,6 +29,13 @@
             <%= interview_markdown(chat_message.content) %>
           <% end %>
         </div>
+      </article>
+    <% end %>
+
+    <% if persisted_messages.last&.role == "user" %>
+      <article class="application-chat__message application-chat__message--assistant application-chat__message--pending">
+        <span class="application-chat__role">JobEasy</span>
+        <p>Thinking…</p>
       </article>
     <% end %>
   </div>
