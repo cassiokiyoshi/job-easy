@@ -8,6 +8,7 @@
   background-color: rgba(0, 61, 150, 0.79);
   border-radius: 0.5rem;
   color: white;
+  width: 236px;
 
   &:hover {
     background-color: rgba(0, 61, 150, 0.5);
@@ -74,4 +75,8 @@
       color:white;
     }
   }
+}
+
+.notice {
+  margin-bottom: 0px;
 }
