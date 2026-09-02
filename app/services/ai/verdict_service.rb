@@ -31,8 +31,7 @@ module Ai
         "Great match" or "Worth applying" depending on how many overlaps between the
         resume and the job requirements.
 
-        Also mention 2 - 4 of those overlaps. "Worth applying" is when there is only 1 overlap.
-        "Great match" is for 2 and above.
+        Also mention 2 - 4 of those overlaps. "Worth applying" is when there is only 1 and more overlap.
         "Cannot apply" when a working adult applies for internship.
 
         Here's an example:
