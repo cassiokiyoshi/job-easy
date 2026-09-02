@@ -8,12 +8,14 @@ module Resumes
     end
 
     def call
+      blob = @resume.cv_file.blob
       Tempfile.create(["resume", ".docx"]) do |file|
         file.binmode
-        file.write(@resume.cv_file.blob.download)
+        file.write(blob.download)
         file.rewind
 
-        Docx::Document.open(file.path).text
+        doc = Docx::Document.open(file.path)
+        doc.text
       end
     end
   end

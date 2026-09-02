@@ -52,7 +52,8 @@ class ResumesController < ApplicationController
 
   def recommendations
     authorize @resume
-    @resume.update(content: Resumes::TextExtractor.new(@resume).call)
+    content = Resumes::TextExtractor.new(@resume).call
+    @resume.update(content: content)
     job_opening = @resume.job_application.job_opening
     jd = job_opening.content
 
