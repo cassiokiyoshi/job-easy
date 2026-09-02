@@ -2,7 +2,7 @@ require 'docx'
 
 class ResumesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_resume, only: %i[edit update destroy recommendations dismiss_advice]
+  before_action :set_resume, only: %i[edit update destroy recommendations dismiss_advice set_as_default]
   def create
     @job_application = JobApplication.find(params[:job_application_id])
     @resume = Resume.new(resume_params)
@@ -40,24 +40,19 @@ class ResumesController < ApplicationController
     redirect_to job_application_path(@job_application), status: :see_other
   end
 
+  def set_as_default
+    authorize @resume
+
+    @resume.make_default!
+    current_user.job_applications.update_all(verdict: nil, verdict_generated_at: nil)
+    GenerateVerdictJob.perform_later(@resume.job_application_id)
+
+    redirect_to edit_resume_path(@resume)
+  end
+
   def recommendations
     authorize @resume
-    # io = URI.parse(Cloudinary::Utils.cloudinary_url("#{Rails.env}/#{@resume.cv_file.key}.docx",
-    #                                                 resource_type: "raw")).read
-    # doc = Docx::Document.open(io)
-    # doc.paragraphs.each do |p|
-    #   puts p
-    blob = @resume.cv_file.blob
-    Tempfile.create(["resume", ".docx"]) do |file|
-      file.binmode
-      file.write(blob.download)
-      file.rewind
-
-      doc = Docx::Document.open(file.path)
-      @resume.update(
-        content: doc.text
-      )
-    end
+    @resume.update(content: Resumes::TextExtractor.new(@resume).call)
     job_opening = @resume.job_application.job_opening
     jd = job_opening.content
 

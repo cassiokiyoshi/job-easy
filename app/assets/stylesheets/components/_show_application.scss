@@ -462,6 +462,41 @@ $application-chat-surface: #fff;
   color: $application-blue;
 }
 
+.application-verdict {
+  margin-top: 20px;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+
+  p { margin: 0; }
+  p + p { margin-top: 6px; }
+}
+
+.application-verdict__label {
+  margin-bottom: 6px !important;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.application-verdict--ready {
+  border: 1px solid #b7e4c7;
+  background: #edf7f0;
+  color: #1b4332;
+
+  .application-verdict__label { color: #2d6a4f; }
+}
+
+.application-verdict--placeholder {
+  border: 1px solid #e4e7ec;
+  background: #f6f7f9;
+  color: #98a2b3;
+
+  .application-verdict__label { color: #98a2b3; }
+}
+
 .application-details-actions {
   display: grid;
   gap: 10px;

@@ -32,6 +32,10 @@ class ResumePolicy < ApplicationPolicy
     edit?
   end
 
+  def set_as_default?
+    edit?
+  end
+
   def dismiss_advice?
     edit?
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_020822) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_02_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -64,6 +64,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_020822) do
     t.string "status"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.text "verdict"
+    t.datetime "verdict_generated_at"
     t.index ["job_opening_id"], name: "index_job_applications_on_job_opening_id"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
   end
@@ -100,8 +102,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_020822) do
     t.string "callback_token"
     t.text "content"
     t.datetime "created_at", null: false
+    t.boolean "is_default", default: false
     t.bigint "job_application_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["is_default"], name: "index_resumes_on_is_default"
     t.index ["job_application_id"], name: "index_resumes_on_job_application_id"
   end
 

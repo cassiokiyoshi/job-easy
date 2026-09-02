@@ -23,6 +23,11 @@ class JobApplicationsController < ApplicationController
     @resume = @job_application.resume || @job_application.build_resume
     @chat = @job_application.chat || @job_application.build_chat
     @message = Message.new
+
+    @default_resume = current_user.default_resume
+    if @job_application.verdict.blank? && @default_resume.present?
+      GenerateVerdictJob.perform_later(@job_application.id)
+    end
   end
 
   def create
