@@ -52,8 +52,17 @@ class ResumesController < ApplicationController
 
   def recommendations
     authorize @resume
-    content = Resumes::TextExtractor.new(@resume).call
-    @resume.update(content: content)
+    blob = @resume.cv_file.blob
+    Tempfile.create(["resume", ".docx"]) do |file|
+      file.binmode
+      file.write(blob.download)
+      file.rewind
+
+      doc = Docx::Document.open(file.path)
+      @resume.update(
+        content: doc.text
+      )
+    end
     job_opening = @resume.job_application.job_opening
     jd = job_opening.content
 
