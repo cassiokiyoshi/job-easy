@@ -117,8 +117,7 @@ module Ai
       def job_opening = chat.job_application.job_opening
 
       def resume_content
-        application = chat.job_application
-        application.resume&.content || application.user.default_resume&.content
+        chat.job_application.resume.content
       end
 
       def job_description = job_opening.content

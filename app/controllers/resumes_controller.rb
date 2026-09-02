@@ -5,14 +5,15 @@ class ResumesController < ApplicationController
   before_action :set_resume, only: %i[edit update destroy recommendations dismiss_advice set_as_default]
   def create
     @job_application = JobApplication.find(params[:job_application_id])
-    @resume = Resume.new(resume_params)
-    @resume.job_application = @job_application
+    @resume = @job_application.resume || @job_application.build_resume
+    @resume.assign_attributes(resume_params)
     authorize @resume
 
+    # extract the uploaded .docx text into content before saving
     if @resume.save
+      extract_content(@resume)
       redirect_to edit_resume_path(@resume)
     else
-      flash.now[:alert] = @resume.errors.full_messages.to_sentence
       render "job_applications/show", status: :unprocessable_entity
     end
   end
@@ -52,17 +53,6 @@ class ResumesController < ApplicationController
 
   def recommendations
     authorize @resume
-    blob = @resume.cv_file.blob
-    Tempfile.create(["resume", ".docx"]) do |file|
-      file.binmode
-      file.write(blob.download)
-      file.rewind
-
-      doc = Docx::Document.open(file.path)
-      @resume.update(
-        content: doc.text
-      )
-    end
     job_opening = @resume.job_application.job_opening
     jd = job_opening.content
 
@@ -108,6 +98,18 @@ class ResumesController < ApplicationController
 
   def set_resume
     @resume = Resume.find(params[:id])
+  end
+
+  # Downloads the attached .docx and stores its plain text in content.
+  def extract_content(resume)
+    # return unless resume.cv_file.attached?
+
+    Tempfile.create(["resume", ".docx"]) do |file|
+      file.binmode
+      file.write(resume.cv_file.download)
+      file.rewind
+      resume.update!(content: Docx::Document.open(file.path).text)
+    end
   end
 
   def all_advices(ai_response)
