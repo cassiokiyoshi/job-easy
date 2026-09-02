@@ -3,6 +3,7 @@ module InterviewPrep
     # Picker: the user's applications to prep for.
     def index
       @job_applications = policy_scope(JobApplication)
+                          .where.not(status: %w[Accepted Rejected])
                           .includes(job_opening: :company)
                           .order(created_at: :desc)
     end
