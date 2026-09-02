@@ -146,6 +146,23 @@
           </dd></div>
         </dl>
 
+        <% if @job_application.verdict.present? %>
+          <div class="application-verdict application-verdict--ready">
+            <p class="application-verdict__label">Your fit</p>
+            <%= simple_format(@job_application.verdict, {}, wrapper_tag: "p") %>
+          </div>
+        <% elsif @default_resume.present? %>
+          <div class="application-verdict application-verdict--placeholder">
+            <p class="application-verdict__label">Your fit</p>
+            <p>Checking your fit for this role — refresh in a moment.</p>
+          </div>
+        <% else %>
+          <div class="application-verdict application-verdict--placeholder">
+            <p class="application-verdict__label">Your fit</p>
+            <p>Set a default resume to see whether this role is a good fit.</p>
+          </div>
+        <% end %>
+
         <div class="application-details-actions">
           <%= link_to "View opening details", job_opening_path(opening), class: "application-show-button application-show-button--primary" %>
           <% if @job_application.resume.persisted? %>
