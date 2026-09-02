@@ -12,7 +12,10 @@
 
   <div class="resume-buttons">
     <%= link_to "Apply for this job", job_application_path(@resume.job_application), data: {controller: "redirect", redirect_url_value: @resume.job_application.job_opening.job_url, action: "click->redirect#openUrl"}, class: "btn go-to-page-btn my-1"  %>
-    <%= link_to "Ask Job Easy for suggestions", recommendations_resume_path(@resume), data: {turbo_method: "post"}, class: "btn go-to-page-btn my-1" %>
+    <%= button_to recommendations_resume_path(@resume), class: "btn go-to-page-btn recommend-btn my-1" do %>
+      <i class="fa-solid fa-circle-notch fa-spin me-0" aria-hidden="true"></i>
+      <span>Ask Job Easy for suggestions</span>
+    <% end %>
     <%= button_to (@resume.is_default? ? "Default resume ✓" : "Set as default resume"), set_as_default_resume_path(@resume), method: :patch, class: "btn go-to-page-btn my-1" %>
   </div>
 </div>
