@@ -119,7 +119,7 @@
         <div class="application-task-card__list">
           <% if @job_application.tasks.any? %>
             <% @job_application.tasks.order(:position, :created_at).each do |task| %>
-              <%= render "tasks/task", task: task %>
+              <%= render "tasks/task", task: task, chat_enabled: true %>
             <% end %>
           <% else %>
             <p class="application-task-card__empty">No tasks yet. Refresh tasks to create suggestions for this application.</p>

@@ -23,17 +23,25 @@
     <p class="task-row__name"><%= task.name %></p>
   </div>
 
-  <%= button_to task_path(task),
-                method: :delete,
-                class: "task-row__delete",
-                form: {
-                  data: {
-                    turbo_confirm: "Delete this task?"
-                  }
-                },
-                aria: {
-                  label: "Delete #{task.name}"
-                } do %>
-    <span aria-hidden="true">&times;</span>
-  <% end %>
+  <details class="task-row__menu" data-controller="task-menu">
+    <summary class="task-row__menu-trigger" aria-label="More options for <%= task.name %>">
+      <span aria-hidden="true">&hellip;</span>
+    </summary>
+
+    <div class="task-row__menu-options">
+      <% if local_assigns.fetch(:chat_enabled, false) %>
+        <button type="button"
+                data-action="chat-panel#openForTask"
+                data-task-content="<%= task.name %>">
+          Chat about this task
+        </button>
+      <% end %>
+
+      <%= button_to "Delete task",
+                    task_path(task),
+                    method: :delete,
+                    class: "task-row__menu-delete",
+                    form: { data: { turbo_confirm: "Delete this task?" } } %>
+    </div>
+  </details>
 </div>

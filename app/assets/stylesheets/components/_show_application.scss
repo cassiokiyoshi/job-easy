@@ -424,6 +424,11 @@ $application-chat-surface: #fff;
     font-size: 14px;
     font-weight: 500;
   }
+
+  .task-row:last-child .task-row__menu-options {
+    top: auto;
+    bottom: 32px;
+  }
 }
 
 .application-task-card__empty {
@@ -903,6 +908,16 @@ body.application-chat-is-open {
     border-radius: 8px;
     font-weight: 600;
   }
+}
+
+.application-chat__task-context {
+  margin: 0;
+  padding: 7px 10px;
+  color: $application-blue;
+  background: rgba($application-blue, 0.08);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 @container application-show (max-width: 900px) {
