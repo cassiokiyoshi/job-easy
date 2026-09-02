@@ -1,4 +1,10 @@
-<section class="application-chat" aria-labelledby="interview-chat-title">
+<section id="<%= dom_id(chat, :interview_chat) %>"
+         class="application-chat"
+         aria-label="Interview chat">
+  <% if chat.persisted? %>
+    <%= turbo_stream_from [chat, :messages] %>
+  <% end %>
+
   <%= render "interview_prep/sessions/messages", chat: chat %>
 
   <%= form_with model: message,
@@ -6,7 +12,7 @@
                 class: "application-chat__form",
                 data: {
                   controller: "chat-form",
-                  action: "keydown->chat-form#submitOnEnter"
+                  action: "keydown->chat-form#submitOnEnter turbo:submit-end->chat-form#reset"
                 } do |form| %>
     <% if message.errors.any? %>
       <p class="application-chat__error">
