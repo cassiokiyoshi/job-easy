@@ -1,0 +1,15 @@
+<% opening = @job_application.job_opening %>
+<% content_for :title, "Interview prep - #{opening.title} | JobEasy" %>
+
+<div class="application-chat-page interview-prep-session">
+  <%= link_to "Back to Interview Simulation",
+              interview_prep_sessions_path,
+              class: "page-back-link" %>
+
+  <h1>Prep for <%= opening.title %> at <%= opening.company.name %></h1>
+
+  <%= render "interview_prep/sessions/chat",
+             job_application: @job_application,
+             chat: @chat,
+             message: @message %>
+</div>

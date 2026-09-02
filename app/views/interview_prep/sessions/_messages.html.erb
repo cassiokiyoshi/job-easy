@@ -1,0 +1,46 @@
+<div id="<%= dom_id(chat, :messages) %>"
+     class="application-chat__messages-shell"
+     data-controller="chat-scroll">
+  <button type="button"
+          class="application-chat__scroll-button application-chat__scroll-button--top"
+          aria-label="Go to first message"
+          hidden
+          data-chat-scroll-target="topButton"
+          data-action="chat-scroll#scrollToTop">
+    &uarr;
+  </button>
+
+  <div class="application-chat__messages"
+       aria-live="polite"
+       data-chat-scroll-target="viewport"
+       data-action="scroll->chat-scroll#updateButtons">
+    <% messages = chat.messages.to_a %>
+
+    <% if messages.any? %>
+      <% messages.each do |chat_message| %>
+        <article class="application-chat__message application-chat__message--<%= chat_message.role %>">
+          <div class="application-chat__message-content">
+            <% if chat_message.role == "user" %>
+              <p><%= chat_message.content %></p>
+            <% else %>
+              <%= interview_markdown(chat_message.content) %>
+            <% end %>
+          </div>
+        </article>
+      <% end %>
+    <% else %>
+      <div class="application-chat__empty">
+        <p>Loading your session…</p>
+      </div>
+    <% end %>
+  </div>
+
+  <button type="button"
+          class="application-chat__scroll-button application-chat__scroll-button--bottom"
+          aria-label="Go to latest message"
+          hidden
+          data-chat-scroll-target="bottomButton"
+          data-action="chat-scroll#scrollToBottom">
+    &darr;
+  </button>
+</div>

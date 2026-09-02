@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_02_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_02_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -45,8 +45,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_02_000000) do
   create_table "chats", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "job_application_id", null: false
+    t.string "purpose", default: "general", null: false
     t.datetime "updated_at", null: false
-    t.index ["job_application_id"], name: "index_chats_on_job_application_id", unique: true
+    t.index ["job_application_id", "purpose"], name: "index_chats_on_job_application_id_and_purpose", unique: true
   end
 
   create_table "companies", force: :cascade do |t|

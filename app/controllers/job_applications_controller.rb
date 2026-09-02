@@ -21,7 +21,7 @@ class JobApplicationsController < ApplicationController
     end
 
     @resume = @job_application.resume || @job_application.build_resume
-    @chat = @job_application.chat || @job_application.build_chat
+    @chat = @job_application.chats.general.first || @job_application.chats.general.new
     @message = Message.new
 
     @default_resume = current_user.default_resume

@@ -1,0 +1,22 @@
+<section class="application-chat interview-chat" aria-labelledby="interview-chat-title">
+
+  <%= render "interview_prep/sessions/messages", chat: chat %>
+
+  <%= form_with model: message,
+                url: job_application_interview_session_messages_path(job_application),
+                class: "application-chat__form",
+                data: {
+                  controller: "chat-form",
+                  action: "keydown->chat-form#submitOnEnter"
+                } do |form| %>
+    <%= form.label :content, "Your answer", class: "visually-hidden" %>
+    <div class="application-chat__composer">
+      <%= form.text_area :content,
+                         placeholder: "Type your answer…",
+                         rows: 3,
+                         required: true %>
+
+      <%= form.submit "Send", data: { turbo_submits_with: "Sending…" } %>
+    </div>
+  <% end %>
+</section>

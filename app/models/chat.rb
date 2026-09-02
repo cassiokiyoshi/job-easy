@@ -5,5 +5,7 @@ class Chat < ApplicationRecord
            -> { order(:created_at, :id) },
            dependent: :destroy
 
-  validates :job_application_id, uniqueness: true
+  # One chat per purpose per application; the DB enforces uniqueness on
+  # [job_application_id, purpose].
+  enum :purpose, { general: "general", interview_prep: "interview_prep" }
 end
