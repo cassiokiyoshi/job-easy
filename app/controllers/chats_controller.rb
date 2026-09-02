@@ -1,7 +1,6 @@
 class ChatsController < ApplicationController
   def show
     @job_application = current_user.job_applications
-                                   .includes(chats: :messages)
                                    .find(params[:job_application_id])
 
     authorize @job_application, :show?

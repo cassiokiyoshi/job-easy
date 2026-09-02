@@ -1,18 +1,16 @@
 module Ai
   module InterviewCoach
-    # The five stages the coach works through, in order. This is the single
-    # source of truth for the syllabus shown in the UI and for the stage
-    # descriptions injected into the system prompt. Progression itself is not
-    # tracked in the database - the coach follows the conversation.
+    # The five areas the mock interview works through, in order. Single source of
+    # truth for the area descriptions injected into the system prompt. Progression
+    # is not tracked anywhere - the interviewer follows the conversation.
     module Stages
       Stage = Struct.new(
-        :key, :number, :title, :goal, :what_good_looks_like, :hard_questions,
+        :number, :title, :goal, :what_good_looks_like, :hard_questions,
         keyword_init: true
       )
 
       ALL = [
         Stage.new(
-          key: "career_change_story",
           number: 1,
           title: "Career-change story",
           goal: "Explain why they are moving into software development, told with " \
@@ -29,7 +27,6 @@ module Ai
           ]
         ),
         Stage.new(
-          key: "project_walkthrough",
           number: 2,
           title: "Project walkthrough",
           goal: "Walk through one project the way they would in a code review: the " \
@@ -45,7 +42,6 @@ module Ai
           ]
         ),
         Stage.new(
-          key: "motivation",
           number: 3,
           title: "志望動機 for this role",
           goal: "Say why this company and why now - specific to this role, not a " \
@@ -61,7 +57,6 @@ module Ai
           ]
         ),
         Stage.new(
-          key: "experience_gap",
           number: 4,
           title: "Handling the experience gap",
           goal: "Reframe 'we want 3 years of experience' into what they do have plus " \
@@ -77,7 +72,6 @@ module Ai
           ]
         ),
         Stage.new(
-          key: "training_questions",
           number: 5,
           title: "Questions to ask about training",
           goal: "Prepare questions to ask the company about how they support junior " \
@@ -95,14 +89,6 @@ module Ai
 
       def self.stages
         ALL
-      end
-
-      def self.find(key)
-        ALL.find { |stage| stage.key == key.to_s }
-      end
-
-      def self.first
-        ALL.first
       end
     end
   end

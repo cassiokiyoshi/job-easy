@@ -14,24 +14,16 @@
        aria-live="polite"
        data-chat-scroll-target="viewport"
        data-action="scroll->chat-scroll#updateButtons">
-    <% messages = chat.messages.to_a %>
-
-    <% if messages.any? %>
-      <% messages.each do |chat_message| %>
-        <article class="application-chat__message application-chat__message--<%= chat_message.role %>">
-          <div class="application-chat__message-content">
-            <% if chat_message.role == "user" %>
-              <p><%= chat_message.content %></p>
-            <% else %>
-              <%= interview_markdown(chat_message.content) %>
-            <% end %>
-          </div>
-        </article>
-      <% end %>
-    <% else %>
-      <div class="application-chat__empty">
-        <p>Loading your session…</p>
-      </div>
+    <% chat.messages.each do |chat_message| %>
+      <article class="application-chat__message application-chat__message--<%= chat_message.role %>">
+        <div class="application-chat__message-content">
+          <% if chat_message.role == "user" %>
+            <p><%= chat_message.content %></p>
+          <% else %>
+            <%= interview_markdown(chat_message.content) %>
+          <% end %>
+        </div>
+      </article>
     <% end %>
   </div>
 
