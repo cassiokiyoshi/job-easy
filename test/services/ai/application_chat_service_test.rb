@@ -56,7 +56,7 @@ class Ai::ApplicationChatServiceTest < ActiveSupport::TestCase
       status: "Applied"
     )
 
-    @chat = application.create_chat!
+    @chat = application.chats.general.create!
 
     @chat.messages.create!(
       role: "user",

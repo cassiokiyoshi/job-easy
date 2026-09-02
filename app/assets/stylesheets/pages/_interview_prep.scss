@@ -1,0 +1,144 @@
+$interview-blue: #003d96;
+$interview-text: #111827;
+$interview-muted: #6b7280;
+$interview-border: #e5e7eb;
+
+// --- Picker ------------------------------------------------------------------
+
+.interview-prep-index {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 32px 64px;
+  color: $interview-text;
+}
+
+.interview-prep-index__header {
+  margin-bottom: 28px;
+
+  .eyebrow {
+    margin: 0 0 4px;
+    color: $interview-muted;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: 26px;
+    font-weight: 600;
+  }
+}
+
+.interview-prep-index__lead {
+  margin: 0;
+  color: $interview-muted;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.interview-prep-index__list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.interview-prep-index__card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid $interview-border;
+  border-radius: 12px;
+  color: $interview-text;
+  text-decoration: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+
+  &:hover {
+    border-color: rgba($interview-blue, 0.5);
+    box-shadow: 0 2px 12px rgba(17, 24, 39, 0.06);
+  }
+
+  .company-mark {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border-radius: 10px;
+    background: rgba($interview-blue, 0.1);
+    color: $interview-blue;
+    font-weight: 700;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 2px 0 0;
+    color: $interview-muted;
+    font-size: 13px;
+  }
+}
+
+.interview-prep-index__card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.interview-prep-index__card-cta {
+  color: $interview-muted;
+  font-size: 18px;
+}
+
+.interview-prep-index__empty {
+  color: $interview-muted;
+  font-size: 14px;
+}
+
+// --- Session ---------------------------------------------------------------
+
+.interview-prep-session {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 12px 32px 64px;
+
+  h1 {
+    margin: 0 0 20px;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+}
+
+.interview-prep-session .application-chat {
+  height: 70vh;
+  min-height: 480px;
+}
+
+.interview-prep-session {
+  .application-chat__messages-shell,
+  .application-chat__form {
+    background: #f5f6f8;
+  }
+
+  .application-chat__message--assistant {
+    background: #fff;
+  }
+}
+
+@media (max-width: 600px) {
+  .interview-prep-index,
+  .interview-prep-session {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

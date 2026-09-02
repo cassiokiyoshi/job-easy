@@ -5,11 +5,9 @@ class MessagesController < ApplicationController
 
     authorize @job_application, :show?
 
-    @chat = @job_application.chat || @job_application.build_chat
+    @chat = @job_application.chats.general.first || @job_application.chats.general.new
     @task_context = verified_task_context
-    @message = @chat.messages.build(
-      message_params.except(:task_context).merge(role: "user")
-    )
+    @message = @chat.messages.build(message_params.except(:task_context).merge(role: "user"))
 
     if @message.valid?
       Chat.transaction do

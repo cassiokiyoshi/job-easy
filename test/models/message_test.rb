@@ -11,7 +11,7 @@ class MessageTest < ActiveSupport::TestCase
     opening = JobOpening.create!(company:, title: "Developer")
     application = JobApplication.create!(user:, job_opening: opening)
 
-    @chat = application.create_chat!
+    @chat = application.chats.general.create!
   end
 
   test "accepts supported roles" do

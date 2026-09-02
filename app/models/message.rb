@@ -1,5 +1,5 @@
 class Message < ApplicationRecord
-  ROLES = %w[user assistant].freeze
+  ROLES = %w[user assistant]
 
   belongs_to :chat
 
