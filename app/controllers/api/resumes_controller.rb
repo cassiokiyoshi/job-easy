@@ -10,7 +10,7 @@ class Api::ResumesController < ApplicationController
     body = JSON.parse(request.body.read)
     verify_jwt!(body)
 
-    ResumeSaveJob.perform_later(resume.id, body["url"]) if [2, 6].include?(body["status"])
+    ResumeSaveJob.perform_later(resume.id, body["url"]) if body["status"] == 2 && body["url"].present?
 
     render json: { error: 0 }
   rescue JWT::DecodeError
