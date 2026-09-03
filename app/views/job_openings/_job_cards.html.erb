@@ -6,12 +6,16 @@
             <% if job_opening.closed  %>
               <span class="job-card__deadline">Closed</span>
               <% else %>
-              <span class="job-card__deadline">Open</span>
+              <%# <span class="job-card__deadline">Open</span> %>
             <% end %>
           </div>
           <div class="div">
             <%= link_to "", class: "job-card__save" do %>
-              <i class="fa-regular fa-bookmark"></i>
+              <% if job_opening.job_applications.where(user: current_user).empty? %>
+                <i class="fa-regular fa-bookmark"></i>
+              <% else %>
+                <i class="fa-solid fa-bookmark"> </i>
+              <% end %>
             <% end %>
           </div>
         </div>

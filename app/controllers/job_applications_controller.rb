@@ -25,9 +25,9 @@ class JobApplicationsController < ApplicationController
     @message = Message.new
 
     @default_resume = current_user.default_resume
-    if @job_application.verdict.blank? && @default_resume.present?
-      GenerateVerdictJob.perform_later(@job_application.id)
-    end
+    return unless @job_application.verdict.blank? && @default_resume.present?
+
+    GenerateVerdictJob.perform_later(@job_application.id)
   end
 
   def create
