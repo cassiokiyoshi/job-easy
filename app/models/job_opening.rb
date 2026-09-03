@@ -1,6 +1,6 @@
 class JobOpening < ApplicationRecord
   belongs_to :company
-  has_many :applications
+  has_many :job_applications
 
   validates :title, presence: true
 

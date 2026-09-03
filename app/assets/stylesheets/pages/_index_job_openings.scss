@@ -84,9 +84,10 @@ $jo-card-min-height: 240px; // baseline height; grows only if the title needs mo
 
 .job-openings-grid .job-card {
   position: relative;
-  width: 100%;
-  min-width: 0;
-  min-height: $jo-card-min-height;
+  // width: 100%;
+  // min-width: 0;
+  // min-height: $jo-card-min-height;
+  height: 248px;
   background: #fff;
   border: 1px solid #e7e9ee;
   border-radius: 16px;
@@ -97,7 +98,7 @@ $jo-card-min-height: 240px; // baseline height; grows only if the title needs mo
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 
   // neutralize the older .job-card rules from _job_index.scss
-  max-width: none;
+  // max-width: none;
   margin: 0;
   gap: 0;
   align-items: stretch;
@@ -126,6 +127,7 @@ $jo-card-min-height: 240px; // baseline height; grows only if the title needs mo
   background: $jo-panel-bg;
   border-radius: 12px;
   padding: 16px;
+  height: 150px;
   // a long title adds lines here, growing the panel (and the card with it)
 }
 
@@ -182,8 +184,8 @@ $jo-card-min-height: 240px; // baseline height; grows only if the title needs mo
 }
 
 .job-card__footer {
-  margin-top: auto; // keeps location/salary at the bottom of short cards
-  padding: 12px 6px 0;
+  // margin-top: auto; // keeps location/salary at the bottom of short cards
+  // padding: 12px 6px 0;
 }
 
 .job-card__location {

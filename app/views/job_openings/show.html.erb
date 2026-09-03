@@ -97,7 +97,11 @@
         <% if @job_application.present? %>
           <%= link_to "Go to application", job_application_path(@job_application), class: "job-show-button job-show-button--primary" %>
         <% else %>
-          <%= link_to "Save job", job_opening_job_applications_path(@job_opening), data: { turbo_method: :post }, class: "job-show-button job-show-button--primary" %>
+          <% if current_user %>
+            <%= link_to "Save job", job_opening_job_applications_path(@job_opening), data: { turbo_method: :post }, class: "job-show-button job-show-button--primary" %>
+          <% else %>
+            <%= link_to "Save job", new_user_session_path, class: "job-show-button job-show-button--primary"%>
+          <% end %>
         <% end %>
 
         <% if @job_opening.job_url.present? %>
