@@ -6,6 +6,13 @@ class JobOpeningsController < ApplicationController
 
     @job_openings = scope.open
     @job_openings_closed = scope.close
+    @applications_by_opening_id = if current_user
+                                    current_user.job_applications
+                                                .where(job_opening_id: scope.select(:id))
+                                                .index_by(&:job_opening_id)
+                                  else
+                                    {}
+                                  end
     @sources = JobOpening.all.distinct.pluck(:source).compact.sort
     @current_source = params[:source]
   end
