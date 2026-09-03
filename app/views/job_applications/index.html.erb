@@ -35,10 +35,7 @@
                   ].join(" ")
                 } do %>
               <div class="card-heading">
-                <span class="company-mark">
-                  <%= application.job_opening.company.name.first.upcase %>
-                </span>
-
+                    <span class="dashboard-job__mark" style="<%= application.job_opening.company.logo.attached? ? "background-image: url(#{cl_image_path(application.job_opening.company.logo.key, secure: true)})" : "background-color: rgba(0, 61, 150, 0.09)" %>"></span>
                 <div>
                   <h3><%= application.job_opening.title %></h3>
                   <p><%= application.job_opening.company.name %></p>
