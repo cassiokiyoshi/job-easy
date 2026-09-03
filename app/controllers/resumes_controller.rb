@@ -1,4 +1,6 @@
 require 'docx'
+require 'tempfile'
+require 'open-uri'
 
 class ResumesController < ApplicationController
   before_action :authenticate_user!
@@ -97,9 +99,15 @@ class ResumesController < ApplicationController
     # return unless resume.cv_file.attached?
 
     Tempfile.create(["resume", ".docx"]) do |file|
-      file.binmode
-      file.write(resume.cv_file.download)
-      file.rewind
+      IO.copy_stream(
+        # URI.open("https://res.cloudinary.com/q4omjogk/raw/upload/v1788417465/development/#{resume.cv_file.key}"), file
+        URI.open(resume.cv_file.url), file
+      )
+      # p doc = Docx::Document.open(file.path)
+      #   file.binmode
+      #   file.write(resume.cv_file.download)
+      #   file.rewind
+      #   p file.read
       resume.update!(content: Docx::Document.open(file.path).text)
     end
   end
