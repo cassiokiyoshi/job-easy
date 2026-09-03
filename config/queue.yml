@@ -7,9 +7,15 @@ default: &default
       threads: 3
       processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
       polling_interval: 1
+  scheduler:
+    dynamic_tasks_enabled: true
 
 development:
   <<: *default
+  scrape_wantedly_job:
+    class: ScrapeWantedlyJob
+    schedule: every day at 6am
+
 
 test:
   <<: *default
