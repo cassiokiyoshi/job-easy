@@ -100,8 +100,8 @@ class ResumesController < ApplicationController
 
     Tempfile.create(["resume", ".docx"]) do |file|
       IO.copy_stream(
-        # URI.open("https://res.cloudinary.com/q4omjogk/raw/upload/v1788417465/development/#{resume.cv_file.key}"), file
-        URI.open(resume.cv_file.url), file
+        URI.open("https://res.cloudinary.com/q4omjogk/raw/upload/v1788417465/development/#{resume.cv_file.key}"), file
+        # URI.open(resume.cv_file.url), file
       )
       # p doc = Docx::Document.open(file.path)
       #   file.binmode
