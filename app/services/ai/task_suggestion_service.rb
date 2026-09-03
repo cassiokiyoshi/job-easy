@@ -3,9 +3,9 @@ module Ai
     MAX_SUGGESTIONS = 3
 
     STATUS_GUIDANCE = {
-      "Saved" => "Research the role, tailor the resume, and prepare the application.",
-      "Applied" => "Prepare a follow-up and begin interview preparation.",
-      "Interviewed" => "Send a thank-you message and prepare for the next round.",
+      "Saved" => "Apply the job by deadline, research the role, tailor the resume.",
+      "Applied" => "Prepare a follow-up email after 1 week of applying, and begin interview preparation. When interview is scheduled, stalk interviewers on linkedin",
+      "Interviewed" => "Send a thank-you message or email, follow up email after 3 business days, and prepare for the next round.",
       "Offered" => "Review the offer, benefits, and possible negotiation.",
       "Accepted" => "Complete onboarding and close other applications.",
       "Rejected" => "Request feedback, record lessons, and address skill gaps."
@@ -25,25 +25,39 @@ module Ai
       parse_refresh_plan(response.content)
     end
 
+    def one_suggestion
+      response = RubyLLM.chat.ask(prompt(max_suggestions: 1, require_new: true))
+      parse_refresh_plan(response.content, limit: 1)[:suggestions].first
+    end
+
     private
 
     attr_reader :job_application
 
-    def prompt
+    def prompt(max_suggestions: MAX_SUGGESTIONS, require_new: false)
       <<~PROMPT
         You help job seekers decide their next actions.
 
-        Review the existing incomplete tasks for this job application.
+        Review the incomplete tasks from the application's previous status.
 
-        Decide which incomplete tasks remain useful for the application's
-        current status. Also create at most #{MAX_SUGGESTIONS} additional
-        new tasks.
-        Create tasks in english language.
+        When changing status make sure the number of tasks is not over #{max_suggestions}.
+
+        Keep an incomplete task only if it is still relevant and useful for the application's current status. Prefer reusing a relevant existing task over creating a new one when it serves the same purpose.
+
+        #{require_new ? "Create exactly one new task for the current status." : "Create up to #{max_suggestions} tasks for the current status:"}
+
+        Reuse relevant incomplete tasks when appropriate.
+
+        Create new tasks when the existing tasks are no longer relevant or when better next steps exist.
+
+        Do not include completed, outdated, duplicate, or redundant tasks.
+
+        Each task should be practical, specific, and appropriate for the application's current status.
+
+        Write all tasks in English.
 
         Requirements:
-        - Keep an existing task only when it is still useful for the current status.
         - Return the IDs of useful existing incomplete tasks in keep_task_ids.
-        - Create at most #{MAX_SUGGESTIONS} new tasks in suggestions.
         - Base decisions on the application status and job-opening details.
         - First judge whether the job description states clear technical needs, such
           as named skills, tools, project types, or specific experience.
@@ -100,12 +114,12 @@ module Ai
       }
     end
 
-    def parse_refresh_plan(content)
+    def parse_refresh_plan(content, limit: MAX_SUGGESTIONS)
       parsed = JSON.parse(remove_code_fence(content))
 
       {
         keep_task_ids: valid_keep_task_ids(parsed["keep_task_ids"]),
-        suggestions: normalize_suggestions(parsed["suggestions"])
+        suggestions: normalize_suggestions(parsed["suggestions"], limit:)
       }
     rescue JSON::ParserError, TypeError
       raise "The AI returned an invalid task-suggestion response"
@@ -120,7 +134,7 @@ module Ai
         .select { |id| allowed_ids.include?(id) }
     end
 
-    def normalize_suggestions(suggestions)
+    def normalize_suggestions(suggestions, limit: MAX_SUGGESTIONS)
       existing_names = job_application.tasks.pluck(:name).map do |name|
         name.to_s.squish.downcase
       end
@@ -129,7 +143,7 @@ module Ai
         .filter_map { |suggestion| normalize(suggestion) }
         .uniq { |suggestion| suggestion.downcase }
         .reject { |suggestion| existing_names.include?(suggestion.downcase) }
-        .first(MAX_SUGGESTIONS)
+        .first(limit)
     end
 
     def normalize(suggestion)
