@@ -1,6 +1,5 @@
 <% job_openings.each do |job_opening| %>
   <% application = applications_by_opening_id[job_opening.id] %>
-  <% saved = application&.saved? %>
 
   <article class="job-card <%= 'job-card--closed' if job_opening.closed? %>">
     <div class="job-card__panel">
@@ -15,17 +14,10 @@
 
         <div class="job-card__bookmark">
           <% if current_user %>
-            <% if saved %>
-              <span class="job-card__save job-card__save--saved" aria-label="Job saved" title="Job saved">
+            <% if application %>
+              <span class="job-card__save job-card__save--saved" aria-label="Job tracked" title="<%= application.status %>">
                 <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
               </span>
-            <% elsif application %>
-              <%= button_to job_application_path(application), method: :patch,
-                    params: { job_application: { status: "Saved" }, bookmark: true, source: params[:source] },
-                    class: "job-card__save", title: "Save job",
-                    aria: { label: "Save #{job_opening.title}" } do %>
-                <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
-              <% end %>
             <% else %>
               <%= button_to job_opening_job_applications_path(job_opening), method: :post,
                     params: { bookmark: true, source: params[:source] }, class: "job-card__save", title: "Save job",
