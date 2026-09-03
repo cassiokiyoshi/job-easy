@@ -53,8 +53,10 @@ class ResumesController < ApplicationController
 
   def recommendations
     authorize @resume
+    content = Resumes::TextExtractor.new(@resume).call
+    @resume.update(content: content)
     job_opening = @resume.job_application.job_opening
-    # ResumeRecommendationJob.perform_later(@resume, job_opening)
+    jd = job_opening.content
 
     chat = RubyLLM.chat.with_schema(AiResponseSchema)
     response = chat.ask(
