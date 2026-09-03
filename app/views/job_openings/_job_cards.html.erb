@@ -8,14 +8,14 @@
           <span class="dashboard-job__mark" style="<%= job_opening.company.logo.attached? ? "background-image: url(#{cl_image_path(job_opening.company.logo.key, secure: true)})" : "background-color: rgba(0, 61, 150, 0.09)" %>"></span>
         </div>
           <%# <div class="bookmark_saved">
-            <%# <% if job_opening.closed  %> %>
+            <%# <% if job_opening.closed  %>
               <%# <span class="job-card__deadline">Closed</span> %>
               <%# else %>
               <%# <span class="job-card__deadline">Open</span> %>
             <%# end %>
           <%# </div> %>
           <%# <div class="div"> %>
-            <%# <%=# link_to "", class: "job-card__save" do %> %>
+            <%# <%=# link_to "", class: "job-card__save" do %>
               <%# if job_opening.job_applications.where(user: current_user).empty? %>
                 <%# <i class="fa-regular fa-bookmark"></i> %>
               <%# else %>
