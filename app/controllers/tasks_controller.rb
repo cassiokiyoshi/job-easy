@@ -50,6 +50,29 @@ class TasksController < ApplicationController
     end
   end
 
+  def clear_completed_application
+    authorize current_user.tasks.build, :destroy?
+    completed_tasks = policy_scope(Task)
+                      .where(completed: true)
+                      .where.not(job_application_id: nil)
+    removed_count = completed_tasks.destroy_all.size
+
+    redirect_to tasks_path,
+                notice: "#{removed_count} completed application task(s) cleared.",
+                status: :see_other
+  end
+
+  def clear_completed_personal
+    authorize current_user.tasks.build, :destroy?
+    completed_tasks = policy_scope(Task)
+                      .where(completed: true, job_application_id: nil)
+    removed_count = completed_tasks.destroy_all.size
+
+    redirect_to tasks_path,
+                notice: "#{removed_count} completed personal task(s) cleared.",
+                status: :see_other
+  end
+
   private
 
   def load_index_data
@@ -71,11 +94,15 @@ class TasksController < ApplicationController
       task.job_application_id.nil?
     end
 
+    tasks_by_application = application_tasks.group_by(&:job_application)
+
     @application_tasks_by_status =
-      application_tasks
-      .group_by { |task| task.job_application.status }
-      .transform_values do |tasks|
-        tasks.group_by(&:job_application)
+      @job_applications
+      .group_by(&:status)
+      .transform_values do |applications|
+        applications.index_with do |application|
+          tasks_by_application.fetch(application, [])
+        end
       end
   end
 

@@ -131,8 +131,12 @@
 }
 
 .task-panel__form--application form {
-  grid-template-columns: minmax(220px, 1.4fr) minmax(210px, 1fr) auto;
+  grid-template-columns: minmax(220px, 1.4fr) minmax(210px, 1fr) 110px;
   align-items: start;
+
+  .btn {
+    width: 100%;
+  }
 }
 
 .task-panel__form--personal {
@@ -227,6 +231,18 @@
   align-items: center;
   gap: 10px;
   min-width: 0;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover h4 {
+    color: #0d4aa2;
+  }
+
+  &:focus-visible {
+    border-radius: 6px;
+    outline: 2px solid #0d4aa2;
+    outline-offset: 3px;
+  }
 
   h4 {
     margin: 0 0 2px;
@@ -254,10 +270,31 @@
 
 .application-task-card__link {
   flex: 0 0 auto;
+  padding: 0;
   color: #0d4aa2;
+  background: transparent;
+  border: 0;
   font-size: 0.75rem;
   font-weight: 700;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.application-task-card__actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  text-align: right;
+
+  form {
+    margin: 0;
+  }
+
+  .application-task-card__link {
+    line-height: 1.25;
+  }
 }
 
 .application-task-card__tasks,
@@ -439,4 +476,5 @@
   .task-panel__form--application .btn {
     width: 100%;
   }
+
 }
