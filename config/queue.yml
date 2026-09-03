@@ -12,10 +12,9 @@ default: &default
 
 development:
   <<: *default
-  scrape_wantedly_job:
-    class: ScrapeWantedlyJob
-    schedule: every day at 6am
-
+  # scrape_wantedly_job:
+  #   class: ScrapeWantedlyJob
+  #   schedule: every day at 6am
 
 test:
   <<: *default
