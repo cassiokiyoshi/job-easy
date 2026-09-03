@@ -8,16 +8,38 @@
   background-color: rgba(0, 61, 150, 0.79);
   border-radius: 0.5rem;
   color: white;
+  width: 236px;
 
   &:hover {
     background-color: rgba(0, 61, 150, 0.5);
     color:white;
   }
 }
+
+// recommendations button only: loading state while the request is in flight
+.recommend-btn {
+  .fa-circle-notch { display: none; }
+
+  &:disabled {
+    width: 236px;
+    background-color: rgba(0, 61, 150, 0.69);
+    border-color: transparent;
+    color: white;
+    opacity: 1;
+
+    span { display: none; }
+    &::after { content: "Generating…"; }
+    .fa-circle-notch {
+      display: inline-block;
+      margin-right: 0.4rem;
+    }
+  }
+}
 .resume-buttons {
   display: flex;
   flex-direction: column;
   margin: 0 16px;
+  width: 236px;
 }
 
 #advices {
@@ -53,4 +75,8 @@
       color:white;
     }
   }
+}
+
+.notice {
+  margin-bottom: 0px;
 }

@@ -58,7 +58,7 @@ class ResumesController < ApplicationController
 
     chat = RubyLLM.chat.with_schema(AiResponseSchema)
     response = chat.ask(
-      "You are a professional tech recruiter with over 10 years of experience. You mainly recruit for new grads and mid-level engineers. I am a newbie who has #{@resume.content} in my resume content. Currently applying for #{job_opening.title} job with the following JD: #{jd}. Give me precise and brief recommendations."
+      "You are a professional tech recruiter with over 10 years of experience. You mainly recruit for new grads and mid-level engineers. I am a newbie who has #{@resume.content} in my resume content. Currently applying for #{job_opening.title} job with the following JD: #{job_opening.content}. Give me precise and brief recommendations. If something is already fulfilled, no need to give recommendation (For example, if their top part of resume is already tech projects, no need to give position recommendations)."
     )
     result = response.content
 
@@ -71,14 +71,6 @@ class ResumesController < ApplicationController
     )
 
     redirect_to edit_resume_path(@resume)
-
-    # Parse CV into content - DONE
-    # Get descrpition JD
-    # Write prompt to check this CV, Give recommendations (list of 3 things)
-    # Call RubyLLM to chat
-    # Returns in jsonb
-    # background job to add squares on the side, iterate overt the json to give recommendations
-    # When click close button, disappear
   end
 
   def dismiss_advice
