@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   resources :job_applications, only: [:index, :show, :update, :destroy] do
     member do
       post :suggest_tasks
+      post :generate_task
+      delete :clear_completed_tasks
       post :schedule_interview
     end
     resources :resumes, only: [:create]
@@ -41,7 +43,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :tasks, only: [:index, :create, :update, :destroy]
+  resources :tasks, only: [:index, :create, :update, :destroy] do
+    collection do
+      delete :clear_completed_application
+      delete :clear_completed_personal
+    end
+  end
 
   namespace :api do
     get "resumes/callback"

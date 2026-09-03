@@ -1,28 +1,71 @@
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  font-size: 16px;
-}
+.resume-edit-page {
+  width: 100%;
+  max-width: 1530px;
+  margin: 0 auto;
+  padding: 4px 30px 42px;
+  color: #111827;
 
-.go-to-page-btn {
-  background-color: rgba(0, 61, 150, 0.79);
-  border-radius: 0.5rem;
-  color: white;
+  > .page-back-link {
+    margin-bottom: 20px;
+  }
 
-  &:hover {
-    background-color: rgba(0, 61, 150, 0.5);
-    color:white;
+  > .eyebrow {
+    margin-bottom: 16px;
   }
 }
-.resume-buttons {
-  display: flex;
-  flex-direction: column;
-  margin: 0 16px;
+
+.resume-edit-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  align-items: start;
+  gap: 24px;
+}
+
+.resume-edit-main {
+  min-width: 0;
+}
+
+.resume-edit-sidebar {
+  position: sticky;
+  top: 16px;
+}
+
+.resume-actions-card {
+  padding: 20px;
+
+  .application-details-actions {
+    padding-top: 0;
+  }
+}
+
+// recommendations button only: loading state while the request is in flight
+.recommend-btn {
+  .fa-circle-notch {
+    display: none;
+  }
+
+  &:disabled {
+    color: #111827;
+    background: #e5e7eb;
+    border-color: #d1d5db;
+    opacity: 1;
+
+    span {
+      display: none;
+    }
+
+    &::after {
+      content: "Generating…";
+    }
+
+    .fa-circle-notch {
+      display: inline-block;
+      margin-right: 0.4rem;
+    }
+  }
 }
 
 #advices {
-  max-height: 130vh;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -45,12 +88,28 @@
     margin-top: 8px;
   }
 
-  .go-to-page-btn {
-    background-color: rgba(0, 61, 150, 0.60);
+}
 
-    &:hover {
-      background-color: rgba(0, 61, 150, 0.35);
-      color:white;
-    }
+.resume-actions-card__suggestions {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+@media (max-width: 900px) {
+  .resume-edit-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-edit-sidebar {
+    position: static;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .resume-edit-page {
+    padding-right: 16px;
+    padding-left: 16px;
   }
 }

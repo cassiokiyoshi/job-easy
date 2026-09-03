@@ -1,24 +1,29 @@
 <% job_openings.each do |job_opening| %>
     <article class="job-card <%= 'job-card--closed' if job_opening.closed %>">
       <div class="job-card__panel">
-        <div class="job-card__panel-top">
-          <div class="div">
-            <% if job_opening.closed  %>
-              <span class="job-card__deadline">Closed</span>
-              <% else %>
-              <span class="job-card__deadline">Open</span>
-            <% end %>
-          </div>
-          <div class="div">
-            <%= link_to "", class: "job-card__save" do %>
-              <i class="fa-regular fa-bookmark"></i>
-            <% end %>
-          </div>
-        </div>
-
+      <%# <div class="d-flex justify-content-between"> %>
         <p class="job-card__company"><%= job_opening.company.name %></p>
-        <h2 class="job-card__title"><%= job_opening.title %></h2>
-      </div>
+        <div class="d-flex">
+          <h2 class="job-card__title"><%= job_opening.title %></h2>
+          <span class="dashboard-job__mark" style="<%= job_opening.company.logo.attached? ? "background-image: url(#{cl_image_path(job_opening.company.logo.key, secure: true)})" : "background-color: rgba(0, 61, 150, 0.09)" %>"></span>
+        </div>
+          <%# <div class="bookmark_saved">
+            <%# <% if job_opening.closed  %>
+              <%# <span class="job-card__deadline">Closed</span> %>
+              <%# else %>
+              <%# <span class="job-card__deadline">Open</span> %>
+            <%# end %>
+          <%# </div> %>
+          <%# <div class="div"> %>
+            <%# <%=# link_to "", class: "job-card__save" do %>
+              <%# if job_opening.job_applications.where(user: current_user).empty? %>
+                <%# <i class="fa-regular fa-bookmark"></i> %>
+              <%# else %>
+                <%# <i class="fa-solid fa-bookmark"> </i> %>
+              <%# end %>
+            <%# end %>
+          <%# </div> %>
+      <%# </div> %>
 
       <div class="job-card__footer">
           <span class="job-card__salary">Salary: <%= job_opening.salary %></span>

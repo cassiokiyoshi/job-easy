@@ -6,6 +6,10 @@
         <div>
           <h2>Application tasks</h2>
         </div>
+        <%= button_to "Clear tasks", clear_completed_application_tasks_path,
+                      method: :delete,
+                      class: "application-task-card__link",
+                      data: { turbo_confirm: "Delete all completed application tasks?" } %>
       </div>
 
       <div class="task-panel__form task-panel__form--application">
@@ -57,16 +61,20 @@
                 <% applications.each do |application, tasks| %>
                   <article class="application-task-card">
                     <header class="application-task-card__header">
-                      <div class="application-task-card__company">
-                        <span class="application-task-card__mark"><%= application.job_opening.company.name.first.upcase %></span>
+                      <%= link_to job_application_path(application),
+                                  class: "application-task-card__company",
+                                  aria: { label: "View #{application.job_opening.title} application" } do %>
+                        <span class="dashboard-job__mark" style="<%= application.job_opening.company.logo.attached? ? "background-image: url(#{cl_image_path(application.job_opening.company.logo.key, secure: true)})" : "background-color: rgba(0, 61, 150, 0.09)" %>"></span>
                         <div>
                           <h4><%= application.job_opening.title %></h4>
                           <p><%= application.job_opening.company.name %></p>
                         </div>
-                      </div>
-                      <%= link_to job_application_path(application), class: "application-task-card__link" do %>
-                        View <span aria-hidden="true">›</span>
                       <% end %>
+                      <div class="application-task-card__actions">
+                        <%= button_to "Generate task", generate_task_job_application_path(application),
+                                      method: :post,
+                                      class: "application-task-card__link" %>
+                      </div>
                     </header>
 
                     <div class="application-task-card__tasks">
@@ -83,7 +91,7 @@
       <% else %>
         <div class="tasks-empty tasks-empty--applications">
           <h3>No application tasks yet</h3>
-          <p>Open an application and generate AI tasks based on its status and job details.</p>
+          <p>Add an application to generate AI tasks based on its status and job details.</p>
         </div>
       <% end %>
     </main>
@@ -94,6 +102,10 @@
           <div>
             <h2>Personal tasks</h2>
           </div>
+          <%= button_to "Clear tasks", clear_completed_personal_tasks_path,
+                        method: :delete,
+                        class: "application-task-card__link",
+                        data: { turbo_confirm: "Delete all completed personal tasks?" } %>
         </div>
 
         <div class="task-panel__form task-panel__form--personal">

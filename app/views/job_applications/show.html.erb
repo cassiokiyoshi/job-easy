@@ -112,9 +112,9 @@
       <section class="application-show-card application-task-card">
         <header class="application-task-card__header">
           <div><h2>My tasks</h2><p><%= pluralize(@job_application.tasks.reject(&:completed?).size, "task") %> remaining</p></div>
-          <%= button_to "Refresh tasks", suggest_tasks_job_application_path(@job_application), method: :post,
+          <%= button_to "Clear tasks", clear_completed_tasks_job_application_path(@job_application), method: :delete,
                         class: "application-task-card__refresh",
-                        data: { turbo: false, turbo_confirm: "Generate and save all suggested tasks?" } %>
+                        data: { turbo_confirm: "Delete all completed tasks for this application?" } %>
         </header>
         <div class="application-task-card__list">
           <% if @job_application.tasks.any? %>
@@ -122,7 +122,7 @@
               <%= render "tasks/task", task: task, chat_enabled: true %>
             <% end %>
           <% else %>
-            <p class="application-task-card__empty">No tasks yet. Refresh tasks to create suggestions for this application.</p>
+            <p class="application-task-card__empty">No tasks yet.</p>
           <% end %>
         </div>
       </section>

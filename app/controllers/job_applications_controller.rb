@@ -25,9 +25,9 @@ class JobApplicationsController < ApplicationController
     @message = Message.new
 
     @default_resume = current_user.default_resume
-    if @job_application.verdict.blank? && @default_resume.present?
-      GenerateVerdictJob.perform_later(@job_application.id)
-    end
+    return unless @job_application.verdict.blank? && @default_resume.present?
+
+    GenerateVerdictJob.perform_later(@job_application.id)
   end
 
   def create
@@ -121,6 +121,39 @@ class JobApplicationsController < ApplicationController
 
     redirect_to job_application_path(params[:id]),
                 alert: "Tasks could not be refreshed. Please try again."
+  end
+
+  def generate_task
+    @job_application = current_user.job_applications
+                                   .includes(:tasks, job_opening: :company)
+                                   .find(params[:id])
+    authorize @job_application, :show?
+
+    suggestion = Ai::TaskSuggestionService.new(@job_application).one_suggestion
+
+    if suggestion
+      @job_application.tasks.create!(user: current_user, name: suggestion)
+      redirect_to tasks_path, notice: "Task generated."
+    else
+      redirect_to tasks_path, alert: "No new task could be generated."
+    end
+  rescue StandardError => e
+    Rails.logger.error(
+      "Task generation failed for application #{params[:id]}: " \
+      "#{e.class} - #{e.message}"
+    )
+    redirect_to tasks_path, alert: "Task could not be generated. Please try again."
+  end
+
+  def clear_completed_tasks
+    @job_application = current_user.job_applications.find(params[:id])
+    authorize @job_application, :show?
+
+    removed_count = @job_application.tasks.where(completed: true).destroy_all.size
+
+    redirect_to job_application_path(@job_application),
+                notice: "#{removed_count} completed task(s) cleared.",
+                status: :see_other
   end
 
   def schedule_interview
