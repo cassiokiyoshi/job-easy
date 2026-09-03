@@ -16,7 +16,7 @@
   <% end %>
 
   <div class="job-openings-grid">
-    <%= render "job_openings/job_cards", job_openings: @job_openings%>
-    <%= render "job_openings/job_cards", job_openings: @job_openings_closed %>
+    <%= render "job_openings/job_cards", job_openings: @job_openings, applications_by_opening_id: @applications_by_opening_id %>
+    <%= render "job_openings/job_cards", job_openings: @job_openings_closed, applications_by_opening_id: @applications_by_opening_id %>
   </div>
 </main>

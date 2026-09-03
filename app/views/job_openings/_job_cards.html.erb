@@ -1,44 +1,75 @@
 <% job_openings.each do |job_opening| %>
-    <article class="job-card <%= 'job-card--closed' if job_opening.closed %>">
-      <div class="job-card__panel">
-      <%# <div class="d-flex justify-content-between"> %>
-        <p class="job-card__company"><%= job_opening.company.name %></p>
-        <div class="d-flex">
-          <h2 class="job-card__title"><%= job_opening.title %></h2>
-          <span class="dashboard-job__mark" style="<%= job_opening.company.logo.attached? ? "background-image: url(#{cl_image_path(job_opening.company.logo.key, secure: true)})" : "background-color: rgba(0, 61, 150, 0.09)" %>"></span>
-        </div>
-          <%# <div class="bookmark_saved">
-            <%# <% if job_opening.closed  %>
-              <%# <span class="job-card__deadline">Closed</span> %>
-              <%# else %>
-              <%# <span class="job-card__deadline">Open</span> %>
-            <%# end %>
-          <%# </div> %>
-          <%# <div class="div"> %>
-            <%# <%=# link_to "", class: "job-card__save" do %>
-              <%# if job_opening.job_applications.where(user: current_user).empty? %>
-                <%# <i class="fa-regular fa-bookmark"></i> %>
-              <%# else %>
-                <%# <i class="fa-solid fa-bookmark"> </i> %>
-              <%# end %>
-            <%# end %>
-          <%# </div> %>
-      <%# </div> %>
+  <% application = applications_by_opening_id[job_opening.id] %>
+  <% saved = application&.saved? %>
 
-      <div class="job-card__footer">
-          <span class="job-card__salary">Salary: <%= job_opening.salary %></span>
+  <article class="job-card <%= 'job-card--closed' if job_opening.closed? %>">
+    <div class="job-card__panel">
+      <div class="job-card__topline">
+        <% if job_opening.company.logo.attached? %>
+          <span class="job-card__logo" style="background-image: url(<%= cl_image_path(job_opening.company.logo.key, secure: true) %>)" aria-hidden="true"></span>
+        <% else %>
+          <span class="job-card__logo job-card__logo--fallback" aria-hidden="true"><%= job_opening.company.name.to_s.first&.upcase %></span>
+        <% end %>
 
-        <div class="job-card__footer-row">
-          <%# <div class="d-flex justify-content-between"> %>
-            <p class="job-card__location"><%= job_opening.location %></p>
-            <% if job_opening.deadline %>
-              <p class="job-card__deadline">
-                Deadline: <%= job_opening.deadline.strftime("%b %d, %Y") %>
-              </p>
+        <p class="job-card__company" title="<%= job_opening.company.name %>"><%= job_opening.company.name %></p>
+
+        <div class="job-card__bookmark">
+          <% if current_user %>
+            <% if saved %>
+              <span class="job-card__save job-card__save--saved" aria-label="Job saved" title="Job saved">
+                <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
+              </span>
+            <% elsif application %>
+              <%= button_to job_application_path(application), method: :patch,
+                    params: { job_application: { status: "Saved" }, bookmark: true, source: params[:source] },
+                    class: "job-card__save", title: "Save job",
+                    aria: { label: "Save #{job_opening.title}" } do %>
+                <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
+              <% end %>
+            <% else %>
+              <%= button_to job_opening_job_applications_path(job_opening), method: :post,
+                    params: { bookmark: true, source: params[:source] }, class: "job-card__save", title: "Save job",
+                    aria: { label: "Save #{job_opening.title}" } do %>
+                <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
+              <% end %>
             <% end %>
-          <%# </div> %>
-          <%= link_to "", job_opening_path(job_opening), class: "job-card__details" %>
+          <% else %>
+            <%= link_to new_user_session_path, class: "job-card__save",
+                  title: "Sign in to save this job",
+                  aria: { label: "Sign in to save #{job_opening.title}" } do %>
+              <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
+            <% end %>
+          <% end %>
         </div>
       </div>
-    </article>
+
+      <h2 class="job-card__title" title="<%= job_opening.title %>"><%= job_opening.title %></h2>
+    </div>
+
+    <div class="job-card__footer">
+      <div class="job-card__facts">
+        <p class="job-card__fact">
+          <span class="job-card__yen-sack" aria-hidden="true">
+            <i class="fa-solid fa-sack-dollar"></i>
+            <span>¥</span>
+          </span>
+          <span><%= job_opening.salary.presence || "Not specified" %></span>
+        </p>
+        <p class="job-card__fact"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span><%= job_opening.location.presence || "Not specified" %></span></p>
+      </div>
+      <span class="job-card__deadline <%= 'job-card__deadline--closed' if job_opening.closed? %>">
+        <% if job_opening.closed? %>
+          <i class="fa-solid fa-lock" aria-hidden="true"></i> Closed
+        <% else %>
+          <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+          <%= job_opening.deadline&.strftime("%b %-d, %Y") || "No deadline" %>
+        <% end %>
+      </span>
+    </div>
+
+    <%= link_to job_opening_path(job_opening), class: "job-card__details",
+          aria: { label: "View #{job_opening.title} at #{job_opening.company.name}" } do %>
+      <span class="visually-hidden">View job details</span>
+    <% end %>
+  </article>
 <% end %>

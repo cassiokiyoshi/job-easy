@@ -48,12 +48,12 @@ class JobApplicationsController < ApplicationController
     begin
       Ai::TaskRefreshService.new(@job_application).call
 
-      redirect_to job_application_path(@job_application),
+      redirect_to bookmark_redirect_path,
                   notice: "Application saved and tasks generated."
     rescue StandardError => e
       log_task_refresh_error(e)
 
-      redirect_to job_application_path(@job_application),
+      redirect_to bookmark_redirect_path,
                   alert: @job_application.errors.full_messages.to_sentence,
                   status: :see_other
     end
@@ -70,7 +70,7 @@ class JobApplicationsController < ApplicationController
     end
 
     unless @job_application.saved_change_to_status?
-      redirect_to job_application_path(@job_application),
+      redirect_to bookmark_redirect_path,
                   notice: "Application updated.",
                   status: :see_other
       return
@@ -79,13 +79,13 @@ class JobApplicationsController < ApplicationController
     begin
       Ai::TaskRefreshService.new(@job_application).call
 
-      redirect_to job_application_path(@job_application),
+      redirect_to bookmark_redirect_path,
                   notice: "Status updated and tasks refreshed.",
                   status: :see_other
     rescue StandardError => e
       log_task_refresh_error(e)
 
-      redirect_to job_application_path(@job_application),
+      redirect_to bookmark_redirect_path,
                   alert: "Status updated, but tasks could not be refreshed.",
                   status: :see_other
     end
@@ -171,6 +171,12 @@ class JobApplicationsController < ApplicationController
   end
 
   private
+
+  def bookmark_redirect_path
+    return job_application_path(@job_application) unless params[:bookmark].present?
+
+    job_openings_path(source: params[:source].presence)
+  end
 
   def job_application_params
     params.require(:job_application).permit(:status)
