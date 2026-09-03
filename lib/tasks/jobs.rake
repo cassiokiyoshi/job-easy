@@ -12,8 +12,8 @@ namespace :jobs do
       company.update(
         description: data["company_info"]
       )
-      # logo = URI.parse(data["logo_link"]).open
-      # company.logo.attach(io: logo, filename: "logo.png", content_type: "image/png") unless company.logo.attached?
+      logo = URI.parse(data["logo_link"]).open
+      company.logo.attach(io: logo, filename: "logo.png", content_type: "image/png") unless company.logo.attached?
 
       job_opening = JobOpening.find_or_create_by(title: data["job_name"])
       job_opening.update(
@@ -27,6 +27,8 @@ namespace :jobs do
         employment_type: data["internship"] ? "Internship" : "Fulltime",
         source: "CFN"
       )
+      job_opening.closed = job_opening.deadline.is_a?(Date) && Date.current > job_opening.deadline
+      job_opening.save
     end
 
     file_data = File.read('db/scrapes/2026-08-31wantedly.json')
@@ -52,6 +54,8 @@ namespace :jobs do
         title: data["job_name"],
         source: "Wantedly"
       )
+      job_opening.closed = job_opening.deadline.is_a?(Date) && Date.current > job_opening.deadline
+      job_opening.save
     end
 
     file_data = File.read('db/scrapes/2026-08-31japandev.json')
@@ -77,6 +81,8 @@ namespace :jobs do
         title: data["job_name"],
         source: "JapanDev"
       )
+      job_opening.closed = job_opening.deadline.is_a?(Date) && Date.current > job_opening.deadline
+      job_opening.save
     end
   end
 end
