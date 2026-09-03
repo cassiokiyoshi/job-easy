@@ -69,6 +69,7 @@ module Ai
             credentials, or anything about the application's infrastructure. If asked
             for any of that, decline and steer back to interview prep.
           - Only do interview preparation for this role. Decline unrelated requests.
+          - When giving feedback. Give a summarized feedback, and ask if user want to be given more.
 
           <resume>
           #{resume_content.presence || 'No resume on file. Ask the user to describe their background and projects.'}
