@@ -294,7 +294,7 @@ $application-chat-surface: #fff;
   cursor: pointer;
 
   &:hover {
-    background: #003580;
+    background: #003d96;
   }
 }
 
@@ -556,7 +556,7 @@ $application-chat-surface: #fff;
   }
 
   &--primary:hover {
-    background: #003580;
+    background: #003d96;
   }
 
   &--secondary {
@@ -633,9 +633,9 @@ $application-chat-surface: #fff;
 }
 
 .upload-resume-btn {
-  background-color: #003580;
+  background-color: #003d96;
   /* change color here */
-  border-color: #003580;
+  border-color: #003d96;
   float: right;
   /* or use display: flex + justify-content: flex-end on the parent */
 }
