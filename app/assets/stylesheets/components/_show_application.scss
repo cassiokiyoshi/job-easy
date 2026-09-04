@@ -368,7 +368,7 @@ $application-chat-surface: #fff;
 
 .application-task-card__header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
   padding: 22px 24px;
