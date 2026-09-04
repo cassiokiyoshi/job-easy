@@ -23,7 +23,7 @@
 .tasks-header__eyebrow,
 .task-panel__eyebrow {
   margin: 0 0 16px 12px;
-  color: #0d4aa2;
+  color: #003d96;
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -117,15 +117,15 @@
     min-height: 42px;
     padding-right: 22px;
     padding-left: 22px;
-    background: #0d4aa2;
-    border: 1px solid #0d4aa2;
+    background: #003d96;
+    border: 1px solid #003d96;
     border-radius: 8px;
     font-size: 0.875rem;
     font-weight: 700;
 
     &:hover {
-      background: #0a3d87;
-      border-color: #0a3d87;
+      background: #003d96;
+      border-color: #003d96;
     }
   }
 }
@@ -223,24 +223,27 @@
 }
 
 .application-task-card__header {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
   padding-bottom: 10px;
 }
 
 .application-task-card__company {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   min-width: 0;
   color: inherit;
   text-decoration: none;
 
   &:hover h4 {
-    color: #0d4aa2;
+    color: #003d96;
   }
 
   &:focus-visible {
     border-radius: 6px;
-    outline: 2px solid #0d4aa2;
+    outline: 2px solid #003d96;
     outline-offset: 3px;
   }
 
@@ -263,7 +266,7 @@
   flex: 0 0 36px;
   place-items: center;
   color: #fff;
-  background: #0d4aa2;
+  background: #003d96;
   border-radius: 8px;
   font-weight: 700;
 }
@@ -271,7 +274,7 @@
 .application-task-card__link {
   flex: 0 0 auto;
   padding: 0;
-  color: #0d4aa2;
+  color: #003d96;
   background: transparent;
   border: 0;
   font-size: 0.75rem;

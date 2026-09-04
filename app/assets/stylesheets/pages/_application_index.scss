@@ -1,5 +1,5 @@
 :root {
-  --blue: #0d4aa2;
+  --blue: #003d96;
   --navy: #101d39;
   --muted: #68758d;
   --column-background: #f0f2f6;
@@ -152,7 +152,7 @@
 }
 
 .application-card:focus-visible {
-  outline: 3px solid rgba(13, 74, 162, 0.3);
+  outline: 3px solid rgba(0, 61, 150, 0.3);
   outline-offset: 2px;
 }
 
