@@ -5,7 +5,7 @@ namespace :jobs do
   desc "Changing jobs DB"
 
   task update: :environment do
-    file_data = File.read('db/scrapes/2026-00-04cfn.json')
+    file_data = File.read('db/scrapes/2026-09-04cfn.json')
     data_array = JSON.parse(file_data)
     data_array.each do |data|
       company = Company.find_or_create_by(name: data["company_name"])
