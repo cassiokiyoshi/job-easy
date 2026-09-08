@@ -1,0 +1,3 @@
+ScrapeWantedlyJob.perform_now
+ScrapeJapandevJob.perform_now
+ScrapeCfnJob.perform_now
